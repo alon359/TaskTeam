@@ -28,10 +28,10 @@ if (process.env.NODE_ENV === 'production') {
     app.use(cors(corsOptions));
 }
 
-// const userRoutes = require('./api/user/user.routes')
+const userRoutes = require('./api/user/user.routes')
 
 // routes
-// app.use('/api/user', userRoutes)
+app.use('/api/user', userRoutes)
 
 
 const logger = require('./services/logger.service')
