@@ -1,15 +1,73 @@
 <div class="container">
   <p class="h1">Join us</p>
-  <form>
+  <form novalidate [formGroup]="signUp" (ngSubmit)="onSignUp()">
     <div class="form-group">
-      <input type="email" class="form-control" placeholder="Email" />
+      <input type="email" class="form-control" [ngClass]="GetValidationClass('email')" placeholder="Email"
+        formControlName="email" />
+
+      <div class="invalid-feedback">
+        <p *ngIf="!fc.email.value; else inValidMail">
+          Please enter an email
+        </p>
+        <ng-template #inValidMail>
+          Please enter a valid email. Example example@mail.com
+        </ng-template>
+      </div>
     </div>
+
+    <div class="form-group form-row">
+      <div class="col">
+        <input type="text" class="form-control" placeholder="First name" formControlName="fName"
+          [ngClass]="GetValidationClass('fName')" />
+
+        <div class="invalid-feedback">
+          <p *ngIf="!fc.fName.value; else inValidfName">
+            Please enter a first name
+          </p>
+          <ng-template #inValidfName>
+            Please enter a valid first name.
+          </ng-template>
+        </div>
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Last name" formControlName="lName"
+          [ngClass]="GetValidationClass('lName')" />
+
+        <div class="invalid-feedback">
+          <p *ngIf="!fc.lName.value; else inValidlName">
+            Please enter an last name
+          </p>
+          <ng-template #inValidlName>
+            Please enter a valid last name.
+          </ng-template>
+        </div>
+      </div>
+    </div>
+
     <div class="form-group">
-      <input type="password" class="form-control" placeholder="Password" />
+      <input type="password" class="form-control" placeholder="Password" formControlName="password"
+        [ngClass]="GetValidationClass('password')" />
+
+      <div class="invalid-feedback">
+        <p *ngIf="!fc.password.value; else inValidPassword">
+          Please enter a password
+        </p>
+        <ng-template #inValidPassword>
+          Password must be at least 8 characters long.
+        </ng-template>
+      </div>
     </div>
+
     <div class="form-group">
-      <input type="password" class="form-control" placeholder="Confirm Password" />
+      <input type="password" class="form-control" placeholder="Confirm Password" formControlName="passwordConfirm"
+        [ngClass]="GetValidationClass('passwordConfirm')" />
     </div>
-    <button class="btn btn-primary">Sign Up</button>
+
+    <div class="form-group form-row">
+      <div class="col text-center">
+        <button class="btn btn-primary" type="submit">Sign Up</button>
+      </div>
+    </div>
+
   </form>
 </div>
