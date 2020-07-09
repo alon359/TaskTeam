@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { ConfirmedValidator } from '../../services/confirmed.validator';
 
 @Component({
   selector: 'app-sign-up',
@@ -7,16 +8,20 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
-  signUp: FormGroup = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    fName: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]+')]),
-    lName: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]+')]),
-    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    passwordConfirm: new FormControl('', [Validators.required, Validators.minLength(8)]),
-  });
+  signUp: FormGroup = new FormGroup({});
   isWasSubmit = false;
 
-  constructor() { }
+  constructor(private fb: FormBuilder) {
+    this.signUp = fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      fName: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
+      lName: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      passwordConfirm: ['', [Validators.required]],
+    }, {
+      validator: ConfirmedValidator('password', 'passwordConfirm'),
+    });
+  }
 
   ngOnInit(): void {
   }
