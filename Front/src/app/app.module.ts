@@ -15,6 +15,8 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 // Pages
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
+import { SignInComponent } from './pages/sign-in/sign-in.component';
+
 
 
 @NgModule({
@@ -22,7 +24,9 @@ import { SignUpComponent } from './pages/sign-up/sign-up.component';
     AppComponent,
     NavBarComponent,
     HomePageComponent,
-    SignUpComponent
+    SignUpComponent,
+    SignInComponent,
+
   ],
   imports: [
     BrowserModule,
