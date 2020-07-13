@@ -1,7 +1,5 @@
-
-const dbService = require('../../services/db.service')
-const reviewService = require('../review/review.service')
-const ObjectId = require('mongodb').ObjectId
+const dbService = require('../../services/db.service');
+const ObjectId = require('mongodb').ObjectId;
 
 module.exports = {
     query,
@@ -13,8 +11,8 @@ module.exports = {
 }
 
 async function query(filterBy = {}) {
-    const criteria = _buildCriteria(filterBy)
-    const collection = await dbService.getCollection('user')
+    const criteria = _buildCriteria(filterBy);
+    const collection = await dbService.getCollection('user');
     try {
         const users = await collection.find(criteria).toArray();
         users.forEach(user => delete user.password);
@@ -30,18 +28,13 @@ async function getById(userId) {
     try {
         const user = await collection.findOne({ "_id": ObjectId(userId) })
         delete user.password
-
-        user.givenReviews = await reviewService.query({ byUserId: ObjectId(user._id) })
-        user.givenReviews = user.givenReviews.map(review => {
-            delete review.byUser
-            return review
-        })
         return user
     } catch (err) {
         console.log(`ERROR: while finding user ${userId}`)
         throw err;
     }
 }
+
 async function getByEmail(email) {
     const collection = await dbService.getCollection('user')
     try {
