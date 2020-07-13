@@ -5,6 +5,8 @@ const path = require('path')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
 
+const logger = require('./services/logger.service')
+
 const app = express()
 const http = require('http').createServer(app);
 
@@ -28,13 +30,14 @@ if (process.env.NODE_ENV === 'production') {
     app.use(cors(corsOptions));
 }
 
-const userRoutes = require('./api/user/user.routes')
+const userRoutes = require('./api/user/user.routes');
+const authRoutes = require('./api/auth/auth.routes');
 
 // routes
-app.use('/api/user', userRoutes)
+app.use('/api/user', userRoutes);
+app.use('/api/auth', authRoutes);
 
 
-const logger = require('./services/logger.service')
 const port = process.env.PORT || 3030;
 http.listen(port, () => {
     logger.info('Server is running on port: ' + port)
