@@ -1,16 +1,11 @@
 <div class="container">
-
-
-    <p class="head">Sign in</p>
-
+  <p class="head">Sign in</p>
+  <form novalidate [formGroup]="logIn" (ngSubmit)="onLogin()">
     <div class="input">
-
-        <input id="user" type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
-        <input id="pass" type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
-
+      <input type="email" class="form-control" placeholder="Email" formControlName="email" required />
+      <input type="password" class="form-control" placeholder="Password" formControlName="password" required />
     </div>
-
     <div class="btn">
-        <button id="btn" type="button" class="btn btn-primary">Enter</button> </div>
-
+      <button id="btn" type="submit" class="btn btn-primary">Enter</button> </div>
+  </form>
 </div>
