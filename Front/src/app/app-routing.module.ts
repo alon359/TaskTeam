@@ -9,8 +9,8 @@ import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { from } from 'rxjs';
 
 const routes: Routes = [
-  { path: 'signUp', component: SignUpComponent },
-  { path: 'signIn', component : SignInComponent},
+  { path: 'signup', component: SignUpComponent },
+  { path: 'signIn', component: SignInComponent },
   { path: '', component: HomePageComponent },
 ];
 
