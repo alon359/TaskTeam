@@ -7,10 +7,12 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private elementRef: ElementRef) { }
 
   ngOnInit(): void {
+    this.elementRef.nativeElement.ownerDocument.body.style.backgroundImage = "url('../../../assets/homePageImg.jpg')";
 
   }
+
 
 }
