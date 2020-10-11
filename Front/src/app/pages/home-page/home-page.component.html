@@ -9,16 +9,19 @@
 
   <div></div>
 
+  <form novalidate [formGroup]="logIn" (ngSubmit)="onLogin()">
 
-  <div class="input-group mb-3">
-    <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
-      placeholder="Username">
-  </div>
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Username">
+    </div>
 
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Password">
+    </div>
 
+    <input class="btn btn-primary" type="button" value="Enter">
 
-
-
+  </form>
 
 
 </div>

@@ -1,0 +1,22 @@
+.current-tasks {
+  min-height: 100vh;
+  background-color: var(--bgc-main);
+}
+
+h1 {
+  text-align: center;
+  padding: 1.25rem 0;
+}
+
+.tables-tasks-contain {
+  padding: 10px;
+}
+
+.table-contain {
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+.table-contain:not(:last-of-type) {
+  margin-bottom: 5px;
+}

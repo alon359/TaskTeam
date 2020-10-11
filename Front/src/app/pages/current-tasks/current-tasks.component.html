@@ -1,0 +1,15 @@
+<div class="layout-main">
+
+  <app-menu-login>
+  </app-menu-login>
+
+  <div class="current-tasks">
+    <div class="container">
+      <h1>Current tasks</h1>
+      <div class="tables-tasks-contain">
+        <div *ngFor="let table of tables; let i = index" class="table-contain table{{i}}">
+          <app-table-tasks [tableObj]="table" [tableIdx]="i"></app-table-tasks>
+        </div>
+      </div>
+    </div>
+  </div>
