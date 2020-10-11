@@ -1,5 +1,7 @@
-const dbService = require('../../services/db.service');
-const ObjectId = require('mongodb').ObjectId;
+const mongoose = require("mongoose");
+const logger = require("../../services/logger.service");
+
+const USER = require('./user.model');
 
 module.exports = {
     query,
@@ -11,79 +13,85 @@ module.exports = {
 }
 
 async function query(filterBy = {}) {
-    const criteria = _buildCriteria(filterBy);
-    const collection = await dbService.getCollection('user');
     try {
-        const users = await collection.find(criteria).toArray();
-        users.forEach(user => delete user.password);
-        return users
+        const users = await USER.find(filterBy)
+            .select('-isAdmin -password')
+            .then(users => users);
+
+        logger.debug(`user.service: Users query request successfully`)
+
+        return users;
     } catch (err) {
-        console.log('ERROR: cannot find users')
+        logger.error('user.service: Users query request failed\n\t' + err)
         throw err;
     }
 }
 
 async function getById(userId) {
-    const collection = await dbService.getCollection('user')
     try {
-        const user = await collection.findOne({ "_id": ObjectId(userId) })
-        delete user.password
+        const user = await USER.findById(userId)
+            .select('-isAdmin -password')
+            .then(user => user);
+
+        logger.debug(`user.service: User got by ID successfully (userId: ${userId})`)
+
         return user
     } catch (err) {
-        console.log(`ERROR: while finding user ${userId}`)
+        logger.error(`user.service: Get user by ID request failed (userID: ${userId})\n\t` + err)
         throw err;
     }
 }
 
 async function getByEmail(email) {
-    const collection = await dbService.getCollection('user')
     try {
-        const user = await collection.findOne({ email })
+        const user = await USER.findOne({ email })
+            .select('-isAdmin -password')
+            .then(user => user);
+
+        logger.debug(`user.service: User got by mail successfully (userId: ${user._id})`)
+
         return user
     } catch (err) {
-        console.log(`ERROR: while finding user ${email}`)
+        logger.error(`user.service: Gat user by email request failed (userEmail: ${email})\n\t` + err)
         throw err;
     }
 }
 
 async function remove(userId) {
-    const collection = await dbService.getCollection('user')
+    await USER.deleteOne({ _id: userId })
     try {
-        await collection.deleteOne({ "_id": ObjectId(userId) })
+        await USER.deleteOne({ _id: userId });
+
+        logger.debug(`user.service: Remove user successfully (userId: ${userId})`)
     } catch (err) {
-        console.log(`ERROR: cannot remove user ${userId}`)
-        throw err;
+        logger.error(`user.service: User removed request failed (userId: ${userId})`)
+        return err;
     }
 }
 
 async function update(user) {
-    const collection = await dbService.getCollection('user')
-    user._id = ObjectId(user._id);
-
     try {
-        await collection.updateOne({ "_id": user._id }, { $set: user })
-        return user
+        var userUpdated = await USER.findOneAndUpdate({ _id: user._id }, user)
+            .select('-password -isAdmin');
+
+        return userUpdated
     } catch (err) {
-        console.log(`ERROR: cannot update user ${user._id}`)
+        logger.error(`user.service: Update user request failed (UserID: ${user._id})\n\t` + err)
         throw err;
     }
 }
 
 async function add(user) {
-    const collection = await dbService.getCollection('user')
     try {
-        await collection.insertOne(user);
-        return user;
+        user._id = new mongoose.Types.ObjectId();
+
+        const userSchema = new USER(user);
+        const savedUser = await userSchema.save();
+
+        logger.info(`user.service: User added successfully (UserID: ${savedUser._id})`);
+        return savedUser;
     } catch (err) {
-        console.log(`ERROR: cannot insert user`)
+        logger.error(`user.service: add user request failed (UserID: ${user._id})\n\t` + err)
         throw err;
     }
 }
-
-function _buildCriteria(filterBy) {
-    const criteria = {};
-
-    return criteria;
-}
-
-

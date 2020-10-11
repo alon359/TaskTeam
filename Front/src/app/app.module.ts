@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-
 // Routing Module
 import { AppRoutingModule } from './app-routing.module';
 
@@ -12,11 +11,16 @@ import { AppComponent } from './app.component';
 
 // Components
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { CurrentTasksComponent } from './pages/current-tasks/current-tasks.component';
+import { TableTasksComponent } from './components/table-tasks/table-tasks.component';
+import { RowTaskComponent } from './components/row-task/row-task.component';
+import { MenuLoginComponent } from './components/menu-login/menu-login.component';
 
 // Pages
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { SignInComponent } from './pages/sign-in/sign-in.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 
 
@@ -27,7 +31,11 @@ import { SignInComponent } from './pages/sign-in/sign-in.component';
     HomePageComponent,
     SignUpComponent,
     SignInComponent,
-
+    CurrentTasksComponent,
+    TableTasksComponent,
+    RowTaskComponent,
+    MenuLoginComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,

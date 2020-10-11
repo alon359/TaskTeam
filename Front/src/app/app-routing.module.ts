@@ -5,13 +5,15 @@ import { Routes, RouterModule } from '@angular/router';
 // Pages
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
-
-import { from } from 'rxjs';
+import { CurrentTasksComponent } from './pages/current-tasks/current-tasks.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 const routes: Routes = [
-  { path: 'signup', component: SignUpComponent },
-  { path: 'signIn', component: SignInComponent },
-  { path: '', component: HomePageComponent },
+  { path: 'tasks', pathMatch: 'full', component: CurrentTasksComponent },
+  { path: 'signup', pathMatch: 'full', component: SignUpComponent },
+  { path: 'signIn', pathMatch: 'full', component: SignInComponent },
+  { path: '', pathMatch: 'full', component: HomePageComponent },
+  { path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({

@@ -1,38 +1,71 @@
-const authService = require('./auth.service')
-const logger = require('../../services/logger.service')
+var { validationResult } = require('express-validator');
+const authService = require('./auth.service');
+const logger = require('../../services/logger.service');
 
 async function login(req, res) {
-    const { email, password } = req.body
+    const { email } = req.body
     try {
-        const user = await authService.login(email, password)
+        const errors = validationResult(req).errors;
+        if (errors.length !== 0) {
+            logger.debug('auth.controller: login - errors:\n\t' + JSON.stringify(errors))
+
+            res.status(409).json(errors);
+            return;
+        }
+
+        const user = await authService.login(email)
+
         req.session.user = user;
-        res.json(user)
+
+        delete user._doc.isAdmin;
+
+        res.status(200).json(user)
     } catch (err) {
-        res.status(401).send({ error: err })
+        logger.debug('auth.controller: login - errors:\n\t' + JSON.stringify(errors))
+
+        res.status(401).send({ massage: 'Could not login, please try later' })
     }
 }
 
 async function signup(req, res) {
     try {
-        const { email, password, username } = req.body
-        logger.debug(email + ", " + username + ', ' + password)
-        const account = await authService.signup(email, password, username)
-        logger.debug(`auth.route - new account created: ` + JSON.stringify(account))
-        const user = await authService.login(email, password)
-        req.session.user = user
-        res.json(user)
+        const errors = validationResult(req).errors;
+        if (errors.length !== 0) {
+            logger.debug('auth.controller: signup - errors:\n\t' + JSON.stringify(errors))
+
+            res.status(409).json(errors);
+            return;
+        }
+
+        const user = req.body;
+        let account = await authService.signup(user)
+
+        delete account._doc.password;
+
+        // req.session.user = account;
+
+        delete account._doc.isAdmin;
+
+        res.status(200).json(account);
     } catch (err) {
-        logger.error('[SIGNUP] ' + err)
-        res.status(500).send({ error: 'could not signup, please try later' })
+        logger.error('aut.controller signup user filed\n\t' + err)
+
+        res.status(500).send({ massage: 'Could not signup, please try later' })
     }
 }
 
 async function logout(req, res) {
     try {
+        const userID = req.session.user._id;
+
         req.session.destroy()
-        res.send({ message: 'logged out successfully' })
+
+        logger.info(`User logged out (userID: ${userID})`)
+        res.status(200).send({ message: 'Logged out successfully' })
     } catch (err) {
-        res.status(500).send({ error: err })
+        logger.info(`auth.service: logout - User log out filed (userID: ${userID}):\n\t${err}`)
+
+        res.status(500).send({ massage: 'User log out filed' })
     }
 }
 

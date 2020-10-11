@@ -1,0 +1,27 @@
+<button class="btn-collapse btn btn-secondary btn-block text-left" (click)="scrollToTable()" data-toggle="collapse"
+  [attr.data-target]="'.task' + tableIdx">
+  iso{{tableObj}}
+</button>
+<div class="{{'task' + tableIdx}} collapse">
+  <table class="table text-center">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Main task</th>
+        <th>Status</th>
+        <th>Priority</th>
+        <th>Release date</th>
+        <th>End date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr app-row-task></tr>
+      <tr app-row-task></tr>
+      <tr app-row-task></tr>
+      <tr app-row-task></tr>
+      <tr app-row-task></tr>
+      <tr app-row-task></tr>
+      <tr app-row-task></tr>
+    </tbody>
+  </table>
+</div>
