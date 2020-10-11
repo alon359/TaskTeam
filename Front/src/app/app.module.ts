@@ -21,6 +21,8 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { MyProjectsComponent } from './pages/my-projects/my-projects.component';
+import { ProjectRowComponent } from './components/project-row/project-row.component';
 
 
 
@@ -36,6 +38,8 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
     RowTaskComponent,
     MenuLoginComponent,
     NotFoundComponent,
+    MyProjectsComponent,
+    ProjectRowComponent,
   ],
   imports: [
     BrowserModule,
