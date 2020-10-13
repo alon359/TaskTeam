@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: 'signIn', pathMatch: 'full', component: SignInComponent },
   { path: '', pathMatch: 'full', component: HomePageComponent },
   { path: '**', component: NotFoundComponent },
+  { path: '/404', component: NotFoundComponent },
 ];
 
 @NgModule({

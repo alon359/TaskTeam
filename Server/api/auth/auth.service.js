@@ -8,8 +8,12 @@ const saltRounds = 10
 
 async function login(email) {
     try {
-        const user = await userService.getByEmail(email)
-        delete user._doc.password;
+        const user = await userService.getByEmail(email);
+        if (user) {
+            delete user._doc.password;
+        } else {
+            logger.debug('auth.service: login - User not founded. userEmail: ', email);
+        }
         return user;
     } catch (err) {
         logger.error('auth.service: login - User login failed\n\t' + err);

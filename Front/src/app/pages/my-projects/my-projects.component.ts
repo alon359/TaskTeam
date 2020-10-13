@@ -10,7 +10,7 @@ export class MyProjectsComponent implements OnInit {
     {
       _id: '1',
       name: 'ios app',
-      Progress: 10,
+      Progress: 80,
       RemainTasks: 10
     },
     {

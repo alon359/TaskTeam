@@ -1,38 +1,42 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 50px;
 }
 
 .head {
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    margin-top: 10px;
-    font-weight: bold;
-    font-size: 30px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.fromGroup:not(:last-child) {
+  margin-bottom: 20px;
 }
 
 .input {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 #pass {
-    width: 150px;
-    margin-top: 10px;
-    align-self: center;
+  width: 150px;
+  margin-top: 10px;
+  align-self: center;
 }
 
 #user {
-    align-self: center;
-    width: 150px;
+  align-self: center;
+  width: 150px;
 }
 
 .btn {
-    display: flex;
-    margin-top: 10px;
-    justify-content: center;
+  display: flex;
+  margin-top: 10px;
+  justify-content: center;
 }

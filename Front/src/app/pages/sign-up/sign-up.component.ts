@@ -12,7 +12,7 @@ export class SignUpComponent implements OnInit {
   isWasSubmit = false;
 
   constructor(private fb: FormBuilder) {
-    this.signUp = fb.group({
+    this.signUp = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       fName: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
       lName: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],

@@ -39,3 +39,7 @@ a {
 .clean-least {
   list-style: none;
 }
+
+h1 {
+  text-align: center;
+}

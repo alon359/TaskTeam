@@ -18,11 +18,11 @@ async function query(filterBy = {}) {
             .select('-isAdmin -password')
             .then(users => users);
 
-        logger.debug(`user.service: Users query request successfully`)
+        logger.debug(`user.service: query - Users query request successfully`)
 
         return users;
     } catch (err) {
-        logger.error('user.service: Users query request failed\n\t' + err)
+        logger.error('user.service: query - Users query request failed\n\t' + err)
         throw err;
     }
 }
@@ -33,11 +33,11 @@ async function getById(userId) {
             .select('-isAdmin -password')
             .then(user => user);
 
-        logger.debug(`user.service: User got by ID successfully (userId: ${userId})`)
+        logger.debug(`user.service: getById - User got successfully (userId: ${userId})`)
 
         return user
     } catch (err) {
-        logger.error(`user.service: Get user by ID request failed (userID: ${userId})\n\t` + err)
+        logger.error(`user.service: getById - Get user by ID request failed (userID: ${userId})\n\t` + err)
         throw err;
     }
 }
@@ -45,14 +45,18 @@ async function getById(userId) {
 async function getByEmail(email) {
     try {
         const user = await USER.findOne({ email })
-            .select('-isAdmin -password')
-            .then(user => user);
-
-        logger.debug(`user.service: User got by mail successfully (userId: ${user._id})`)
-
+            .then(user => {
+                if (user) {
+                    logger.debug(`user.service: getByEmail - User got by mail successfully (userId: ${user._id})`)
+                }
+                else {
+                    logger.debug(`user.service: getByEmail - User not founded (userEmail: ${email})`)
+                }
+                return user
+            });
         return user
     } catch (err) {
-        logger.error(`user.service: Gat user by email request failed (userEmail: ${email})\n\t` + err)
+        logger.error(`user.service: getByEmail -  Gat user by email request failed (userEmail: ${email})\n\t` + err)
         throw err;
     }
 }
