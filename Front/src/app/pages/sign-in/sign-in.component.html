@@ -2,9 +2,32 @@
   <p class="head">Sign in</p>
   <form novalidate [formGroup]="logIn" (ngSubmit)="onLogin()">
     <div class="input">
-      <input type="email" class="form-control" placeholder="Email" formControlName="email" required />
-      <input type="password" class="form-control" placeholder="Password" formControlName="password" required />
+
+      <!-- Password emil -->
+      <div class="fromGroup">
+        <input type="email" class="form-control" placeholder="Email" formControlName="email"
+          [ngClass]="GetValidationClass('email')" />
+
+        <div class="invalid-feedback">
+          <div *ngIf="fc.email.errors?.required; else invalidEmail"> Email is required</div>
+          <ng-template #invalidEmail>Please enter a valid email. Example example@mail.com</ng-template>
+        </div>
+      </div>
+
+      <!-- Password input -->
+      <div class="fromGroup">
+        <input type="password" class="form-control" placeholder="Password" formControlName="password"
+          [ngClass]="GetValidationClass('password')" />
+
+        <div class="invalid-feedback">
+          <div *ngIf="fc.password.errors?.required; else invalidPassword">Password is required</div>
+          <ng-template #invalidPassword>Password must be at least 8 characters long</ng-template>
+        </div>
+      </div>
+
     </div>
+
+    <!-- Button submit -->
     <div class="btn">
       <button id="btn" type="submit" class="btn btn-primary">Enter</button> </div>
   </form>

@@ -46,7 +46,7 @@ const authRoutes = require('./api/auth/auth.routes');
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 
-app.get('/404', pageNotFound);
+// app.get('/404', pageNotFound);
 
 // For angular
 app.use((req, res) => {

@@ -3,7 +3,7 @@
   <form novalidate [formGroup]="signUp" (ngSubmit)="onSignUp()">
     <div class="form-group">
       <input type="email" class="form-control" [ngClass]="GetValidationClass('email')" placeholder="Email"
-        formControlName="email" />
+        formControlName="email" required />
 
       <div class="invalid-feedback">
         <div *ngIf="fc.email.errors.required"> Please enter an email</div>

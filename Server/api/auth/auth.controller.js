@@ -15,10 +15,11 @@ async function login(req, res) {
 
         const user = await authService.login(email)
 
+        delete user._doc.password;
         req.session.user = user;
-
         delete user._doc.isAdmin;
 
+        logger.info(`auth.controller: login - User logged-in\n\t(UserID: ${req.session.user._id})`)
         res.status(200).json(user)
     } catch (err) {
         logger.debug('auth.controller: login - errors:\n\t' + JSON.stringify(errors))
