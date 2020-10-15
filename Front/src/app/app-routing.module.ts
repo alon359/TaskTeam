@@ -1,3 +1,4 @@
+import { OneProjectComponent } from './pages/one-project/one-project.component';
 import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -13,10 +14,10 @@ import { OneProjectComponent } from './pages/one-project/one-project.component';
 const routes: Routes = [
   { path: 'tasks', pathMatch: 'full', component: CurrentTasksComponent },
   { path: 'projects', pathMatch: 'full', component: MyProjectsComponent },
+  { path: 'project', pathMatch: 'full', component: OneProjectComponent },
   { path: 'signup', pathMatch: 'full', component: SignUpComponent },
   { path: 'signIn', pathMatch: 'full', component: SignInComponent },
   { path: '', pathMatch: 'full', component: HomePageComponent },
-  { path: 'project', pathMatch: 'full', component: OneProjectComponent },
   { path: '**', component: NotFoundComponent }
 ];
 

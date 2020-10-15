@@ -41,7 +41,7 @@ import { OneProjectComponent } from './pages/one-project/one-project.component';
     NotFoundComponent,
     MyProjectsComponent,
     ProjectRowComponent,
-    OneProjectComponent
+    OneProjectComponent,
   ],
   imports: [
     BrowserModule,
