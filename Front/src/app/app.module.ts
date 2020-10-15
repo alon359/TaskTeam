@@ -23,6 +23,7 @@ import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { MyProjectsComponent } from './pages/my-projects/my-projects.component';
 import { ProjectRowComponent } from './components/project-row/project-row.component';
+import { OneProjectComponent } from './pages/one-project/one-project.component';
 
 
 
@@ -40,6 +41,7 @@ import { ProjectRowComponent } from './components/project-row/project-row.compon
     NotFoundComponent,
     MyProjectsComponent,
     ProjectRowComponent,
+    OneProjectComponent,
   ],
   imports: [
     BrowserModule,
