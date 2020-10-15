@@ -1,0 +1,17 @@
+td {
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+.table {
+    text-align: center;
+}
+
+.container {
+    display: flex;
+}
+
+.table-contain {
+    margin: 0 auto;
+    padding: 10px;
+}
