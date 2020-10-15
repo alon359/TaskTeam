@@ -44,6 +44,12 @@ async function deleteUser(req, res) {
 async function updateUser(req, res) {
     try {
         const user = req.body;
+
+        // If the user is not admin
+        // if (!req.session.user.isAdmin) {
+        //     user.isAdmin = false;
+        // }
+
         const userUpdated = await userService.update(user)
 
         logger.info(`user.controller: User successfully update userID: ${userUpdated._id}`);

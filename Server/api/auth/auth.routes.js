@@ -10,6 +10,6 @@ const { userValidator } = require('../user/user.validator');
 
 router.post('/login', loginValidator, login)
 router.post('/signup', userValidator, signup)
-router.post('/logout', requireAuth, logout)
+router.get('/logout', requireAuth, logout)
 
 module.exports = router

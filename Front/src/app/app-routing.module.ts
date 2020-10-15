@@ -8,6 +8,7 @@ import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { CurrentTasksComponent } from './pages/current-tasks/current-tasks.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { MyProjectsComponent } from './pages/my-projects/my-projects.component';
+import { OneProjectComponent } from './pages/one-project/one-project.component';
 
 const routes: Routes = [
   { path: 'tasks', pathMatch: 'full', component: CurrentTasksComponent },
@@ -15,8 +16,8 @@ const routes: Routes = [
   { path: 'signup', pathMatch: 'full', component: SignUpComponent },
   { path: 'signIn', pathMatch: 'full', component: SignInComponent },
   { path: '', pathMatch: 'full', component: HomePageComponent },
-  { path: '**', component: NotFoundComponent },
-  { path: '/404', component: NotFoundComponent },
+  { path: 'project', pathMatch: 'full', component: OneProjectComponent },
+  { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({

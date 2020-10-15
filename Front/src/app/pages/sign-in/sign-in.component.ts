@@ -14,6 +14,9 @@ export class SignInComponent implements OnInit, OnDestroy {
   userLoggedIn: User = null;
   subscription: Subscription;
 
+  // Incorrect password or email
+  isIncorrectPassOrMail = false;
+
   isWasSubmit = false;
   logIn = new FormGroup({});
 
@@ -38,26 +41,36 @@ export class SignInComponent implements OnInit, OnDestroy {
   }
 
   // Getter form-controls
-  get fc() {
-    return this.logIn.controls;
+  get fc() { return this.logIn.controls; }
+
+  isIncorrectData(): boolean {
+    return this.isIncorrectPassOrMail;
   }
 
   onLogin(): void {
     this.isWasSubmit = true;
+    this.isIncorrectPassOrMail = false;
     const { email, password } = this.logIn.controls;
 
     if (email.status === 'VALID' && password.status === 'VALID') {
-      this.authService.login(email.value, password.value);
+      this.authService.login(email.value, password.value)
+        .subscribe(user => {
+          console.log('User logged-in\n', { user });
+        }, err => {
+          console.log('user not exists');
+          this.isIncorrectPassOrMail = true;
+        });
     }
   }
 
   GetValidationClass(inputName: string): string {
     if (!this.isWasSubmit) {
       return '';
-    } else if (this.logIn.controls[inputName].errors) {
+    } else if (this.logIn.controls[inputName].errors || this.isIncorrectPassOrMail) {
       return 'is-invalid';
     } else {
       return 'is-valid';
     }
   }
+
 }

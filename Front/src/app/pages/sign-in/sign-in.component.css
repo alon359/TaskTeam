@@ -40,3 +40,8 @@
   margin-top: 10px;
   justify-content: center;
 }
+
+.incorrect-data {
+  color: #dc3545;
+  margin-bottom: 10px;
+}

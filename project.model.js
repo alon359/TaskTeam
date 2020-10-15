@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 // const { getModel } = require('../../services/db.service');
 
 // Collection name
-const collectName = 'user';
+const collectName = 'project';
 
 const schema = new mongoose.Schema({
     _id: { type: mongoose.Schema.Types.ObjectId, required: true },

@@ -12,7 +12,6 @@ require('dotenv').config();
 // Services 
 const dbService = require('./services/db.service');
 const logger = require('./services/logger.service');
-const pageNotFound = require('./services/pageNotFound.service');
 
 
 // Express App Config
@@ -46,6 +45,7 @@ const authRoutes = require('./api/auth/auth.routes');
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 
+const pageNotFound = require('./services/pageNotFound.service');
 // app.get('/404', pageNotFound);
 
 // For angular

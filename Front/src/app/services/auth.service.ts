@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 // Imports rxjs
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, retry } from 'rxjs/operators';
 import { Subject, throwError } from 'rxjs';
 
 import { HttpService } from './http.service';
@@ -26,10 +26,12 @@ export class AuthService {
 
   login(email: string, password: string) {
     const data = { email, password };
-    this.http.post<User>(`${environment.baseUrl}${this.END_POINT}/login`, data)
-      .subscribe((user) => {
+    return this.http.post<User>(`${environment.baseUrl}${this.END_POINT}/login`, data)
+      .pipe(map(user => {
         this._loggedUser$.next(user);
-        console.log('auth.login', { user });
-      });
+        return user;
+      }, err => {
+        return null;
+      }));
   }
 }
