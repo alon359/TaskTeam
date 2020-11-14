@@ -1,0 +1,15 @@
+.layout-main {
+  background-color: #bacef4;
+  min-height: 100vh;
+}
+
+.container {
+  width: 500px;
+}
+
+label {
+  font-weight: bold;
+}
+label::after {
+  content: ":";
+}

@@ -6,5 +6,5 @@ export interface User {
   lastName: string;
   title: string;
   phone: string;
-  skype: string;
+  imgUlr: string;
 }

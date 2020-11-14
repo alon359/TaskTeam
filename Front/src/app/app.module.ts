@@ -24,6 +24,10 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { CurrentTasksComponent } from './pages/current-tasks/current-tasks.component';
 import { MyProjectsComponent } from './pages/my-projects/my-projects.component';
 import { OneProjectComponent } from './pages/one-project/one-project.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { CreateProjectComponent } from './pages/create-project/create-project.component';
+import { AddTaskComponent } from './pages/add-task/add-task.component';
+import { SettingComponent } from './pages/setting/setting.component';
 
 
 
@@ -42,6 +46,10 @@ import { OneProjectComponent } from './pages/one-project/one-project.component';
     MyProjectsComponent,
     ProjectRowComponent,
     OneProjectComponent,
+    ProfileComponent,
+    CreateProjectComponent,
+    AddTaskComponent,
+    SettingComponent,
   ],
   imports: [
     BrowserModule,
