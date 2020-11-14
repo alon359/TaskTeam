@@ -25,6 +25,7 @@ async function signup(user) {
     try {
         const hash = await bcrypt.hash(user.password, saltRounds)
         user.password = hash
+        user.isAdmin = false;
         let account = await userService.add(user)
 
         logger.info('auth.service: signup - User signup successfully userID:' + account._id);

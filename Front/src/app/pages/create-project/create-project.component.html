@@ -1,0 +1,51 @@
+<div class="layout-main">
+
+  <app-menu-login></app-menu-login>
+
+  <div class="container">
+    <header>
+      <h1 class="h1">Create new project</h1>
+    </header>
+    <main>
+
+      <section>
+        <form>
+          <div class="form-group row">
+            <label for="projectName">Project name:</label>
+            <input type="text" class="form-control" id="projectName" placeholder="Enter a name project">
+          </div>
+          <div class="form-group row">
+            <label for="description">Project description:</label>
+            <textarea name="description" class="form-control" id="description" cols="30" rows="3"
+              placeholder="Add description to your project"></textarea>
+          </div>
+        </form>
+        <h3>Add team members</h3>
+        <h4>Invite new members to your project</h4>
+        <form>
+          <div class="from-group row">
+            <label for="memberMail">Enter member email</label>
+            <input type="email" id="memberMail" class="form-control" placeholder="example@mail.com">
+          </div>
+          <div class="from-group row">
+            <button class="btn btn-outline-success mt-3">Add</button>
+          </div>
+        </form>
+      </section>
+
+      <section>
+        <h2 class="mt-4">Team members</h2>
+        <table class="table">
+          <tr>
+            <td>Alon Davidi</td>
+            <td>alon@email.com</td>
+            <td>-- invite sent --</td>
+            <td><button class="btn btn-danger">Remove</button></td>
+          </tr>
+        </table>
+      </section>
+
+    </main>
+  </div>
+
+</div>

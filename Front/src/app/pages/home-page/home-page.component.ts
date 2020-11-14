@@ -19,9 +19,11 @@ export class HomePageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundImage = 'url(\'../../../assets/homePageImg.jpg\')';
 
-    this.subscription = this.userService.getUsers().subscribe(users => {
+    this.userService.loadUsers();
+
+    this.subscription = this.userService.users$.subscribe(users => {
       this.users = users;
-      console.log('home-page.component: onInit\n', { users: this.users });
+      console.log({ users });
     });
   }
 

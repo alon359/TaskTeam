@@ -1,0 +1,38 @@
+<div class="layout-main">
+  <app-menu-login></app-menu-login>
+  <div class="main-contain">
+
+    <section class="details">
+      <header>
+        <div class="user-img">
+          <img src={{user.imgUlr}} alt="User">
+        </div>
+        <div>
+          <div class="details-row">
+            <p class="user-name">{{user.firstName}} {{user.lastName}}</p>
+          </div>
+          <div class="details-row">
+            <p class="user-title">{{user.title}}</p>
+          </div>
+        </div>
+      </header>
+      <main>
+        <div class="details-row">
+          <p class="title-info">Phone:</p>
+          <p class="info">{{user.phone}}</p>
+        </div>
+        <div class="details-row">
+          <p class="title-info">Email:</p>
+          <p class="info">{{user.email}}</p>
+        </div>
+      </main>
+      <footer>
+        <button class="btn btn-primary mr-2">Back</button>
+        <a class="btn btn-primary" href="/setting">Edit profile</a>
+
+      </footer>
+    </section>
+  </div>
+
+
+</div>

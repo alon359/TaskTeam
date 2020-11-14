@@ -19,12 +19,9 @@ export class UserService {
 
   // tslint:disable-next-line: variable-name
   private _users$ = new BehaviorSubject<User[]>([]);
-  private users$ = this._users$.asObservable();
+  public users$ = this._users$.asObservable();
 
   constructor(private http: HttpClient) { }
-
-
-  getUsers = () => this.users$;
 
   loadUsers() {
     this.http.get<User[]>(this.BASE_URL + this.endpoint)

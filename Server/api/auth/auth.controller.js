@@ -22,7 +22,7 @@ async function login(req, res) {
         logger.info(`auth.controller: login - User logged-in\n\t(UserID: ${req.session.user._id})`)
         res.status(200).json(user)
     } catch (err) {
-        logger.debug('auth.controller: login - errors:\n\t' + JSON.stringify(errors))
+        logger.debug('auth.controller: login - errors:\n\t' + JSON.stringify(err))
 
         res.status(401).send({ massage: 'Could not login, please try later' })
     }

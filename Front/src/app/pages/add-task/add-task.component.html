@@ -1,0 +1,66 @@
+<div class="layout-main">
+  <app-menu-login></app-menu-login>
+
+  <main class="main-contain">
+    <h1>New task</h1>
+
+    <section class="container">
+      <p class="h2">Project Name</p>
+
+      <form>
+        <div class="form-group row">
+          <label for="taskName">Task name:</label>
+          <input type="text" class="form-control" id="taskName" placeholder="Enter task name">
+        </div>
+
+        <div class="form-group row">
+          <label for="description">Task description:</label>
+          <textarea name="description" class="form-control" id="description" cols="30" rows="3"
+            placeholder="Add description to your task"></textarea>
+        </div>
+
+        <div class="row">
+
+          <div class="form-group col-3 row">
+            <label for="date">Date:</label>
+            <input type="date" value="2011-08-19" id="date">
+          </div>
+
+          <!-- Dorp-down priority  -->
+          <div class="form-group col-2 row">
+            <label for="description">Priority:</label>
+            <div class="dropdown priorities">
+              <button class="btn-drop" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                data-offset="-11,0">
+                Choose priority
+              </button>
+              <div class="dropdown-menu priorities">
+                <button class="dropdown-item priority-high " type="button">High</button>
+                <button class="dropdown-item priority-medium" type="button">Medium</button>
+                <button class="dropdown-item priority-low" type="button">Low</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dorp-down users  -->
+        <div class="form-group">
+          <label for="description">Task for:</label>
+          <div class="dropdown">
+            <button class="btn-drop dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false" data-offset="-11,0">
+              Choose
+            </button>
+            <div class="dropdown-menu">
+              <button class="dropdown-item" type="button">Me</button>
+              <button class="dropdown-item" type="button">ALon</button>
+              <button class="dropdown-item" type="button">Lior</button>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-success" type="submit">Create</button>
+      </form>
+    </section>
+
+  </main>
+</div>

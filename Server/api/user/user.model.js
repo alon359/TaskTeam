@@ -10,6 +10,7 @@ const schema = new mongoose.Schema({
     email: {
         type: String,
         match: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+        lowercase: true,
         unique: true,
         required: true
     },

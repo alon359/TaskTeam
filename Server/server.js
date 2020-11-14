@@ -7,15 +7,15 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const http = require('http').createServer(app);
 const path = require('path')
+const log = require('morgan');
 require('dotenv').config();
 
 // Services 
 const dbService = require('./services/db.service');
 const logger = require('./services/logger.service');
-const pageNotFound = require('./services/pageNotFound.service');
-
 
 // Express App Config
+app.use(log('dev')) // Morgan
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser())
@@ -37,8 +37,6 @@ if (process.env.NODE_ENV === 'production') {
     app.use(cors(corsOptions));
 }
 
-
-
 const userRoutes = require('./api/user/user.routes');
 const authRoutes = require('./api/auth/auth.routes');
 
@@ -46,9 +44,11 @@ const authRoutes = require('./api/auth/auth.routes');
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 
+// const pageNotFound = require('./services/pageNotFound.service');
+// const morgan = require('morgan')
 // app.get('/404', pageNotFound);
 
-// For angular
+// Rendering 
 app.use((req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));
 })
@@ -57,7 +57,6 @@ app.use((req, res) => {
 const port = process.env.PORT || 3030;
 http.listen(port, () => {
     logger.info('Server is running on port: ' + port)
+    // Connecting to database
+    dbService.connect()
 });
-
-// Connecting to database
-dbService.connect()

@@ -9,7 +9,7 @@ const loginValidator = [
         .exists({ checkFalsy: true })
         .withMessage('Password is required')
         .custom(async (password, { req }) => {
-            if (!password || !req.body.user) return;
+            if (!password || !req.body.email) return;
 
             const user = await userService.getByEmail(req.body.email);
             if (!user) return Promise.reject('Invalid email or password');
