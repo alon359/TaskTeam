@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+// Services
+import { UserService } from 'src/app/services/user.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { ConfirmedValidator } from '../../services/confirmed.validator';
+// Models
+import { User } from 'src/app/models/user.model';
+
+
+
 
 @Component({
   selector: 'app-sign-up',
@@ -11,15 +19,17 @@ export class SignUpComponent implements OnInit {
   signUp = new FormGroup({});
   isWasSubmit = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private userService: UserService, private authService: AuthService) {
     this.signUp = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      fName: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
-      lName: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
+      email: ['', [Validators.required, Validators.email,
+      Validators.pattern('^[a-zA-Z]([a-zA-Z]|[0-9]|-|_)+@[a-zA-Z]+(\.[a-zA-Z]{2,3})+$')]],
+      fName: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
+      lName: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
+      title: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      passwordConfirm: ['', [Validators.required]],
+      passconfrim: ['', [Validators.required]],
     }, {
-      validator: ConfirmedValidator('password', 'passwordConfirm'),
+      validator: ConfirmedValidator('password', 'passconfrim'),
     });
   }
 
@@ -32,10 +42,12 @@ export class SignUpComponent implements OnInit {
   }
 
   onSignUp = () => {
-    this.isWasSubmit = true;
-    console.log('submit on');
-    console.log(this.signUp.controls);
-    console.log(('required' in this.signUp.controls.email.errors));
+    if (this.signUp.status === 'VALID') {
+      const user: User = this.signUp.value;
+      this.authService.signUp(user);
+    } else {
+      this.isWasSubmit = true;
+    }
   }
 
   GetValidationClass(inputName: string) {

@@ -1,4 +1,4 @@
-<div class="container">
+<main class="container">
   <div class="h1">Join us</div>
   <form novalidate [formGroup]="signUp" (ngSubmit)="onSignUp()">
     <div class="form-group">
@@ -6,10 +6,21 @@
         formControlName="email" required />
 
       <div class="invalid-feedback">
-        <div *ngIf="fc.email.errors.required"> Please enter an email</div>
-        <div *ngIf="fc.email.errors.email">Please enter a valid email. Example example@mail.com</div>
+        <div *ngIf="fc.email.errors?.required"> Please enter an email</div>
+        <div *ngIf="fc.email.errors?.email || fc.email.errors?.pattern">Please enter a valid email. Example
+          example@mail.com</div>
       </div>
     </div>
+
+    <div class="form-group">
+      <input type="text" class="form-control" [ngClass]="GetValidationClass('title')" placeholder="What is your job?"
+        formControlName="title" required />
+
+      <div class="invalid-feedback">
+        <div *ngIf="fc.title.errors?.required"> Please write what is your job</div>
+      </div>
+    </div>
+
 
     <div class="form-group form-row">
       <div class="col">
@@ -17,8 +28,8 @@
           [ngClass]="GetValidationClass('fName')" />
 
         <div class="invalid-feedback">
-          <div *ngIf="fc.fName.errors.required">Please enter a first name</div>
-          <div *ngIf="fc.fName.errors.pattern">Please enter a valid first name</div>
+          <div *ngIf="fc.fName.errors?.required">Please enter a first name</div>
+          <div *ngIf="fc.fName.errors?.pattern">Please enter a valid first name</div>
         </div>
       </div>
       <div class="col">
@@ -26,7 +37,7 @@
           [ngClass]="GetValidationClass('lName')" />
 
         <div class="invalid-feedback">
-          <div *ngIf="fc.lName.errors.required">Please enter an last name</div>
+          <div *ngIf="fc.lName.errors?.required">Please enter an last name</div>
           <ng-template #inValidlName>
             Please enter a valid last name.
           </ng-template>
@@ -34,24 +45,27 @@
       </div>
     </div>
 
-    <div class="form-group">
-      <input type="password" class="form-control" placeholder="Password" formControlName="password"
-        [ngClass]="GetValidationClass('password')" />
+    <div class="form-group form-row">
+      <div class="col">
+        <input type="password" class="form-control" placeholder="Password" formControlName="password"
+          [ngClass]="GetValidationClass('password')" />
 
-      <div class="invalid-feedback">
-        <div *ngIf="fc.password.errors.required">Please enter a password</div>
-        <div *ngIf="fc.password.errors.minLength">Password must be at least 8 characters long</div>
+        <div class="invalid-feedback">
+          <div *ngIf="fc.password.errors?.required">Please enter a password</div>
+          <div *ngIf="fc.password.errors?.minLength">Password must be at least 8 characters long</div>
+        </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <input type="password" class="form-control" placeholder="Confirm Password" formControlName="passwordConfirm"
-        [ngClass]="GetValidationClass('passwordConfirm')" />
+      <div class="col">
+        <input type="password" class="form-control" placeholder="Confirm Password" formControlName="passconfrim"
+          [ngClass]="GetValidationClass('passconfrim')" />
 
-      <div class="invalid-feedback">
-        <div *ngIf="fc.passwordConfirm.errors.required">Please enter a confirm password</div>
-        <div *ngIf="fc.passwordConfirm.errors.confirmedValidator">Password and Confirm Password must be match</div>
+        <div class="invalid-feedback">
+          <div *ngIf="fc.passconfrim.errors?.required">Please enter a confirm password</div>
+          <div *ngIf="fc.passconfrim.errors?.confirmedValidator">Password and Confirm Password must be match</div>
+        </div>
       </div>
+
     </div>
 
     <div class="form-group form-row">
@@ -60,4 +74,4 @@
       </div>
     </div>
   </form>
-</div>
+</main>

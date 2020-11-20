@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const logger = require("../../services/logger.service");
 
-const USER = require('./user.model');
+const USER = require('../../models/user.model.js');
 
 module.exports = {
     query,

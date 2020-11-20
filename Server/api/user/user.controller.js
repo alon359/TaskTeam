@@ -43,6 +43,7 @@ async function deleteUser(req, res) {
 
 async function updateUser(req, res) {
     try {
+        console.log({ body: req.body });
         const user = req.body;
 
         // If the user is not admin

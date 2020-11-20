@@ -30,10 +30,9 @@ export class SignInComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscription = this.authService.getLoggedUser()
-      .subscribe(user => {
-        this.userLoggedIn = user;
-      });
+    this.subscription = this.authService.loggedUser$.subscribe(user => {
+      this.userLoggedIn = user;
+    });
   }
 
   ngOnDestroy(): void {
@@ -50,16 +49,10 @@ export class SignInComponent implements OnInit, OnDestroy {
   onLogin(): void {
     this.isWasSubmit = true;
     this.isIncorrectPassOrMail = false;
-    const { email, password } = this.logIn.controls;
 
-    if (email.status === 'VALID' && password.status === 'VALID') {
-      this.authService.login(email.value, password.value)
-        .subscribe(user => {
-          console.log('User logged-in\n', { user });
-        }, err => {
-          console.log('user not exists');
-          this.isIncorrectPassOrMail = true;
-        });
+    if (this.logIn.status === 'VALID') {
+      const { email, password } = this.logIn.value;
+      this.authService.login(email, password);
     }
   }
 

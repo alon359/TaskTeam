@@ -8,7 +8,7 @@ const saltRounds = 10
 
 async function login(email) {
     try {
-        const user = await userService.getByEmail(email);
+        const user = await userService.findOne({ email });
         if (user) {
             delete user._doc.password;
         } else {
