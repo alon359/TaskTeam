@@ -1,23 +1,21 @@
 body {
-    width: auto;
-    height: auto;
+  width: auto;
+  height: auto;
 }
 
 .container {
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    grid-gap: 1em;
-    grid-auto-rows: minmax(100px, auto);
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-gap: 1em;
+  grid-auto-rows: minmax(100px, auto);
 }
 
-.container>div {
-    padding: 1em;
-    text-align: center;
+.container > div {
+  padding: 1em;
+  text-align: center;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.container-login {
+  background-color: #101015b3;
+  border-radius: 5px;
 }

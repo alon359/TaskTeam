@@ -15,10 +15,11 @@ import { User } from '../models/user.model';
 export class AuthService {
   private END_POINT = 'auth/';
   private BASE_URL = environment.baseUrl;
-
   // tslint:disable-next-line: variable-name
   private _loggedUser$ = new BehaviorSubject<User>(null);
   public loggedUser$ = this._loggedUser$.asObservable();
+
+  public errSignUp$ = new Subject<any>();
 
   constructor(private http: HttpClient) { }
 
@@ -32,10 +33,22 @@ export class AuthService {
   }
 
   signUp(user: User) {
-    user.phone = '012345678';
-    this.http.post<User>(`${this.BASE_URL}${this.END_POINT}/signup`, user)
-      .subscribe(loggedUser => {
+    this.http.post<User>(`${this.BASE_URL}${this.END_POINT}/signup`, user).subscribe(
+      loggedUser => {
         this._loggedUser$.next(loggedUser);
-      })
+      },
+      error => {
+        if (Array.isArray(error.error)) {
+          error = error.error[0];
+        } else {
+          console.error(error);
+          error = {
+            location: 'body',
+            msg: 'We are sorry, we got a problem.\nPlease try again.',
+            param: 'unknown',
+          };
+        }
+        this.errSignUp$.next(error);
+      });
   }
 }

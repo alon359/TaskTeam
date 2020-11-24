@@ -1,0 +1,55 @@
+.forget-contain {
+  margin-top: 20px;
+  padding: 10px;
+  width: 600px;
+  max-width: 100%;
+}
+
+.forget-contain label {
+  color: black;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.forget-contain button {
+  text-transform: capitalize;
+  font-weight: 600;
+}
+
+.header-forget {
+  display: flex;
+  align-items: center;
+}
+
+.icon-lock {
+  margin-inline-end: 5px;
+}
+
+.icon-lock svg {
+  width: 30px;
+  height: 30px;
+}
+
+.header-text {
+  line-height: 20px;
+  line-height: 1.25em;
+}
+
+.main-forget {
+  margin-bottom: 20px;
+}
+
+.footer-forget {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.footer-forget a {
+  font-weight: bold;
+}
+
+.footer-forget p {
+  margin: 0;
+}

@@ -1,14 +1,29 @@
 <main class="container">
   <div class="h1">Join us</div>
   <form novalidate [formGroup]="signUp" (ngSubmit)="onSignUp()">
+    <!-- If have unknown error -->
+    <div *ngIf="errMsg" class="alert alert-danger">{{errMsg}}</div>
+
     <div class="form-group">
-      <input type="email" class="form-control" [ngClass]="GetValidationClass('email')" placeholder="Email"
-        formControlName="email" required />
+      <input type="email" class="form-control" [ngClass]="GetValidationClass('email')" [class.is-invalid]="emailUseMsg"
+        placeholder="Email" formControlName="email" required />
 
       <div class="invalid-feedback">
         <div *ngIf="fc.email.errors?.required"> Please enter an email</div>
         <div *ngIf="fc.email.errors?.email || fc.email.errors?.pattern">Please enter a valid email. Example
           example@mail.com</div>
+        <div *ngIf="emailUseMsg">{{emailUseMsg}}</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input type="text" class="form-control" [ngClass]="GetValidationClass('phone')" placeholder="Number phone"
+        formControlName="phone" required />
+
+      <div class="invalid-feedback">
+        <div *ngIf="fc.phone.errors?.required"> Please enter an number phone</div>
+        <div *ngIf="fc.phone.errors?.pattern">Please enter a valid Number phone. Example
+          0XXX XXX XXX</div>
       </div>
     </div>
 
@@ -29,7 +44,9 @@
 
         <div class="invalid-feedback">
           <div *ngIf="fc.fName.errors?.required">Please enter a first name</div>
-          <div *ngIf="fc.fName.errors?.pattern">Please enter a valid first name</div>
+          <div *ngIf="fc.fName.errors?.pattern">
+            A first name should have a capital letter at the beginning and only with letters
+          </div>
         </div>
       </div>
       <div class="col">
@@ -37,10 +54,10 @@
           [ngClass]="GetValidationClass('lName')" />
 
         <div class="invalid-feedback">
-          <div *ngIf="fc.lName.errors?.required">Please enter an last name</div>
-          <ng-template #inValidlName>
-            Please enter a valid last name.
-          </ng-template>
+          <div *ngIf="fc.lName.errors?.required">Please enter a last name</div>
+          <div *ngIf="fc.lName.errors?.pattern">
+            A last name should have a capital letter at the beginning of a name and only with letters and spaces
+          </div>
         </div>
       </div>
     </div>
@@ -70,7 +87,12 @@
 
     <div class="form-group form-row">
       <div class="col text-center">
-        <button class="btn btn-primary" type="submit">Sign Up</button>
+        <button class="btn btn-primary" type="submit" [disabled]="isLoading">
+          <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+
+          <span *ngIf="!isLoading; else loading">Sign Up</span>
+          <ng-template #loading> Loading...</ng-template>
+        </button>
       </div>
     </div>
   </form>

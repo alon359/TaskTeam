@@ -1,0 +1,40 @@
+<section class="forget-contain card bg-light">
+
+  <header class="header-forget card-header">
+    <span class="icon-lock">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 23 32">
+        <path fill="currentColor"
+          d="M19.65,14.425 L19.65,8.125 C19.65,3.782725 16.1157,0.25 11.775,0.25 C7.43115,0.25 3.9,3.782725 3.9,8.125 L3.9,14.425 C2.162775,14.425 0.75,15.8362 0.75,17.575 L0.75,28.6 C0.75,30.337225 2.162775,31.75 3.9,31.75 L19.65,31.75 C21.387225,31.75 22.8,30.337225 22.8,28.6 L22.8,17.575 C22.8,15.8362 21.387225,14.425 19.65,14.425 Z M11.775,25.45 C10.4709,25.45 9.4125,24.3916 9.4125,23.0875 C9.4125,21.7834 10.4709,20.725 11.775,20.725 C13.0791,20.725 14.1375,21.7834 14.1375,23.0875 C14.1375,24.3916 13.0791,25.45 11.775,25.45 Z M16.5,14.425 L7.05,14.425 L7.05,8.125 C7.05,5.51995 9.16995,3.4 11.775,3.4 C14.38005,3.4 16.5,5.51995 16.5,8.125 L16.5,14.425 Z">
+        </path>
+      </svg>
+    </span>
+    <span class="header-text">
+      Enter your email address and we'll send you a link to reset your password.
+    </span>
+  </header>
+
+  <main class="main-forget card-body">
+    <div *ngIf="msgErr" class="alert alert-danger">{{msgErr}}</div>
+    <form>
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input class="form-control" type="email" id="email" name="email" placeholder="e.g email@domain.com">
+      </div>
+      <button class="btn btn-success btn-block" type="submit" [disabled]="isLoading">
+        <span *ngIf="!isLoading">
+          Reset password
+        </span>
+        <span *ngIf="isLoading">
+          <div class="spinner-border spinner-border-sm" role="status"></div>
+          <span> Loading...</span>
+        </span>
+      </button>
+    </form>
+  </main>
+
+  <footer class="footer-forget card-footer">
+    <p class="mr-2">Don't have an account?</p>
+    <a class="btn btn-link" href="/signup">Create free now!</a>
+  </footer>
+
+</section>

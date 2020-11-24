@@ -13,6 +13,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { CreateProjectComponent } from './pages/create-project/create-project.component';
 import { AddTaskComponent } from './pages/add-task/add-task.component';
 import { SettingComponent } from './pages/setting/setting.component';
+import { ForgetPasswordComponent } from './pages/forget-password/forget-password.component';
 
 
 
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'addtask', pathMatch: 'full', component: AddTaskComponent },
   { path: 'setting', pathMatch: 'full', component: SettingComponent },
   { path: '', pathMatch: 'full', component: HomePageComponent },
+  { path: 'forget', pathMatch: 'full', component: ForgetPasswordComponent },
   { path: '**', pathMatch: 'full', component: NotFoundComponent },
 ];
 
