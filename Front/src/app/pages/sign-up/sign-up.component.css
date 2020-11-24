@@ -1,13 +1,13 @@
 .container {
   display: flex;
   flex-direction: column;
-  width: 600px;
-  max-width: 100%;
   align-items: center;
   padding: 10px;
-  height: 100vh;
+  height: auto;
   width: 100vw;
-  background-color: #bacef4;
+  min-height: 100vh;
+  max-width: 100%;
+  background-color: #4092ea;
 }
 
 .h1 {
@@ -16,10 +16,20 @@
 }
 
 form {
-  width: 400px;
+  width: 500px;
   max-width: 100%;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #08192bd9;
 }
 
 button:disabled {
   cursor: not-allowed;
+}
+
+.invalid-feedback {
+  color: #c10000;
+  font-weight: bold;
+  font-size: 90%;
+  text-align: left;
 }

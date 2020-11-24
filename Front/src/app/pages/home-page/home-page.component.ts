@@ -17,7 +17,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   constructor(private elementRef: ElementRef, private userService: UserService) { }
 
   ngOnInit(): void {
-    this.elementRef.nativeElement.ownerDocument.body.style.backgroundImage = 'url(\'../../../assets/homePageImg.jpg\')';
+    // this.elementRef.nativeElement.ownerDocument.body.style.backgroundImage = 'url(\'../../../assets/homePageImg.jpg\')';
 
     this.userService.loadUsers();
 
