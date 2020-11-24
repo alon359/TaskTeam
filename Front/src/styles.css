@@ -16,6 +16,13 @@
   --priority-low: #177700;
 }
 
+html,
+body {
+  min-height: 100vh;
+  height: auto;
+  margin: 0;
+}
+
 button {
   line-height: normal;
 }
