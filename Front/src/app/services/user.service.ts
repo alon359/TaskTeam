@@ -30,14 +30,19 @@ export class UserService {
         this._users$.next(users);
       });
   }
-  getUserByID(userID: string) {
+  getByID(userID: string) {
 
   }
 
-  createUser(user: User) {
-
+  update(user: User) {
+    user.phone = '0123456789';
+    this.http.put<User>(this.BASE_URL + this.endpoint, user)
+      .subscribe((userUpdated) => {
+        console.log('user.service: update \n', { userUpdated });
+        this._users$.next([userUpdated, ...this._users$.value]);
+      });
   }
-  deleteUser(userID: string) {
+  remove(userID: string) {
 
   }
 

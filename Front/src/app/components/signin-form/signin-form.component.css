@@ -1,0 +1,7 @@
+.form-group {
+  min-height: 62px;
+}
+
+.invalid-feedback {
+  font-weight: bold;
+}

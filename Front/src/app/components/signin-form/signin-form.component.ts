@@ -6,26 +6,25 @@ import { AuthService } from '../../services/auth.service';
 import { User } from 'src/app/models/user.model';
 
 @Component({
-  selector: 'app-sign-in',
-  templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.css']
+  selector: '[app-signin-form]',
+  templateUrl: './signin-form.component.html',
+  styleUrls: ['./signin-form.component.css']
 })
-export class SignInComponent implements OnInit, OnDestroy {
+export class SigninFormComponent implements OnInit, OnDestroy {
   userLoggedIn: User = null;
   subscription: Subscription;
 
-  // Incorrect password or email
-  isIncorrectPassOrMail = false;
+  // Error
+  errMsg: string = null;
+
+  isLoading = false;
 
   isWasSubmit = false;
   logIn = new FormGroup({});
-
   constructor(private fb: FormBuilder, private authService: AuthService) {
     this.logIn = this.fb.group({
-      email: ['', [Validators.required, Validators.email,
-      Validators.pattern('^(([^<>()\\[\\]\\\\.,;:\\s@"]+(\\.[^<>()\\[\\]\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$')
-      ]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      email: ['', [Validators.required, Validators.email, Validators.pattern('^[a-zA-Z][a-zA-Z0-9-_]+@[a-zA-Z]+(\\.[a-zA-Z]{2,3})+$')]],
+      password: ['', [Validators.required]]
     });
   }
 
@@ -42,13 +41,13 @@ export class SignInComponent implements OnInit, OnDestroy {
   // Getter form-controls
   get fc() { return this.logIn.controls; }
 
-  isIncorrectData(): boolean {
-    return this.isIncorrectPassOrMail;
+  isIncorrectData(): string {
+    return this.errMsg;
   }
 
   onLogin(): void {
     this.isWasSubmit = true;
-    this.isIncorrectPassOrMail = false;
+    this.errMsg = null;
 
     if (this.logIn.status === 'VALID') {
       const { email, password } = this.logIn.value;
@@ -59,7 +58,7 @@ export class SignInComponent implements OnInit, OnDestroy {
   GetValidationClass(inputName: string): string {
     if (!this.isWasSubmit) {
       return '';
-    } else if (this.logIn.controls[inputName].errors || this.isIncorrectPassOrMail) {
+    } else if (this.logIn.controls[inputName].errors || this.errMsg) {
       return 'is-invalid';
     } else {
       return 'is-valid';

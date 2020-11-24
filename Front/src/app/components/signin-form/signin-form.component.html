@@ -1,0 +1,51 @@
+<form novalidate [formGroup]="logIn" (ngSubmit)="onLogin()">
+
+  <!-- Error massage 'Incorrect password or username' -->
+  <div class="alert alert-danger" *ngIf="errMsg">{{errMsg}}</div>
+
+  <!-- Password email -->
+  <div class="form-group">
+    <input type="email" class="form-control" placeholder="Email" formControlName="email"
+      [ngClass]="GetValidationClass('email')" />
+
+    <div class="invalid-feedback">
+      <div *ngIf="fc.email.errors?.required"> Email is required</div>
+      <div *ngIf="!errMsg && fc.email.errors?.email">
+        <p class="m-0">Please enter a valid email.</p>
+        <p class="m-0">e.g example@mail.com</p>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Password input -->
+  <div class="form-group">
+    <input type="password" class="form-control" placeholder="Password" formControlName="password"
+      [ngClass]="GetValidationClass('password')" />
+
+    <div class="invalid-feedback">
+      <div *ngIf="fc.password.errors?.required">Password is required</div>
+    </div>
+  </div>
+
+  <!-- Button submit -->
+  <div class="row">
+    <button id="btn" type="submit" class="btn btn-primary mx-auto col-10">
+      <span *ngIf="!isLoading">Login</span>
+      <span *ngIf="isLoading">
+        <div class="spinner-border spinner-border-sm" role="status"></div>
+        <span> Loading...</span>
+      </span>
+    </button>
+  </div>
+</form>
+<footer>
+  <div class="row justify-content-center mt-3">
+    <p class="mr-3">Forget your password?</p>
+    <a href="/forget">Reset your password</a>
+  </div>
+  <div class="row justify-content-center align-items-center mt-3">
+    <p class="my-0 mr-4">Don't have an account?</p>
+    <a class="btn btn-outline-success" href="/signup">Sign-Up Free!</a>
+  </div>
+</footer>

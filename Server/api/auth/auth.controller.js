@@ -1,5 +1,6 @@
 var { validationResult } = require('express-validator');
 const authService = require('./auth.service');
+const userService = require('../user/user.service');
 const logger = require('../../services/logger.service');
 
 async function login(req, res) {
@@ -13,7 +14,7 @@ async function login(req, res) {
             return;
         }
 
-        const user = await authService.login(email)
+        const user = await userService.getByEmail(email)
 
         delete user._doc.password;
         req.session.user = user;
@@ -24,7 +25,7 @@ async function login(req, res) {
     } catch (err) {
         logger.debug('auth.controller: login - errors:\n\t' + JSON.stringify(err))
 
-        res.status(401).send({ massage: 'Could not login, please try later' })
+        res.status(500).send({ massage: 'Could not login, please try later' })
     }
 }
 
@@ -33,18 +34,19 @@ async function signup(req, res) {
         const errors = validationResult(req).errors;
         if (errors.length !== 0) {
             logger.debug('auth.controller: signup - errors:\n\t' + JSON.stringify(errors))
-
             res.status(409).json(errors);
             return;
         }
-
         const user = req.body;
         let account = await authService.signup(user)
 
+        // Remove password
         delete account._doc.password;
 
-        // req.session.user = account;
+        // Save user
+        req.session.user = account;
 
+        // Remove isAdmin
         delete account._doc.isAdmin;
 
         res.status(200).json(account);

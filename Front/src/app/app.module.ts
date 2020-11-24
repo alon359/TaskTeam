@@ -15,6 +15,8 @@ import { TableTasksComponent } from './components/table-tasks/table-tasks.compon
 import { RowTaskComponent } from './components/row-task/row-task.component';
 import { MenuLoginComponent } from './components/menu-login/menu-login.component';
 import { ProjectRowComponent } from './components/project-row/project-row.component';
+import { ForgetPassEmailCardComponent } from './components/forget-pass-email-card/forget-pass-email-card.component';
+import { ForgetPassEmailSendedComponent } from './components/forget-pass-email-sended/forget-pass-email-sended.component';
 
 // Pages
 import { HomePageComponent } from './pages/home-page/home-page.component';
@@ -28,6 +30,9 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { CreateProjectComponent } from './pages/create-project/create-project.component';
 import { AddTaskComponent } from './pages/add-task/add-task.component';
 import { SettingComponent } from './pages/setting/setting.component';
+import { ForgetPasswordComponent } from './pages/forget-password/forget-password.component';
+import { SigninFormComponent } from './components/signin-form/signin-form.component';
+
 
 
 
@@ -50,6 +55,10 @@ import { SettingComponent } from './pages/setting/setting.component';
     CreateProjectComponent,
     AddTaskComponent,
     SettingComponent,
+    ForgetPasswordComponent,
+    ForgetPassEmailCardComponent,
+    ForgetPassEmailSendedComponent,
+    SigninFormComponent,
   ],
   imports: [
     BrowserModule,

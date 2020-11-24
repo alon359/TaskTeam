@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
-const { userValidator } = require('./user.validator');
-
-// const { requireAuth, requireAdmin } = require('../../middlewares');
+// Controller functions
 const { getUser, getUsers, deleteUser, updateUser } = require('./user.controller')
+
+// Middleware
+const { requireAuth, requireAdmin } = require('../../middlewares/requireAuth.middleware');
+// Validities
+const { userValidator } = require('../../middlewares/validities/user.validator');
 
 router.get('/', getUsers);
 router.get('/:id', getUser);

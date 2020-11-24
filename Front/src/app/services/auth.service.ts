@@ -14,24 +14,41 @@ import { User } from '../models/user.model';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private END_POINT = 'auth/';
-
+  private BASE_URL = environment.baseUrl;
   // tslint:disable-next-line: variable-name
   private _loggedUser$ = new BehaviorSubject<User>(null);
-  private loggedUser$ = this._loggedUser$.asObservable();
+  public loggedUser$ = this._loggedUser$.asObservable();
+
+  public errSignUp$ = new Subject<any>();
 
   constructor(private http: HttpClient) { }
-
-  getLoggedUser = () => this.loggedUser$;
 
 
   login(email: string, password: string) {
     const data = { email, password };
-    return this.http.post<User>(`${environment.baseUrl}${this.END_POINT}/login`, data)
-      .pipe(map(user => {
-        this._loggedUser$.next(user);
-        return user;
-      }, err => {
-        return null;
-      }));
+    this.http.post<User>(`${this.BASE_URL}${this.END_POINT}/login`, data)
+      .subscribe(loggedUser => {
+        this._loggedUser$.next(loggedUser);
+      });
+  }
+
+  signUp(user: User) {
+    this.http.post<User>(`${this.BASE_URL}${this.END_POINT}/signup`, user).subscribe(
+      loggedUser => {
+        this._loggedUser$.next(loggedUser);
+      },
+      error => {
+        if (Array.isArray(error.error)) {
+          error = error.error[0];
+        } else {
+          console.error(error);
+          error = {
+            location: 'body',
+            msg: 'We are sorry, we got a problem.\nPlease try again.',
+            param: 'unknown',
+          };
+        }
+        this.errSignUp$.next(error);
+      });
   }
 }

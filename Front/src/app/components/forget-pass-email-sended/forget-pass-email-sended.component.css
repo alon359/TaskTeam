@@ -1,0 +1,39 @@
+.forget-contain {
+  margin-top: 20px;
+  padding: 10px;
+  width: 600px;
+  max-width: 100%;
+}
+
+.header-forget {
+  display: flex;
+  align-items: center;
+}
+
+.icon-lock svg {
+  width: 30px;
+  height: 30px;
+}
+
+.icon-lock {
+  margin-inline-end: 5px;
+}
+
+.header-text {
+  line-height: 20px;
+  line-height: 1.25em;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-footer span {
+  margin: 0 15px;
+}
+
+.card-footer a {
+  font-weight: bold;
+}

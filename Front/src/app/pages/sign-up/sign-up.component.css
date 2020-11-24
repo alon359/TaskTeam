@@ -5,6 +5,9 @@
   max-width: 100%;
   align-items: center;
   padding: 10px;
+  height: 100vh;
+  width: 100vw;
+  background-color: #bacef4;
 }
 
 .h1 {
@@ -15,4 +18,8 @@
 form {
   width: 400px;
   max-width: 100%;
+}
+
+button:disabled {
+  cursor: not-allowed;
 }

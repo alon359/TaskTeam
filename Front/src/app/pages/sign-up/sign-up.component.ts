@@ -1,29 +1,62 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+// Services
+import { UserService } from 'src/app/services/user.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { ConfirmedValidator } from '../../services/confirmed.validator';
+// Models
+import { User } from 'src/app/models/user.model';
+import { Subscription } from 'rxjs';
+
+
+
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css']
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent implements OnInit, OnDestroy {
   signUp = new FormGroup({});
-  isWasSubmit = false;
 
-  constructor(private fb: FormBuilder) {
+  errSub: Subscription;
+  userLoggedSub: Subscription;
+
+  isWasSubmit = false;
+  isLoading = false;
+
+  emailUseMsg: string = null;
+  errMsg: string = null;
+
+  constructor(private fb: FormBuilder, private userService: UserService, private authService: AuthService) {
     this.signUp = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      fName: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
-      lName: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
+      email: ['', [Validators.required, Validators.email,
+      Validators.pattern('^[a-zA-Z][a-zA-Z0-9-_]+@[a-zA-Z]+(\\.[a-zA-Z]{2,3})+$')]],
+      fName: ['', [Validators.required, Validators.pattern('^[A-Z][a-z]+$')]],
+      lName: ['', [Validators.required, Validators.pattern('^[A-Z][a-z]+\( [A-Z][a-z]+\)*$')]],
+      phone: ['', [Validators.required, Validators.pattern('^0[1-9][0-9]{7,8}$')]],
+      title: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      passwordConfirm: ['', [Validators.required]],
+      passconfrim: ['', [Validators.required]],
     }, {
-      validator: ConfirmedValidator('password', 'passwordConfirm'),
+      validator: ConfirmedValidator('password', 'passconfrim'),
     });
   }
 
   ngOnInit(): void {
+    this.errSub = this.authService.errSignUp$.subscribe(err => {
+      if (err.param === 'email') {
+        this.emailUseMsg = err.msg;
+      } else {
+        this.errMsg = err.msg;
+      }
+      this.isLoading = false;
+    });
+
+    this.userLoggedSub = this.authService.loggedUser$.subscribe(user => {
+      console.log({ user });
+      this.isLoading = false;
+    });
   }
 
   // Getter form-controls
@@ -31,11 +64,26 @@ export class SignUpComponent implements OnInit {
     return this.signUp.controls;
   }
 
+  ngOnDestroy(): void {
+    this.errSub.unsubscribe();
+    this.userLoggedSub.unsubscribe();
+  }
+
   onSignUp = () => {
-    this.isWasSubmit = true;
-    console.log('submit on');
-    console.log(this.signUp.controls);
-    console.log(('required' in this.signUp.controls.email.errors));
+    if (this.errMsg) {
+      this.errMsg = null;
+    }
+    if (this.emailUseMsg) {
+      this.emailUseMsg = null;
+    }
+
+    if (this.signUp.status === 'VALID') {
+      this.isLoading = true;
+      const user: User = this.signUp.value;
+      this.authService.signUp(user);
+    } else {
+      this.isWasSubmit = true;
+    }
   }
 
   GetValidationClass(inputName: string) {

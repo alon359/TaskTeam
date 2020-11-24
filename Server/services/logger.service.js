@@ -1,5 +1,6 @@
 const fs = require('fs');
 const colors = require('colors');
+
 colors.setTheme({
     info: 'green',
     warn: 'yellow',
@@ -7,9 +8,6 @@ colors.setTheme({
     error: 'red',
     time: 'gray'
 });
-
-
-
 
 const logsDir = './logs';
 if (!fs.existsSync(logsDir)) {
