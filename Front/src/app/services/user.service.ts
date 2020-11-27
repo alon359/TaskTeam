@@ -28,7 +28,10 @@ export class UserService {
       .subscribe(users => {
         console.log('user.service: getUsers \n', { users });
         this._users$.next(users);
-      });
+      },
+        error => {
+          console.error(error);
+        });
   }
   getByID(userID: string) {
 

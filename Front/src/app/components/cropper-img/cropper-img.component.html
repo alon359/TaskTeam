@@ -1,0 +1,25 @@
+<!-- https://www.thepolyglotdeveloper.com/2019/06/image-cropping-zooming-scaling-angular-javascript/ -->
+<!-- https://www.youtube.com/watch?v=oERQcX_0OLA&feature=emb_logo&ab_channel=ThePolyglotDeveloper -->
+
+<div class="row">
+  <div class="col-7">
+    <img #image [src]="imageSource" crossorigin style="width:auto; max-width:300px">
+  </div>
+  <div class="col-4">
+    <img [src]="imageDestination" class="img-preview">
+  </div>
+</div>
+
+<div class="row align-items-center mt-3">
+  <!-- Button upload -->
+  <button class="btn btn-success ml-3" type="submit" (click)="onUpload();  $event.preventDefault();"
+    [disabled]="isUpload">Upload</button>
+
+  <!-- Loading bar -->
+  <div *ngIf="isUpload" class="progress ml-2" style="width: 200px">
+    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0"
+      aria-valuemax="100" [ngStyle]="{'width.%': progressUpload}">
+      {{progressUpload}}%
+    </div>
+  </div>
+</div>

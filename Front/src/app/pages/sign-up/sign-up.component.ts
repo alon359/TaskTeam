@@ -8,9 +8,6 @@ import { ConfirmedValidator } from '../../services/confirmed.validator';
 import { User } from 'src/app/models/user.model';
 import { Subscription } from 'rxjs';
 
-
-
-
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -25,8 +22,12 @@ export class SignUpComponent implements OnInit, OnDestroy {
   isWasSubmit = false;
   isLoading = false;
 
+  // Form massages
   emailUseMsg: string = null;
   errMsg: string = null;
+
+  // Profile image
+  imgUrl: string = null;
 
   constructor(private fb: FormBuilder, private userService: UserService, private authService: AuthService) {
     this.signUp = this.fb.group({
@@ -80,6 +81,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     if (this.signUp.status === 'VALID') {
       this.isLoading = true;
       const user: User = this.signUp.value;
+      user.imgUlr = this.imgUrl;
       this.authService.signUp(user);
     } else {
       this.isWasSubmit = true;
@@ -94,6 +96,12 @@ export class SignUpComponent implements OnInit, OnDestroy {
     } else {
       return 'is-valid';
     }
+  }
+
+  onGotImgUrl(imgUrl: string) {
+    console.log({ singup_imgUrl: imgUrl });
+
+    this.imgUrl = imgUrl;
   }
 
 }

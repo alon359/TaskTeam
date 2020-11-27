@@ -1,6 +1,9 @@
 <div class="menu-contain">
-  <img class="logo" src="./assets/logo.png" alt="logo">
+  <a routerLink="/" routerLinkActive="activity">
+    <img class="logo" src="./assets/logo-white.png" alt="logo">
+  </a>
   <nav>
+    <button (click)="onLogout()">Logout</button>
     <ul class="clean-least">
       <li>
         <a class="link" routerLink="/profile" routerLinkActive="activity"

@@ -9,10 +9,13 @@ import { Subject, throwError } from 'rxjs';
 import { HttpService } from './http.service';
 import { environment } from '../../environments/environment';
 import { User } from '../models/user.model';
+import { Router } from '@angular/router';
+import { StorageService } from './storage.service';
 
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  private key = 'user';
   private END_POINT = 'auth/';
   private BASE_URL = environment.baseUrl;
   // tslint:disable-next-line: variable-name
@@ -21,20 +24,25 @@ export class AuthService {
 
   public errSignUp$ = new Subject<any>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private storage: StorageService, private router: Router) { }
 
 
   login(email: string, password: string) {
     const data = { email, password };
     this.http.post<User>(`${this.BASE_URL}${this.END_POINT}/login`, data)
       .subscribe(loggedUser => {
+        this.storage.store(this.key, loggedUser);
         this._loggedUser$.next(loggedUser);
-      });
+      },
+        error => {
+          console.error(error);
+        });
   }
 
   signUp(user: User) {
     this.http.post<User>(`${this.BASE_URL}${this.END_POINT}/signup`, user).subscribe(
       loggedUser => {
+        this.storage.store(this.key, loggedUser);
         this._loggedUser$.next(loggedUser);
       },
       error => {
@@ -50,5 +58,11 @@ export class AuthService {
         }
         this.errSignUp$.next(error);
       });
+  }
+
+  logout() {
+    this.http.get(`${this.BASE_URL}/${this.END_POINT}/logout`);
+    this.storage.remove(this.key);
+    this._loggedUser$.next(null);
   }
 }

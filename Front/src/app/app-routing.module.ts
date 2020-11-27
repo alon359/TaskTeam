@@ -15,18 +15,21 @@ import { AddTaskComponent } from './pages/add-task/add-task.component';
 import { SettingComponent } from './pages/setting/setting.component';
 import { ForgetPasswordComponent } from './pages/forget-password/forget-password.component';
 
+// Guards
+import { AuthGuard } from './services/auth.guard';
+
 
 
 const routes: Routes = [
-  { path: 'tasks', pathMatch: 'full', component: CurrentTasksComponent },
-  { path: 'projects', pathMatch: 'full', component: MyProjectsComponent },
-  { path: 'project', pathMatch: 'full', component: OneProjectComponent },
+  { path: 'tasks', pathMatch: 'full', canActivate: [AuthGuard], component: CurrentTasksComponent },
+  { path: 'projects', pathMatch: 'full', canActivate: [AuthGuard], component: MyProjectsComponent },
+  { path: 'project', pathMatch: 'full', canActivate: [AuthGuard], component: OneProjectComponent },
   { path: 'signup', pathMatch: 'full', component: SignUpComponent },
   { path: 'signIn', pathMatch: 'full', component: SignInComponent },
   { path: 'profile', pathMatch: 'full', component: ProfileComponent },
-  { path: 'createProject', pathMatch: 'full', component: CreateProjectComponent },
-  { path: 'addtask', pathMatch: 'full', component: AddTaskComponent },
-  { path: 'setting', pathMatch: 'full', component: SettingComponent },
+  { path: 'createProject', pathMatch: 'full', canActivate: [AuthGuard], component: CreateProjectComponent },
+  { path: 'addtask', pathMatch: 'full', canActivate: [AuthGuard], component: AddTaskComponent },
+  { path: 'setting', pathMatch: 'full', canActivate: [AuthGuard], component: SettingComponent },
   { path: '', pathMatch: 'full', component: HomePageComponent },
   { path: 'forget', pathMatch: 'full', component: ForgetPasswordComponent },
   { path: '**', pathMatch: 'full', component: NotFoundComponent },

@@ -17,6 +17,8 @@ import { MenuLoginComponent } from './components/menu-login/menu-login.component
 import { ProjectRowComponent } from './components/project-row/project-row.component';
 import { ForgetPassEmailCardComponent } from './components/forget-pass-email-card/forget-pass-email-card.component';
 import { ForgetPassEmailSendedComponent } from './components/forget-pass-email-sended/forget-pass-email-sended.component';
+import { ImgProfileInputComponent } from './components/img-profile-input/img-profile-input.component';
+import { CropperImgComponent } from './components/cropper-img/cropper-img.component';
 
 // Pages
 import { HomePageComponent } from './pages/home-page/home-page.component';
@@ -59,6 +61,8 @@ import { SigninFormComponent } from './components/signin-form/signin-form.compon
     ForgetPassEmailCardComponent,
     ForgetPassEmailSendedComponent,
     SigninFormComponent,
+    ImgProfileInputComponent,
+    CropperImgComponent,
   ],
   imports: [
     BrowserModule,

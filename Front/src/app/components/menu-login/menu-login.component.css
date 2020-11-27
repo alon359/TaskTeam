@@ -1,4 +1,7 @@
 .menu-contain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: fixed;
   left: 0;
   width: 200px;
@@ -6,8 +9,14 @@
   background-color: #751049;
   color: #ffffff;
 }
+
+a {
+  display: flex;
+  justify-content: center;
+}
+
 .logo {
-  width: 100%;
+  width: 85%;
 }
 
 nav {

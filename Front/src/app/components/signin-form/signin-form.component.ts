@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 
 import { AuthService } from '../../services/auth.service';
 import { User } from 'src/app/models/user.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: '[app-signin-form]',
@@ -21,7 +22,7 @@ export class SigninFormComponent implements OnInit, OnDestroy {
 
   isWasSubmit = false;
   logIn = new FormGroup({});
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.logIn = this.fb.group({
       email: ['', [Validators.required, Validators.email, Validators.pattern('^[a-zA-Z][a-zA-Z0-9-_]+@[a-zA-Z]+(\\.[a-zA-Z]{2,3})+$')]],
       password: ['', [Validators.required]]
@@ -31,6 +32,9 @@ export class SigninFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.authService.loggedUser$.subscribe(user => {
       this.userLoggedIn = user;
+      if (user) {
+        this.router.navigate(['/projects']);
+      }
     });
   }
 
