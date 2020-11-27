@@ -1,0 +1,13 @@
+<form>
+  <div class="custom-file">
+    <input type="file" class="custom-file-input" id="customFileLangHTML" (change)="onFileSelected($event)"
+      accept="image/*">
+    <label class="custom-file-label" for="customFileLangHTML" data-browse="Choose image">
+      <span *ngIf="!preImg">Choose image profile</span>
+      <span *ngIf="preImg">{{imgName}}</span>
+    </label>
+  </div>
+  <div class="mt-3">
+    <app-cropper-img *ngIf="preImg" [src]="preImg" (passImgUrl)="OnPassImgUrl($event)"></app-cropper-img>
+  </div>
+</form>

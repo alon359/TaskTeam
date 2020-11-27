@@ -1,6 +1,5 @@
 var { validationResult } = require('express-validator');
 const authService = require('./auth.service');
-const userService = require('../user/user.service');
 const logger = require('../../services/logger.service');
 
 async function login(req, res) {
@@ -14,10 +13,11 @@ async function login(req, res) {
             return;
         }
 
-        const user = await userService.getByEmail(email)
+        const user = await authService.login(email);
 
-        delete user._doc.password;
         req.session.user = user;
+        console.log(req.session);
+
         delete user._doc.isAdmin;
 
         logger.info(`auth.controller: login - User logged-in\n\t(UserID: ${req.session.user._id})`)

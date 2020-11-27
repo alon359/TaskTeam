@@ -1,0 +1,17 @@
+.img-container {
+  width: 200px;
+  float: left;
+}
+
+.img-preview {
+  width: 200px;
+  height: 200px;
+  float: left;
+  margin-left: 10px;
+}
+
+.img-profile {
+  border: 2px solid black;
+  border-radius: 100%;
+  padding: 5px;
+}

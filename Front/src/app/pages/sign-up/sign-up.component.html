@@ -10,6 +10,10 @@
     <div *ngIf="errMsg" class="alert alert-danger">{{errMsg}}</div>
 
     <div class="form-group">
+      <app-img-profile-input (passImgUrl)="onGotImgUrl($event)"></app-img-profile-input>
+    </div>
+
+    <div class="form-group">
       <input type="email" class="form-control" [ngClass]="GetValidationClass('email')" [class.is-invalid]="emailUseMsg"
         placeholder="Email" formControlName="email" required />
 

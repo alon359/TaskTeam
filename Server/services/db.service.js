@@ -3,36 +3,42 @@ const logger = require("../services/logger.service");
 const config = require('../config/DB')
 
 // Database connection
-var gDB = null;
+var gDBconnect = null;
+const dbOptions = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
+};
 
 /** Creates a database connection
  * @throw Database error
  */
-module.exports = function dbConnect() {
+function dbConnection() {
     // If there is already a connection to the database it will return from the function
-    if (gDB) return;
+    if (gDBconnect) return;
     try {
-        mongoose.connect(config.dbURL, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            useFindAndModify: false,
-            useCreateIndex: true,
-        });
+        mongoose.connect(config.dbURL, dbOptions);
 
-        gDB = mongoose.connection;
+        gDBconnect = mongoose.connection;
 
         // DB errors handles
-        gDB.on('error', (err) => {
+        gDBconnect.on('error', (err) => {
             logger.error('db.service: Database connection crashed\n\t' + err);
-            gDB = null;
+            gDBconnect = null;
             throw err;
         });
         // When DB connection was successful
-        gDB.once('open', () => {
+        gDBconnect.once('open', () => {
             logger.info('Database is connection');
         });
     } catch (err) {
         logger.error('db.service: Database connection failed\n\t' + err);
         throw err;
     }
+}
+
+module.exports = {
+    dbConnection,
+    gDBconnect
 }
