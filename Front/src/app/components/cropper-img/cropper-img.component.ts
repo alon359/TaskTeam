@@ -53,6 +53,7 @@ export class CropperImgComponent implements OnInit, AfterViewInit {
         }
       }, error => {
         console.error(error);
+        this.isUpload = false;
       });
   }
 

@@ -16,7 +16,6 @@ async function login(req, res) {
         const user = await authService.login(email);
 
         req.session.user = user;
-        console.log(req.session);
 
         delete user._doc.isAdmin;
 

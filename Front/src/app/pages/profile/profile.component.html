@@ -5,30 +5,30 @@
     <section class="details">
       <header>
         <div class="user-img">
-          <img src={{user.imgUlr}} alt="User">
+          <img [src]="userProfile.imgUrl?userProfile.imgUrl:'../../../assets/user.jpg' " alt="User">
         </div>
         <div>
           <div class="details-row">
-            <p class="user-name">{{user.firstName}} {{user.lastName}}</p>
+            <p class="user-name">{{userProfile.fName}} {{userProfile.lName}}</p>
           </div>
           <div class="details-row">
-            <p class="user-title">{{user.title}}</p>
+            <p class="user-title">{{userProfile.title}}</p>
           </div>
         </div>
       </header>
       <main>
         <div class="details-row">
           <p class="title-info">Phone:</p>
-          <p class="info">{{user.phone}}</p>
+          <p class="info">{{userProfile.phone}}</p>
         </div>
         <div class="details-row">
           <p class="title-info">Email:</p>
-          <p class="info">{{user.email}}</p>
+          <p class="info">{{userProfile.email}}</p>
         </div>
       </main>
       <footer>
-        <button class="btn btn-primary mr-2">Back</button>
-        <a class="btn btn-primary" href="/setting">Edit profile</a>
+        <button class="btn btn-primary mr-2" (click)="onBack()">Back</button>
+        <a *ngIf="userProfile._id===userLogged._id" class="btn btn-primary" href="/setting">Edit profile</a>
 
       </footer>
     </section>

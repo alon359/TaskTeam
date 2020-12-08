@@ -3,15 +3,28 @@
     <img class="logo" src="./assets/logo-white.png" alt="logo">
   </a>
   <nav>
-    <button (click)="onLogout()">Logout</button>
+    <!-- Profile menu -->
+    <div class="btn-group dropright mb-4">
+      <button class="profile-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <img [src]="userLogged.imgUrl ? userLogged.imgUrl : '../../../assets/profile.svg' " alt="profile">
+      </button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" [href]="'/profile/' + userLogged._id">Profile</a>
+        <a class="dropdown-item" href="/setting">Settings</a>
+        <div class=" dropdown-divider"></div>
+        <button class="dropdown-item text-center" (click)="onLogout()">Logout</button>
+      </div>
+    </div>
+
     <ul class="clean-least">
       <li>
-        <a class="link" routerLink="/profile" routerLinkActive="activity"
+        <a class="link" [routerLink]="'/profile/'+userLogged._id" routerLinkActive="activity"
           [routerLinkActiveOptions]="{ exact: true }">Profile</a>
       </li>
       <li>
         <a class="link" routerLink="/projects" routerLinkActive="activity"
-          [routerLinkActiveOptions]="{ exact: true }">My project</a>
+          [routerLinkActiveOptions]="{ exact: true }">My
+          project</a>
       </li>
       <li>
         <a class="link" routerLink="/tasks" routerLinkActive="activity" [routerLinkActiveOptions]="{ exact: true }">My

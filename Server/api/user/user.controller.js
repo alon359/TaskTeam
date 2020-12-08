@@ -1,15 +1,22 @@
+var { validationResult } = require('express-validator');
+// Services
 const userService = require('./user.service')
 const logger = require('../../services/logger.service');
 
 
 async function getUser(req, res) {
     try {
+        const errors = validationResult(req).errors;
+        if (errors.length !== 0) {
+            logger.debug('user.controller: getUser - errors:\n\t' + JSON.stringify(errors))
+            return res.status(409).json(errors[0]);
+        }
+
         const userID = req.params.id;
         const user = await userService.getById(userID);
-
         res.status(200).json(user);
     } catch (err) {
-        logger.error(`user.controller: get user request failed userID: ${userID}\n\t ` + err);
+        logger.error(`user.controller: get user request failed` + err);
 
         res.status(500).json({ massage: 'get user request failed' });
     }
@@ -43,13 +50,21 @@ async function deleteUser(req, res) {
 
 async function updateUser(req, res) {
     try {
-        console.log({ body: req.body });
-        const user = req.body;
+        const errors = validationResult(req).errors;
+        if (errors.length !== 0) {
+            logger.debug('user.controller: login - errors:\n\t' + JSON.stringify(errors));
+            return res.status(409).json(errors);
+        }
+        const user = {};
+        for (let [key, value] of Object.entries(req.body)) {
+            user[key] = value;
+        }
 
-        // If the user is not admin
-        // if (!req.session.user.isAdmin) {
-        //     user.isAdmin = false;
-        // }
+
+        if ('password' in user) {
+            return status(401)
+                .json('massage: Unable to update password with this request.')
+        }
 
         const userUpdated = await userService.update(user)
 
@@ -62,9 +77,31 @@ async function updateUser(req, res) {
     }
 }
 
+async function updatePass(req, res) {
+    try {
+        const errors = validationResult(req).errors;
+        if (errors.length !== 0) {
+            logger.debug('auth.controller: newPassword - errors:\n\t' + JSON.stringify(errors));
+            return res.status(409).json(errors);
+        }
+
+        const { newPass } = req.body;
+        const userID = req.session.user._id;
+
+        await userService.updatePassword(newPass, userID);
+
+        res.status(200).json({ massage: 'Password updated successfully' })
+    } catch (err) {
+        logger.error(`user.controller: Password update failed\n${err}`);
+        res.status(500).json({ massage: 'Password update failed' });
+    }
+}
+
+
 module.exports = {
     getUser,
     getUsers,
     deleteUser,
-    updateUser
+    updateUser,
+    updatePass
 }

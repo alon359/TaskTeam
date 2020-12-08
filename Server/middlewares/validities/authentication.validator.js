@@ -44,8 +44,12 @@ const signUpValid = [
         .exists({ checkFalsy: true }).withMessage('Password confirm is required').bail()
         .notEmpty().withMessage('Password confirm is required').bail()
         .if(check('password').exists().notEmpty())
-        .custom((confirmPassword, { req }) => { return (confirmPassword === req.body.password) }).
-        withMessage('Passwords don\'t math'),
+        .custom((confirmPassword, { req }) => {
+            const { password } = req.body;
+            if (confirmPassword.trim() != password.trim()) {
+                return Promise.reject('Incompatible passwords')
+            }
+        }),
 
     check('fName')
         .exists({ checkFalsy: true }).bail().withMessage('First name is required')

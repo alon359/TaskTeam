@@ -30,7 +30,7 @@
 
   <!-- Button submit -->
   <div class="row">
-    <button id="btn" type="submit" class="btn btn-primary mx-auto col-10">
+    <button id="btn" type="submit" class="btn btn-primary mx-auto col-10" [disabled]="isLoading">
       <span *ngIf="!isLoading">Login</span>
       <span *ngIf="isLoading">
         <div class="spinner-border spinner-border-sm" role="status"></div>

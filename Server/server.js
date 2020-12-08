@@ -25,9 +25,9 @@ const sessionStore = new MongoStore(SessionStoreConfig);
 
 // Express App Config
 app.use(log('dev')) // Morgan
+app.use(cookieParser())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser())
 app.use(session({
     secret: 'taskTeamSecretKey',
     resave: false,
@@ -44,7 +44,7 @@ if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.resolve(__dirname, 'public')));
 } else {
     const corsOptions = {
-        origin: ['http://127.0.0.1:8080', 'http://localhost:8080', 'http://127.0.0.1:4200', 'http://localhost:4200', 'http://localhost:3200'],
+        origin: ['http://127.0.0.1:4200', 'http://localhost:4200', 'http://localhost:3200'],
         credentials: true
     };
     app.use(cors(corsOptions));
@@ -56,29 +56,15 @@ app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 
 
-// const pageNotFound = require('./services/pageNotFound.service');
-// const morgan = require('morgan')
-// app.get('/404', pageNotFound);
-
-
-const { loginValidator } = require('./middlewares/validities/authentication.validator');
-const { requireAuth } = require('./middlewares/requireAuth.middleware');
-app.get('/testLogin', requireAuth, (req, res) => {
-    console.log('Test is working');
-    res.status(200).json('You are logged in');
-});
-
 // Rendering 
 app.use((req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));
 })
 
 
-
-
 // Server creating
 const port = process.env.PORT || 3030;
-http.listen(port, requireAuth, () => {
+http.listen(port, () => {
     logger.info('Server is running on port: ' + port)
     // Connecting to database
     dbConnection();

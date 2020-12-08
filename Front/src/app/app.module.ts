@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // Routing Module
 import { AppRoutingModule } from './app-routing.module';
@@ -19,11 +19,11 @@ import { ForgetPassEmailCardComponent } from './components/forget-pass-email-car
 import { ForgetPassEmailSendedComponent } from './components/forget-pass-email-sended/forget-pass-email-sended.component';
 import { ImgProfileInputComponent } from './components/img-profile-input/img-profile-input.component';
 import { CropperImgComponent } from './components/cropper-img/cropper-img.component';
+import { SigninFormComponent } from './components/signin-form/signin-form.component';
 
 // Pages
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
-import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { CurrentTasksComponent } from './pages/current-tasks/current-tasks.component';
 import { MyProjectsComponent } from './pages/my-projects/my-projects.component';
@@ -33,7 +33,10 @@ import { CreateProjectComponent } from './pages/create-project/create-project.co
 import { AddTaskComponent } from './pages/add-task/add-task.component';
 import { SettingComponent } from './pages/setting/setting.component';
 import { ForgetPasswordComponent } from './pages/forget-password/forget-password.component';
-import { SigninFormComponent } from './components/signin-form/signin-form.component';
+import { UpdatePasswordComponent } from './components/update-password/update-password.component';
+import { CustomInterceptor } from './services/httpInterceptor';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+
 
 
 
@@ -44,7 +47,6 @@ import { SigninFormComponent } from './components/signin-form/signin-form.compon
     NavBarComponent,
     HomePageComponent,
     SignUpComponent,
-    SignInComponent,
     CurrentTasksComponent,
     TableTasksComponent,
     RowTaskComponent,
@@ -63,6 +65,8 @@ import { SigninFormComponent } from './components/signin-form/signin-form.compon
     SigninFormComponent,
     ImgProfileInputComponent,
     CropperImgComponent,
+    UpdatePasswordComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,7 +75,13 @@ import { SigninFormComponent } from './components/signin-form/signin-form.compon
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CustomInterceptor,
+      multi: true
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

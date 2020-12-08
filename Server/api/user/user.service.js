@@ -1,16 +1,11 @@
-const mongoose = require("mongoose");
-const logger = require("../../services/logger.service");
-
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+// Services
+const logger = require('../../services/logger.service');
+// Models
 const USER = require('../../models/user.model.js');
 
-module.exports = {
-    query,
-    getById,
-    getByEmail,
-    remove,
-    update,
-    add
-}
+const salt = parseInt(process.env.SALT_ROUNDS, 10);
 
 async function query(filterBy = {}) {
     try {
@@ -30,9 +25,7 @@ async function query(filterBy = {}) {
 async function getById(userId) {
     try {
         const user = await USER.findById(userId)
-            .select('-isAdmin -password')
             .then(user => user);
-
         logger.debug(`user.service: getById - User got successfully (userId: ${userId})`)
 
         return user
@@ -75,7 +68,7 @@ async function remove(userId) {
 
 async function update(user) {
     try {
-        var userUpdated = await USER.findOneAndUpdate({ _id: user._id }, user)
+        var userUpdated = await USER.findOneAndUpdate({ _id: user._id }, user, { new: true })
             .select('-password -isAdmin');
 
         return userUpdated
@@ -98,4 +91,26 @@ async function add(user) {
         logger.error(`user.service: add user request failed (UserID: ${user._id})\n\t` + err)
         throw err;
     }
+}
+
+async function updatePassword(newPassword, userID) {
+    try {
+        const hash = await bcrypt.hash(newPassword, salt);
+        await USER.updateOne({ _id: userID }, { password: hash });
+
+        return Promise.resolve('Password is updated');
+    } catch (err) {
+        logger.error(`user.service: Update password failed\n\t` + err)
+        throw err;
+    }
+}
+
+module.exports = {
+    query,
+    getById,
+    getByEmail,
+    remove,
+    update,
+    updatePassword,
+    add
 }
