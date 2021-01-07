@@ -1,35 +1,56 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+// Services
+import { ProjectService } from 'src/app/services/project.service';
+import { TaskService } from 'src/app/services/task.service';
+// Module
+import { Project } from 'src/app/models/project.model';
+import { DataProject } from 'src/app/models/dataProject.model';
 
 @Component({
   selector: 'app-my-projects',
   templateUrl: './my-projects.component.html',
   styleUrls: ['./my-projects.component.css']
 })
-export class MyProjectsComponent implements OnInit {
-  projects = [
-    {
-      _id: '1',
-      name: 'ios app',
-      Progress: 80,
-      RemainTasks: 10
-    },
-    {
-      _id: '2',
-      name: 'project2',
-      Progress: 13,
-      RemainTasks: 13
-    },
-    {
-      _id: '1',
-      name: 'project3',
-      Progress: 11,
-      RemainTasks: 11
-    },
-  ];
+export class MyProjectsComponent implements OnInit, OnDestroy {
+  dataProjects: DataProject[] = null;
+  isLoading = true;
 
-  constructor() { }
+  // Subscriptions
+  dataProjectsSub: Subscription;
+
+  constructor(private projectService: ProjectService, private taskService: TaskService) { }
 
   ngOnInit(): void {
+    // Load projects
+    this.projectService.loadUserProjects();
+
+    this.dataProjectsSub = this.projectService.projects$.pipe(
+      map((projects: Project[]) => {
+        let dataProjects: DataProject[] = [];
+
+        projects.forEach(project => {
+          this.taskService.getTasksProjectCount(project._id).subscribe(
+            countTasks => {
+              dataProjects.push({ project, countTasks });
+            });
+        });
+        return dataProjects;
+      })).subscribe(dataProjects => {
+        if (this.dataProjects && this.isLoading) this.isLoading = false;
+        this.dataProjects = dataProjects;
+      });
   }
 
+  ngOnDestroy(): void {
+    this.dataProjectsSub.unsubscribe();
+  }
+
+  getProgress({ countTasks, doneTasks }): string {
+    const precent = countTasks
+      ? ((doneTasks / countTasks) * 100).toFixed(2)
+      : 0;
+    return precent + '%'
+  }
 }

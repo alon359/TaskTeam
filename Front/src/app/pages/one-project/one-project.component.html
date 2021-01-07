@@ -1,79 +1,87 @@
 <div class="layout-main">
   <app-menu-login></app-menu-login>
 
-  <div class="container">
+  <main class="container">
 
-    <h1>Project name</h1>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <!-- Navigation-bar button -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-    <div class="tables">
-      <div class="table-contain">
-        <table class="table">
-          <thead>
-            <th>Tasks</th>
-          </thead>
-          <tbody>
-            <tr>
-              <td>TODO 1</td>
-            </tr>
-            <tr>
-              <td>TODO 2</td>
-            </tr>
-            <tr>
-              <td>TODO 3</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <li class="nav-item mr-2">
+            <!-- "Modal members-project button" -->
+            <button type="button" class="btn btn-primary d-flex align-items-center" data-toggle="modal"
+              data-target="#membersModal">
+              <img class="mr-1" src="./assets/people-fill.svg" style="width: 1.1rem;" />
+              Members
+            </button>
+          </li>
+          <li class="nav-item mr-2">
+            <!-- "Modal add-task button" -->
+            <button type="button" class="btn btn-success d-flex align-items-center" data-toggle="modal"
+              data-target="#addTaskModal">
+              <img class="mr-1" src="./assets/task-plus.svg" style="width: 1.1rem;" />
+              Add task
+            </button>
+          </li>
+          <li *ngIf="userMember && userMember.permission === 'admin' " class="nav-item">
+            <div class="dropdown">
+              <button type="button" class="btn btn-info dropdown-toggle d-flex align-items-center" id="adminMenu"
+                data-toggle="dropdown">
+                <img class="mr-1" src="./assets/gear.svg" />
+                Admin options
+              </button>
+              <div class="dropdown-menu" aria-labelledby="adminMenu">
+                <button class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#delProjectModal">
+                  <img class="mr-1" src="./assets/trash.svg" />
+                  Delete project
+                </button>
+                <button class="dropdown-item d-flex align-items-center">
+                  <img class="mr-1" src="./assets/person-plus.svg" />
+                  Invite new members
+                </button>
+                <button class="dropdown-item d-flex align-items-center">
+                  <img class="mr-1" src="./assets/pencil.svg" />
+                   Rename project
+                </button>
+              </div>
+            </div>
+          </li>
+        </ul>
       </div>
+    </nav>
 
+    <h1 class="my-2">{{currentProject.title}}</h1>
 
-      <div class="table-contain">
-        <table class="table">
-          <thead>
-            <th>Daily tasks</th>
-          </thead>
-          <tbody>
-            <tr>
-              <td>TODO 1</td>
-            </tr>
-            <tr>
-              <td>TODO 2</td>
-            </tr>
-            <tr>
-              <td>TODO 3</td>
-            </tr>
-          </tbody>
-        </table>
+    <!-- If there are no tasks yet -->
+    <section *ngIf="!projectTasks.length" class="non-task">
+      <p>You do not have any tasks in the project yet.</p>
+      <div class="d-flex align-items-center">
+        <p class="m-0 mr-2">Click on</p>
+        <!-- "Modal add-task button" -->
+        <button type="button" class="btn btn-success d-flex align-items-center" data-toggle="modal"
+          data-target="#addTaskModal">
+          <img class="mr-1" src="./assets/task-plus.svg" style="width: 1.1rem;" />
+          Add task
+        </button>
+        <p class="m-0 ml-2">to add task.</p>
       </div>
+    </section>
 
-      <div class="table-contain">
-        <table class="table">
-          <thead>
-            <th>Team</th>
-          </thead>
-          <tbody>
-            <tr>
-              <td> lior</td>
-            </tr>
-            <tr>
-              <td>TODO 2</td>
-            </tr>
-            <tr>
-              <td>TODO 2</td>
-            </tr>
-            <tr>
-              <td>TODO 2</td>
-            </tr>
-            <tr>
-              <td>TODO 2</td>
-            </tr>
+    <!-- Table projectTasks -->
+    <app-table-tasks *ngIf="projectTasks.length" [tasks]="projectTasks"></app-table-tasks>
 
-          </tbody>
-        </table>
-      </div>
+  </main>
 
-    </div>
-
-  </div>
-
+  <!-- Modal "Project-members" -->
+  <project-members-modal></project-members-modal>
+  <!-- Modal "Add-task" -->
+  <add-task-modal></add-task-modal>
+  <!-- Modal "Delete project" -->
+  <app-delete-project-modal [project]="currentProject"></app-delete-project-modal>
 
 </div>

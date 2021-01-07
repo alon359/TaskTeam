@@ -1,0 +1,88 @@
+<div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">New task</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <form class="modal-body" [formGroup]="createTask" (ngSubmit)="onCreate()" novalidate>
+        <!-- Title -->
+        <div class="form-group">
+          <label for="taskName">Task name:</label>
+          <input type="text" class="form-control" [ngClass]="GetValidationClass('title')" id="taskName"
+            placeholder="Enter task name" formControlName="title" />
+          <div class="invalid-feedback">
+            <p class="m-0" style="font-weight:600;">*Please enter title.</p>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group">
+          <label for="description">Task description:</label>
+          <small style="color:red;font-weight:600;">*Optional</small>
+          <textarea name="description" class="form-control" [ngClass]="GetValidationClass('description')" id="description"
+            cols="30" rows="1" placeholder="Add description to your task" formControlName="description"></textarea>
+        </div>
+
+        <!-- Date task -->
+        <div class="form-row">
+          <!-- Start data task -->
+          <div class="form-group col-md-5 col-lg-3">
+            <label for="startDate">Start date:</label>
+            <input type="date" value="2011-08-19" id="startDate" formControlName="startDate"
+              [ngClass]="GetValidationClass('startDate')">
+          </div>
+
+          <!-- End data task -->
+          <div class="form-group col-md-5 col-lg-3">
+            <label for="endDate">End date:</label>
+            <input type="date" value="2011-08-19" id="endDate" formControlName="endDate"
+              [ngClass]="GetValidationClass('endDate')" />
+            <div class="invalid-feedback">
+              <p class="m-0" style="font-weight:600;">*Invalid end date</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-lg-3">
+            <!-- Priority -->
+            <label for="priority">Task priority</label>
+            <select class="custom-select" [ngClass]="GetValidationClass('priority')" name="priority" id="priority"
+              formControlName="priority">
+              <option disabled checked value="">Choose a priority</option>
+              <option value="high">High</option>
+              <option value="medium">Medium</option>
+              <option value="low">Low</option>
+            </select>
+            <div class="invalid-feedback">
+              <p class="m-0" style="font-weight:600;">*Please choose priority.</p>
+            </div>
+          </div>
+
+          <!-- Owners task -->
+          <div class="form-group col-lg-3">
+            <label for="priority">Owner task</label>
+            <small style="color:red;font-weight:600;">*Optional</small>
+            <select class="custom-select" [ngClass]="GetValidationClass('owner')" name="priority" id="priority"
+              formControlName="owner">
+              <option disabled value="">Choose a member</option>
+              <option *ngFor="let member of members" value={{member.userID._id}}>
+                {{member.userID.fName}} {{member.userID.lName}}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <button type="submit" class="btn btn-success mr-1">Create</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

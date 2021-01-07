@@ -1,8 +1,4 @@
-import { HttpEventType } from '@angular/common/http';
 import { Component, EventEmitter, Output } from '@angular/core';
-import Cropper from 'cropperjs';
-import { Subscription } from 'rxjs';
-import { CloudinaryService } from 'src/app/services/cloudinary.service.js';
 
 @Component({
   selector: 'app-img-profile-input',
@@ -19,8 +15,7 @@ export class ImgProfileInputComponent {
   // For input file label
   imgName = null;
 
-  constructor(private cloudinary: CloudinaryService) { }
-
+  constructor() { }
 
   onFileSelected(event) {
     const { files } = event.target;

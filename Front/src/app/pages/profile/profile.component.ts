@@ -1,28 +1,42 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Location } from '@angular/common';
+// Services
+import { AuthService } from 'src/app/services/auth.service';
+// Models
 import { User } from 'src/app/models/user.model';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
 
-  user: User;
+  userProfile: User;
+  userLogged: User = null;
 
-  constructor() { }
+  // Subscriptions
+  userLoggedSub: Subscription;
+
+  constructor(
+    private authService: AuthService,
+    private route: ActivatedRoute,
+    private location: Location) {
+  }
 
   ngOnInit(): void {
-    this.user = {
-      _id: '123214',
-      email: 'example@email.com',
-      firstName: 'Lior',
-      lastName: 'Ganel',
-      title: 'Manager',
-      phone: '05044654654654',
-      imgUlr: 'https://randomuser.me/api/portraits/men/20.jpg'
-    }
+    this.userLoggedSub = this.authService.loggedUser$.subscribe(user => { this.userLogged = user; });
+    this.userProfile = this.route.snapshot.data.user;
+  }
 
+  ngOnDestroy(): void {
+    this.userLoggedSub.unsubscribe();
+  }
+
+  onBack() {
+    this.location.back();
   }
 
 }

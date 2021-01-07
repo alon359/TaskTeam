@@ -6,3 +6,21 @@
   font-weight: bold;
   font-size: 85%;
 }
+
+.btn-profile-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 5px solid black;
+  border-radius: 100%;
+  width: 130px;
+  height: 130px;
+  outline: none;
+}
+
+.btn-profile-img img {
+  border: 5px solid black;
+  border-radius: 100%;
+  width: 130px;
+  height: 130px;
+}

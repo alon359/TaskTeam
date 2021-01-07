@@ -17,7 +17,6 @@ export class CropperImgComponent implements OnInit, AfterViewInit {
   // tslint:disable-next-line: no-input-rename
   @Input('src') imageSource: string;
 
-  // tslint:disable-next-line: no-output-on-prefix
   @Output() passImgUrl: EventEmitter<string> = new EventEmitter();
 
   cropper: Cropper;
@@ -53,6 +52,7 @@ export class CropperImgComponent implements OnInit, AfterViewInit {
         }
       }, error => {
         console.error(error);
+        this.isUpload = false;
       });
   }
 

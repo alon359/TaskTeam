@@ -5,22 +5,21 @@
 
   <!-- Password email -->
   <div class="form-group">
-    <input type="email" class="form-control" placeholder="Email" formControlName="email"
+    <input type="email" class="form-control" placeholder="Email" formControlName="email" autocomplete="on"
       [ngClass]="GetValidationClass('email')" />
 
     <div class="invalid-feedback">
-      <div *ngIf="fc.email.errors?.required"> Email is required</div>
+      <div *ngIf="fc.email.errors?.required">Email is required</div>
       <div *ngIf="!errMsg && fc.email.errors?.email">
         <p class="m-0">Please enter a valid email.</p>
         <p class="m-0">e.g example@mail.com</p>
-
       </div>
     </div>
   </div>
 
   <!-- Password input -->
   <div class="form-group">
-    <input type="password" class="form-control" placeholder="Password" formControlName="password"
+    <input type="password" class="form-control" placeholder="Password" formControlName="password" autocomplete="off"
       [ngClass]="GetValidationClass('password')" />
 
     <div class="invalid-feedback">
@@ -30,7 +29,7 @@
 
   <!-- Button submit -->
   <div class="row">
-    <button id="btn" type="submit" class="btn btn-primary mx-auto col-10">
+    <button id="btn" type="submit" class="btn btn-primary mx-auto col-10" [disabled]="isLoading">
       <span *ngIf="!isLoading">Login</span>
       <span *ngIf="isLoading">
         <div class="spinner-border spinner-border-sm" role="status"></div>

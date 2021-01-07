@@ -2,52 +2,119 @@
   <app-menu-login></app-menu-login>
   <div class="container">
     <h1>Setting</h1>
+    <!-- If have unknown error -->
+    <div *ngIf="msgError" class="alert alert-danger">{{msgError}}</div>
+    <!-- Success update user details massage -->
+    <div *ngIf="successMsg" class="alert alert-success">{{successMsg}}</div>
 
-    <form>
+    <form class="mb-3" [formGroup]="userFrom" (ngSubmit)="onSubmit()">
+      <!-- Image profile -->
       <div class="form-group">
-        <label for="imgProfile">Image profile</label>
-        <input type="file" class="form-control-file" id="imgProfile">
+        <button class="btn-profile-img" type="button" data-toggle="collapse" data-target="#imgProfileInput">
+          <img [src]=" imgUrl? imgUrl: '../../../assets/addImg.jpg'" alt="Avatar" />
+        </button>
+        <div class="collapse mt-2" id="imgProfileInput">
+          <app-img-profile-input (passImgUrl)="onGotImgUrl($event)"></app-img-profile-input>
+        </div>
       </div>
+
+      <!-- Change password -->
+      <div>
+        <button class="btn btn-primary mb-3" type="button" data-toggle="collapse" data-target="#passForm"
+          (click)="isChangePass=!isChangePass">Change
+          password</button>
+        <div class="collapse my-2" id="passForm" *ngIf="isChangePass" app-update-password></div>
+      </div>
+
+      <!-- First name -->
       <div class="row">
         <div class="form-group col">
           <label for="firstName">First name</label>
-          <input type="text" class="form-control" id="firstName">
+          <input type="text" class="form-control" id="firstName" formControlName="fName"
+            [ngClass]="GetValidationClass('fName')" placeholder="Your first name" required>
+
+          <div class="invalid-feedback">
+            <div *ngIf="fc.fName.errors?.required">Please enter a first name</div>
+            <div *ngIf="fc.fName.errors?.pattern">
+              A first name should have a capital letter at the beginning and only with letters
+            </div>
+          </div>
         </div>
         <div class="form-group col">
           <label for="lastName">Last name</label>
-          <input type="text" class="form-control" id="lastName">
+          <input type="text" class="form-control" id="lastName" formControlName="lName"
+            [ngClass]="GetValidationClass('lName')" placeholder="Your last name" required />
+
+          <div class="invalid-feedback">
+            <div *ngIf="fc.lName.errors?.required">Please enter a last name</div>
+            <div *ngIf="fc.lName.errors?.pattern">
+              A last name should have a capital letter at the beginning of a name and only with letters and spaces
+            </div>
+          </div>
         </div>
       </div>
-      <div class="row">
-        <div class="form-group col">
-          <label for="password">Password</label>
-          <input type="password" class="form-control" id="password">
-        </div>
-        <div class="form-group col">
-          <label for="passwordConfirm">Password confirm</label>
-          <input type="password" class="form-control" id="passwordConfirm">
-        </div>
-      </div>
+
+      <!-- Last name -->
       <div class="form-group">
         <label for="title">Title</label>
-        <input type="text" class="form-control" id="title">
+        <input type="text" class="form-control" id="title" formControlName="title"
+          [ngClass]="GetValidationClass('title')" placeholder="What is your job?" required>
+
+        <div class="invalid-feedback">
+          <div *ngIf="fc.title.errors?.required"> Please write what is your job</div>
+        </div>
       </div>
+
+      <!-- Number phone -->
       <div class="form-group">
         <label for="phone">Phone number</label>
-        <input type="text" class="form-control" id="phone">
+        <input type="text" class="form-control" id="phone" formControlName="phone"
+          [ngClass]="GetValidationClass('phone')" placeholder="Enter your call number" required>
+
+        <div class="invalid-feedback">
+          <div *ngIf="fc.phone.errors?.required"> Please enter an number phone</div>
+          <div *ngIf="fc.phone.errors?.pattern">Please enter a valid Number phone. Example
+            0XXX XXX XXX</div>
+        </div>
       </div>
+
+      <!-- Email -->
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" class="form-control" id="email">
+        <input type="email" id="email" class="form-control" [ngClass]="GetValidationClass('email')"
+          formControlName="email" [class.is-invalid]="alreadyUseMsg" placeholder="Enter your email" required>
+
+        <div class="invalid-feedback">
+          <div *ngIf="fc.email.errors?.required"> Please enter an email</div>
+          <div *ngIf="fc.email.errors?.email || fc.email.errors?.pattern">Please enter a valid email. Example
+            example@mail.com</div>
+          <div *ngIf="alreadyUseMsg">{{alreadyUseMsg}}</div>
+        </div>
       </div>
+
+      <!-- Buttons panel -->
       <div class="row">
+        <!-- Submit button -->
         <div class="col-2">
-          <button type="submit" class="btn btn-success">Submit</button>
+          <button class="btn btn-primary" type="submit" [disabled]="isLoading">
+            <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+
+            <span *ngIf="!isLoading; else loading">Submit</span>
+            <ng-template #loading> Loading...</ng-template>
+          </button>
         </div>
+
+        <!-- Cancel button -->
         <div class="col">
-          <a class="btn btn-warning" href="/profile">Cancel</a>
+          <a class="btn btn-danger" [href]="'/profile/'+ userLogged._id">Cancel</a>
+        </div>
+
+        <!-- Reset form button -->
+        <div class="col">
+          <button type="button" class="btn btn-warning" (click)="resetForm()" [disabled]="isLoading">Reset form</button>
         </div>
       </div>
+
     </form>
   </div>
 </div>

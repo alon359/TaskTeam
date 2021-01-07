@@ -13,7 +13,10 @@ import { Router } from '@angular/router';
 })
 export class SigninFormComponent implements OnInit, OnDestroy {
   userLoggedIn: User = null;
-  subscription: Subscription;
+
+  // Subscriptions
+  loggedSub: Subscription;
+  errSub: Subscription;
 
   // Error
   errMsg: string = null;
@@ -30,16 +33,24 @@ export class SigninFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscription = this.authService.loggedUser$.subscribe(user => {
+    this.loggedSub = this.authService.loggedUser$.subscribe(user => {
       this.userLoggedIn = user;
       if (user) {
         this.router.navigate(['/projects']);
       }
     });
+
+
+    this.errSub = this.authService.errAuth$.subscribe(
+      err => {
+        this.isLoading = false;
+        this.errMsg = err.msg;
+      });
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.loggedSub.unsubscribe();
+    this.errSub.unsubscribe();
   }
 
   // Getter form-controls
@@ -54,6 +65,7 @@ export class SigninFormComponent implements OnInit, OnDestroy {
     this.errMsg = null;
 
     if (this.logIn.status === 'VALID') {
+      this.isLoading = true;
       const { email, password } = this.logIn.value;
       this.authService.login(email, password);
     }

@@ -1,0 +1,47 @@
+<section>
+  <!-- Massages -->
+  <div>
+    <div *ngIf="errorMsg" class="alert alert-danger" role="alert">{{errorMsg}}</div>
+    <div *ngIf="successMsg" class="alert alert-success" role="alert">{{successMsg}}</div>
+  </div>
+
+  <!-- Add members form -->
+  <form #addForm [formGroup]="addMemberForm" (ngSubmit)=onAdd()>
+    <!-- Email member -->
+    <div class="form-group">
+      <label for="memberMail">Enter member email:</label>
+      <input type="email" id="memberMail" class="form-control" placeholder="example@mail.com" formControlName="email"
+        [ngClass]="GetValidationClass('email')" [class.is-invalid]="emailInputMsg">
+      <!-- Invalid massage -->
+      <div class="invalid-feedback">
+        <p *ngIf="fc.email.errors">Please enter valid email address.</p>
+        <p *ngIf="emailInputMsg">{{emailInputMsg}}</p>
+      </div>
+    </div>
+
+    <!-- Permission -->
+    <div class="form-group">
+      <label for="Permission">Permission member:</label>
+      <select class="custom-select" formControlName="permission" [ngClass]="GetValidationClass('permission')">
+        <option disabled selected value="">Choose a permission</option>
+        <option *ngFor="let option of options" [ngValue]="option.toLowerCase()">{{option}}</option>
+        <!-- <option value="3">View only</option> -->
+      </select>
+      <!-- Invalid massage -->
+      <div class="invalid-feedback">
+        <p *ngIf="fc.permission.errors">Please choose a permission.</p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <button class="btn btn-outline-primary mt-1" type="submit" [disabled]="isLoading">
+        <div *ngIf="isLoading;else add">
+          <div class="spinner-border spinner-border-sm text-primary mr-1" role="status"></div>
+          <span>Loading...</span>
+        </div>
+        <ng-template #add>Add member</ng-template>
+      </button>
+    </div>
+
+  </form>
+</section>

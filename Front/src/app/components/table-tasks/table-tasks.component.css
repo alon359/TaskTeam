@@ -1,8 +1,8 @@
-thead {
-  font-size: 1.1rem;
+.table {
+  text-align: center;
 }
 
-.btn-collapse {
-  height: 3em;
-  font-size: 1.25rem;
+thead th {
+  vertical-align: middle;
+  padding: 5px;
 }

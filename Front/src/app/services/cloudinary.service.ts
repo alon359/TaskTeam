@@ -21,19 +21,5 @@ export class CloudinaryService {
     formData.append('folder', 'TaskTeam');
 
     return this.http.post<any>(UPLOAD_URL, formData, { reportProgress: true, observe: 'events' });
-
-    // }).subscribe(
-    //   event => {
-    //     if (event.type === HttpEventType.UploadProgress) {
-    //       const totalUpload = Math.round(event.loaded / event.total * 100);
-    //       this.progress$.next(totalUpload);
-    //     }
-    //     else if (event.type === HttpEventType.Response) {
-    //       console.log({ event });
-    //       this.response$.next(event);
-    //     }
-    //   }, error => {
-    //     console.error(error);
-    //   });
   }
 }

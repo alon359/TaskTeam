@@ -1,38 +1,89 @@
-<td>
-  <div class="task-details-contain">
-    <div class="name-task">ios V1</div>
-    <div class="is-new-task badge badge-info">NEW!</div>
-    <button class="btn-confirm btn btn-primary">Confirm</button>
+<!-- Actions task button -->
+<td class="actions-task-td">
+  <div class="dropdown">
+    <button class="btn-actions" id="taskMenu" role="button" data-toggle="dropdown" aria-expanded="false">
+      <img src="./assets/three-dots-vertical.svg" />
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="taskMenu">
+      <li>
+        <button class="dropdown-item d-flex align-items-center" type="button" (click)="onRemoveTask(task._id)">
+          <img class="mr-1" src="./assets/trash.svg" />
+          <span>Remove task</span>
+        </button>
+      </li>
+      <li>
+        <button class="dropdown-item d-flex align-items-center" type="button">
+          <img class="mr-1" src="./assets/pencil-square.svg" />
+          <span>Edit task</span>
+        </button>
+      </li>
+      <li>
+        <button class="dropdown-item d-flex align-items-center" type="button">
+          <img class="mr-1" src="./assets/person.svg" />
+          <span>Add/Remove owners</span>
+        </button>
+      </li>
+    </ul>
   </div>
 </td>
-<td>analytics</td>
+<!-- Title task -->
+<td class="title-task">{{task.title}}</td>
+<!-- Owner task -->
+<td class="td-owner">
+  <a [href]="'/profile/' + task.owner[0]._id" class="d-flex align-items-center justify-content-center"
+    *ngIf="task.owner.length; else nonOwner">
+    <img class="mr-1" [src]="task.owner[0].imgUrl ? task.owner[0].imgUrl : './assets/profile.svg' ">
+    <p class="m-0 p-0">{{task.owner[0].fName}} {{task.owner[0].lName}}</p>
+  </a>
+  <ng-template #nonOwner>none</ng-template>
+</td>
+<!-- Status task -->
 <td>
   <div class="status-drop dropdown">
-    <button class="btn-drop status-waiting" type="button" data-toggle="dropdown" aria-haspopup="true"
-      aria-expanded="false" data-offset="-11,0">
-      Waiting for response
+    <button class="btn-drop" [ngClass]="getStatusClass(task.status)" type="button" data-toggle="dropdown"
+      aria-haspopup="true" aria-expanded="false" data-offset="-11,0">
+      {{task.status}}
     </button>
     <div class="dropdown-menu status-drop-menu">
-      <button class="dropdown-item status-release" type="button">Releases</button>
-      <button class="dropdown-item status-approved" type="button">Approved</button>
-      <button class="dropdown-item status-rejected" type="button">Rejected</button>
-      <button class="dropdown-item status-tested" type="button">Tested</button>
-      <button class="dropdown-item status-submitted" type="button">Submitted</button>
+      <button class="dropdown-item task-item status-hold" type="button" (click)="onStatusChange('on hold')">
+        On hold
+      </button>
+      <button class="dropdown-item task-item status-working" type="button" (click)="onStatusChange('working on it')">
+        Working on it
+      </button>
+      <button class="dropdown-item task-item status-done" type="button" (click)="onStatusChange('done')">
+        Done
+      </button>
+      <button class="dropdown-item task-item status-waiting" type="button"
+        (click)="onStatusChange('waiting for response')">
+        Waiting for response
+      </button>
+      <button class="dropdown-item task-item status-blocked" type="button" (click)="onStatusChange('blocked')">
+        Blocked
+      </button>
     </div>
   </div>
 </td>
+<!-- Priority task -->
 <td>
   <div class="status-drop dropdown">
-    <button class="btn-drop priority-high" type="button" data-toggle="dropdown" aria-haspopup="true"
-      aria-expanded="false" data-offset="-11,0">
-      High
+    <button class="btn-drop" [ngClass]="getPriorityClass(task.priority)" type="button" data-toggle="dropdown"
+      aria-haspopup="true" aria-expanded="false" data-offset="-11,0">
+      {{task.priority}}
     </button>
     <div class="dropdown-menu status-drop-menu">
-      <button class="dropdown-item priority-high " type="button">High</button>
-      <button class="dropdown-item priority-medium" type="button">Medium</button>
-      <button class="dropdown-item priority-low" type="button">Low</button>
+      <button class="dropdown-item task-item priority-low" type="button" (click)="onPriorityChange('low')">
+        Low
+      </button>
+      <button class="dropdown-item task-item priority-medium" type="button" (click)="onPriorityChange('medium')">
+       Medium
+      </button>
+      <button class="dropdown-item task-item priority-high" type="button" (click)="onPriorityChange('high')">
+        High
+      </button>
     </div>
   </div>
 </td>
-<td>Tody</td>
-<td>10, Apr, 2019</td>
+<!-- Dates task -->
+<td>{{task.startDate | date:'dd/MM/yyyy'}}</td>
+<td>{{task.endDate | date:'dd/MM/yyyy'}}</td>

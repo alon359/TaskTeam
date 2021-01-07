@@ -7,9 +7,42 @@
   width: 500px;
 }
 
+.btn-warning {
+  font-weight: 700;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
 label {
   font-weight: bold;
 }
 label::after {
   content: ":";
+}
+
+.invalid-feedback {
+  color: #c10000;
+  font-weight: bold;
+  font-size: 90%;
+  text-align: left;
+}
+
+.btn-profile-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 5px solid black;
+  border-radius: 100%;
+  width: 100px;
+  height: 100px;
+  outline: none;
+}
+
+.btn-profile-img img {
+  border: 5px solid black;
+  border-radius: 100%;
+  width: 100px;
+  height: 100px;
 }

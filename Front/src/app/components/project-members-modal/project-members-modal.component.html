@@ -1,0 +1,39 @@
+<div class="modal fade" id="membersModal" aria-hidden="true">
+  <div class="modal-dialog " role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Project members</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="list-group">
+          <!-- Members project list -->
+          <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between"
+            *ngFor="let member of members" [ngClass]="{'active': member.permission == 'admin'}">
+            <a class="d-flex align-items-center w-100 h-100" [href]="'/profile/' + member.userID._id">
+              <img class="mr-2" [src]="member.userID.imgUrl ? member.userID.imgUrl : './assets/profile.svg' ">
+              <p class="m-0 p-0">{{member.userID.fName}} {{member.userID.lName}}</p>
+            </a>
+            <!-- Actions menu -->
+            <div class="dropdown dropleft">
+              <button class="btn-actions" id="btnAction" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                <img src="./assets/three-dots-vertical.svg" />
+              </button>
+              <div class="dropdown-menu" aria-labelledby="btnAction">
+                <button class="dropdown-item">Remove member</button>
+                <button class="dropdown-item">Change permission</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

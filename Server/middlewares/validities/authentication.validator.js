@@ -21,6 +21,8 @@ const loginValidator = [
                 .then(res => res)
                 .catch(err => null)
             if (!match) return Promise.reject('Invalid email or password')
+
+            return true;
         }),
 ];
 
@@ -33,6 +35,7 @@ const signUpValid = [
             return User.findOne({ email }).then((user) => {
                 if (user) return Promise.reject('Email already in use');
             })
+            return true;
         }),
 
     check('password')
@@ -44,8 +47,13 @@ const signUpValid = [
         .exists({ checkFalsy: true }).withMessage('Password confirm is required').bail()
         .notEmpty().withMessage('Password confirm is required').bail()
         .if(check('password').exists().notEmpty())
-        .custom((confirmPassword, { req }) => { return (confirmPassword === req.body.password) }).
-        withMessage('Passwords don\'t math'),
+        .custom((confirmPassword, { req }) => {
+            const { password } = req.body;
+            if (confirmPassword.trim() != password.trim()) {
+                return Promise.reject('Passwords not match')
+            }
+            return true;
+        }),
 
     check('fName')
         .exists({ checkFalsy: true }).bail().withMessage('First name is required')

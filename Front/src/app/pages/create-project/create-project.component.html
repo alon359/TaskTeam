@@ -4,48 +4,96 @@
 
   <div class="container">
     <header>
-      <h1 class="h1">Create new project</h1>
+      <h1 class="h1">New project</h1>
     </header>
-    <main>
+    <main class="pb-1">
 
+      <!-- Massages -->
       <section>
-        <form>
-          <div class="form-group row">
-            <label for="projectName">Project name:</label>
-            <input type="text" class="form-control" id="projectName" placeholder="Enter a name project">
+        <div *ngIf="errorMsg" class="alert alert-danger" role="alert">{{errorMsg}}</div>
+        <div *ngIf="successMsg" class="alert alert-success" role="alert">{{successMsg}}</div>
+      </section>
+
+      <!-- Create project -->
+      <p class="h3 top">1. Create project</p>
+      <section class="contain create-project">
+        <form class="project-form" novalidate [formGroup]="projectFrom" (ngSubmit)="onCreate()">
+          <!-- Title / Project name -->
+          <div class="form-group">
+            <label for="title">Project name:</label>
+            <input type="text" class="form-control" id="title" placeholder="Enter a name project"
+              formControlName="title" [ngClass]="GetValidationClass('title')" required>
+            <!-- Invalid massage -->
+            <div class="invalid-feedback">
+              <p *ngIf="fc.title.errors">Please enter name to your project.</p>
+            </div>
           </div>
-          <div class="form-group row">
+
+          <!-- Project description -->
+          <div class="form-group">
             <label for="description">Project description:</label>
-            <textarea name="description" class="form-control" id="description" cols="30" rows="3"
-              placeholder="Add description to your project"></textarea>
+            <small>(*Optional)</small>
+            <textarea name="description" class="form-control" id="description" cols="30" rows="2"
+              placeholder="Add description to your project" formControlName="description"
+              [ngClass]="GetValidationClass('description')"></textarea>
           </div>
-        </form>
-        <h3>Add team members</h3>
-        <h4>Invite new members to your project</h4>
-        <form>
-          <div class="from-group row">
-            <label for="memberMail">Enter member email</label>
-            <input type="email" id="memberMail" class="form-control" placeholder="example@mail.com">
-          </div>
-          <div class="from-group row">
-            <button class="btn btn-outline-success mt-3">Add</button>
+
+          <div class="form-group">
+            <button class="btn btn-lg btn-success btn-block" [disabled]="isLoading">
+              <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1" role="status"></span>
+              Create project
+            </button>
           </div>
         </form>
       </section>
-
       <section>
-        <h2 class="mt-4">Team members</h2>
-        <table class="table">
-          <tr>
-            <td>Alon Davidi</td>
-            <td>alon@email.com</td>
-            <td>-- invite sent --</td>
-            <td><button class="btn btn-danger">Remove</button></td>
-          </tr>
-        </table>
-      </section>
 
+      </section>
+      <!-- Add members to project -->
+      <p class="h3">2. Add members</p>
+      <section class="contain add-member" style="display: none;">
+        <h4>Add team members</h4>
+        <h5 class="m-0">Invite members to your project and click on "Next" button when you will end</h5>
+        <small>*You can skip this step now and return to it later.</small>
+
+        <!-- Button modal end create-project -->
+        <button type="button" class="btn btn-success my-3" data-toggle="modal" data-target="#modal">
+          Next
+        </button>
+
+
+        <app-add-member></app-add-member>
+
+        <!-- Members table -->
+        <h2 class="mt-4">Project members</h2>
+        <app-table-members-management></app-table-members-management>
+
+      </section>
     </main>
+
   </div>
 
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal" data-backdrop="static" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Create project</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="m-0">Your project has been created.</p>
+        <p class="m-0">You can add more members by clicking "Back" or to end click "End".</p>
+        <p class="m-0">You can always add more members to the project whenever you want on your project page.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
+        <a [href]="'/project/'+ createdProject._id" class="btn btn-primary">End</a>
+      </div>
+    </div>
+  </div>
 </div>

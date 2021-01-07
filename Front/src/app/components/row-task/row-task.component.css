@@ -1,69 +1,107 @@
 td {
-  font-weight: bold;
   vertical-align: middle;
 }
-.task-details-contain {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-.task-details-contain div {
-  padding: 10px;
-}
-.task-details-contain div:not(:last-child) {
-  margin-inline-end: 5px;
+
+.td-owner img {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  padding: 1px;
+  border-radius: 100%;
+  width: 45px;
 }
 
+.td-owner a {
+  width: fit-content;
+}
+
+.td-owner a:hover {
+  text-decoration: none;
+}
+
+.title-task {
+  text-align: left;
+}
+
+.table-contain {
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.actions-task-td {
+  padding: 0;
+  width: 2px;
+  background-color: #efefef;
+}
+
+.actions-task-td .btn-actions {
+  width: 100%;
+  height: 49px;
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
+
+/* Dorp-down box*/
 .btn-drop {
-  font-weight: bold;
-  white-space: normal;
-  font-size: 0.8rem;
-  width: 7em;
+  width: 6em;
   height: 3.5em;
+  color: #ffffff;
+  padding: 2px;
   border-radius: 5px;
+  font-weight: 500;
+  font-size: 0.8rem;
+  text-transform: capitalize;
+  text-align: center;
+  white-space: normal;
 }
 
-.dropdown-menu {
-  font-size: 0.8rem;
-  width: 8.7em;
-  min-width: 8.7em;
-  padding: 0;
+.status-drop-menu {
+   width: 6.5em;
+  min-width: 6em;
   border-radius: 5px;
   padding: 10px;
 }
-.dropdown-item {
-  text-align: center;
-  padding: 0;
-  white-space: normal;
-  font-weight: bold;
-  border-radius: 5px;
+
+.task-item {
+  width: 6em;
   height: 3.5em;
+  color: #ffffff;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  margin: 5px auto;
+  padding: 2px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-align: center;
+  text-transform: capitalize;
+  white-space: normal;
 }
 
-.dropdown-item:not(:last-child) {
-  margin-bottom: 3px;
+.task-item:first-child{
+  margin-top: 0 !important;
+}
+.task-item:last-child{
+  margin-bottom: 0 !important;
 }
 
-/* Statuses */
-.status-release {
-  background-color: var(--status--release);
+/* Status task */
+.status-hold {
+  background-color: var(--status-hold);
+}
+.status-working {
+  background-color: var(--status-working);
 }
 .status-waiting {
   background-color: var(--status-waiting);
 }
-.status-approved {
-  background-color: var(--status-approved);
+.status-blocked {
+  background-color: var(--status-blocked);
 }
-.status-rejected {
-  background-color: var(--status-rejected);
-  color: #ffffff;
+.status-done {
+  background-color: var(--status-done);
 }
-.status-tested {
-  background-color: var(--status-tested);
-}
-.status-submitted {
-  background-color: var(--status-submitted);
+.status-not-started {
+  background-color: var(--status-not-started);
 }
 
 /* priorities */

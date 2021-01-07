@@ -4,7 +4,21 @@
   <div class="container">
     <h1>My projects</h1>
 
-    <table class="table">
+    <section *ngIf="isLoading" class="d-flex align-items-center justify-content-center mt-4 mr-2">
+      <div class="spinner-border" style="width: 2rem; height: 2rem;" role="status">
+        <span class="sr-only">Loading, please wait...</span>
+      </div>
+      <p class="m-0 ml-2">Loading, please wait...</p>
+    </section>
+
+    <!-- No projects massage -->
+    <section *ngIf="dataProjects && !dataProjects.length && !isLoading" class="mt-2">
+      <p class="h2"> You have no projects yet</p>
+      <a href="/createProject">Create a new one here!</a>
+    </section>
+
+    <!-- Projects table -->
+    <table *ngIf="dataProjects && dataProjects.length && !isLoading" class="table">
       <thead class="table-dark">
         <tr>
           <th>Title</th>
@@ -14,19 +28,19 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let project of projects">
-          <td>{{project.name}}</td>
+        <tr *ngFor="let dataProject of dataProjects">
+          <td>{{dataProject.project.title}}</td>
           <td>
             <div class="progress">
-              <div class="progress-bar" role="progressbar" attr.style="width: {{project.Progress}}%;" aria-valuenow="25"
-                aria-valuemin="0" aria-valuemax="100">{{project.Progress}}%</div>
+              <span *ngIf='!dataProject.countTasks.doneTasks'>0%</span>
+              <div class="progress-bar" role="progressbar" [ngStyle]="{'width':getProgress(dataProject.countTasks)}" aria-valuenow="80" aria-valuemin="0"
+                aria-valuemax="100">{{getProgress(dataProject.countTasks)}}</div>
             </div>
           </td>
-          <td>{{project.RemainTasks}}</td>
-          <td><a href="/" class="btn btn-primary">Open</a></td>
+          <td>{{dataProject.countTasks.doneTasks}}/{{dataProject.countTasks.countTasks}}</td>
+          <td><a [href]="'/project/'+ dataProject.project._id" class="btn btn-primary">Open</a></td>
         </tr>
       </tbody>
     </table>
-
   </div>
 </div>
