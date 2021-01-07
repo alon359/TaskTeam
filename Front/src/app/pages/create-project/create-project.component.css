@@ -1,0 +1,46 @@
+label {
+  font-weight: bold;
+}
+
+.project-form small {
+  margin-inline-start: 5px;
+  font-weight: bold;
+  color: rgb(236, 0, 0);
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.h3 {
+  margin: 0;
+  background-color: #a1abb3;
+  vertical-align: middle;
+  padding: 5px;
+  line-height: 1.5;
+  color: #000000;
+  border: 2px solid #787f85;
+}
+
+.h3.top {
+  border-radius: 10px 10px 0 0;
+}
+.h3:not(.top) {
+  border-top: none;
+}
+
+.contain {
+  border: 1px solid #cccccc;
+  padding: 5px;
+}
+
+.invalid-feedback p {
+  font-weight: bold;
+}
+
+small {
+  color: #dc3545;
+  font-weight: 700;
+}

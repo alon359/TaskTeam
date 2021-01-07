@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/internal/Subscription';
 
 import { UserService } from '../../services/user.service';
 import { User } from 'src/app/models/user.model';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -14,11 +15,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
   users: User[];
   subscription: Subscription;
 
-  constructor(private elementRef: ElementRef, private userService: UserService) { }
+  constructor(private elementRef: ElementRef, private userService: UserService, private authService: AuthService) { }
 
   ngOnInit(): void {
-    // this.elementRef.nativeElement.ownerDocument.body.style.backgroundImage = 'url(\'../../../assets/homePageImg.jpg\')';
-
     this.userService.loadUsers();
 
     this.subscription = this.userService.users$.subscribe(users => {

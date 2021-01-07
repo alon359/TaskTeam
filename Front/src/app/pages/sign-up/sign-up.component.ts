@@ -1,12 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import * as $ from 'jquery';
 // Services
-import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { ConfirmedValidator } from '../../services/confirmed.validator';
 // Models
 import { User } from 'src/app/models/user.model';
-import { Subscription } from 'rxjs';
+// Validators
+import { ConfirmedValidator } from '../../validators/confirmed.validator';
 
 @Component({
   selector: 'app-sign-up',
@@ -16,20 +18,26 @@ import { Subscription } from 'rxjs';
 export class SignUpComponent implements OnInit, OnDestroy {
   signUp = new FormGroup({});
 
-  errSub: Subscription;
-  userLoggedSub: Subscription;
-
   isWasSubmit = false;
   isLoading = false;
+
+  // Subscriptions
+  errSub: Subscription;
+  userLoggedSub: Subscription;
 
   // Form massages
   emailUseMsg: string = null;
   errMsg: string = null;
+  successMsg: string = null;
 
   // Profile image
   imgUrl: string = null;
 
-  constructor(private fb: FormBuilder, private userService: UserService, private authService: AuthService) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private authService: AuthService,
+  ) {
     this.signUp = this.fb.group({
       email: ['', [Validators.required, Validators.email,
       Validators.pattern('^[a-zA-Z][a-zA-Z0-9-_]+@[a-zA-Z]+(\\.[a-zA-Z]{2,3})+$')]],
@@ -45,7 +53,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.errSub = this.authService.errSignUp$.subscribe(err => {
+    this.errSub = this.authService.errAuth$.subscribe(err => {
       if (err.param === 'email') {
         this.emailUseMsg = err.msg;
       } else {
@@ -55,19 +63,21 @@ export class SignUpComponent implements OnInit, OnDestroy {
     });
 
     this.userLoggedSub = this.authService.loggedUser$.subscribe(user => {
-      console.log({ user });
-      this.isLoading = false;
+      if (user) {
+        this.isLoading = false;
+        this.router.navigate(['/']);
+      }
     });
-  }
-
-  // Getter form-controls
-  get fc() {
-    return this.signUp.controls;
   }
 
   ngOnDestroy(): void {
     this.errSub.unsubscribe();
     this.userLoggedSub.unsubscribe();
+  }
+
+  // Getter form-controls
+  get fc() {
+    return this.signUp.controls;
   }
 
   onSignUp = () => {
@@ -81,7 +91,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     if (this.signUp.status === 'VALID') {
       this.isLoading = true;
       const user: User = this.signUp.value;
-      user.imgUlr = this.imgUrl;
+      user.imgUrl = this.imgUrl;
       this.authService.signUp(user);
     } else {
       this.isWasSubmit = true;
@@ -99,9 +109,8 @@ export class SignUpComponent implements OnInit, OnDestroy {
   }
 
   onGotImgUrl(imgUrl: string) {
-    console.log({ singup_imgUrl: imgUrl });
-
     this.imgUrl = imgUrl;
+    $('.collapse').removeClass('show');
   }
 
 }

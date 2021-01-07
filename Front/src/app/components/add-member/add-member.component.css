@@ -1,0 +1,7 @@
+.permission {
+  text-transform: capitalize;
+}
+
+.invalid-feedback {
+  font-weight: bold;
+}

@@ -3,12 +3,12 @@
   --bgc-main: #87ceeb;
 
   /* Statuses colors */
-  --status-waiting: #419700;
-  --status--release: #fd9797;
-  --status-approved: #87a8e6;
-  --status-rejected: #2d2d2d;
-  --status-tested: #86e8de;
-  --status-submitted: #fde197;
+  --status-hold: #e97385;
+  --status-working: #ff9800;
+  --status-waiting: #579bfc;
+  --status-blocked: #e44258;
+  --status-done: #00c875;
+  --status-not-started: #757d83;
 
   /* Priorities colors */
   --priority-high: #bb0000;

@@ -32,6 +32,10 @@ p {
   font-size: 1.2rem;
 }
 
+.details-row img {
+  width: 1.5rem;
+}
+
 .title-info {
   font-weight: bold;
   margin-inline-end: 10px;

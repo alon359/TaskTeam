@@ -1,0 +1,24 @@
+<section>
+  <table class="table">
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Email</td>
+        <td>promission</td>
+        <td>Invite status</td>
+        <td></td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let member of projectMembers">
+        <td>{{member.userID.fName }} {{member.userID.lName }}</td>
+        <td>{{member.userID.email }}</td>
+        <td class="permission">
+          {{member.permission}}
+        </td>
+        <td></td>
+        <td><button class="btn btn-danger" type="button">Cancel</button></td>
+      </tr>
+    </tbody>
+  </table>
+</section>

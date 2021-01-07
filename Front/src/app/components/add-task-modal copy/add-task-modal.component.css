@@ -1,0 +1,51 @@
+.btn-drop {
+  font-weight: bold;
+  white-space: normal;
+  font-size: 0.8rem;
+  width: 7em;
+  height: 3.5em;
+  border-radius: 5px;
+}
+
+.priorities .dropdown-menu {
+  font-size: 0.8rem;
+  width: 8.7em;
+  min-width: 8.7em;
+  padding: 0;
+  border-radius: 5px;
+  padding: 10px;
+}
+.priorities .dropdown-item {
+  text-align: center;
+  padding: 0;
+  white-space: normal;
+  font-weight: bold;
+  border-radius: 5px;
+  height: 3.5em;
+}
+
+.priorities .dropdown-item:not(:last-child) {
+  margin-bottom: 3px;
+}
+
+/* priorities */
+.priority-high {
+  background-color: var(--priority-high);
+}
+.priority-medium {
+  background-color: var(--priority-medium);
+}
+.priority-low {
+  background-color: var(--priority-low);
+}
+.row {
+  align-items: center;
+}
+form label {
+  margin-inline-end: 5px;
+  font-weight: bold;
+}
+
+input[type="date"].is-invalid {
+  border-color: #dc3545;
+}

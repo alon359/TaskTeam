@@ -4,7 +4,8 @@ const bcrypt = require('bcrypt');
 const userService = require('../user/user.service');
 const logger = require('../../services/logger.service');
 
-const saltRounds = 10
+const saltRounds = parseInt(process.env.SALT_ROUNDS, 10);
+
 
 async function login(email) {
     try {

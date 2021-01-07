@@ -1,16 +1,24 @@
 <section class="container">
   <header>
     <a href='/'>
-      <img src="../../../assets/Logo.png" alt="">
+      <img src="../../../assets/logo.png" alt="">
     </a>
   </header>
   <div class="h1">Join us</div>
   <form novalidate [formGroup]="signUp" (ngSubmit)="onSignUp()">
-    <!-- If have unknown error -->
+
+    <!-- Error massage -->
     <div *ngIf="errMsg" class="alert alert-danger">{{errMsg}}</div>
+    <!-- Successfully massage-->
+    <div *ngIf="successMsg" class="alert alert-danger">{{successMsg}}</div>
 
     <div class="form-group">
-      <app-img-profile-input (passImgUrl)="onGotImgUrl($event)"></app-img-profile-input>
+      <button class="btn-profile-img" type="button" data-toggle="collapse" data-target="#imgProfileInput">
+        <img [src]=" imgUrl? imgUrl: '../../../assets/addImg.jpg'" alt="Avatar" />
+      </button>
+      <div class="collapse mt-2" id="imgProfileInput">
+        <app-img-profile-input (passImgUrl)="onGotImgUrl($event)"></app-img-profile-input>
+      </div>
     </div>
 
     <div class="form-group">
@@ -78,7 +86,7 @@
 
         <div class="invalid-feedback">
           <div *ngIf="fc.password.errors?.required">Please enter a password</div>
-          <div *ngIf="fc.password.errors?.minLength">Password must be at least 8 characters long</div>
+          <div *ngIf="fc.password.errors?.minlength">Password must be at least 8 characters long</div>
         </div>
       </div>
 

@@ -1,0 +1,21 @@
+a img {
+  background-color: #fff;
+  border: 1px solid rgb(224, 224, 224);
+  padding: 1px;
+  border-radius: 100%;
+  width: 50px;
+}
+
+a {
+  color: black;
+}
+a:hover {
+  text-decoration: none;
+}
+
+.btn-actions {
+  width: 10px;
+  outline: none;
+  border: none;
+  background-color: transparent;
+}

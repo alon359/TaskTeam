@@ -19,15 +19,18 @@ const SessionStoreConfig = require('./config/sessionStore.config');
 // Routes
 const userRoutes = require('./api/user/user.routes');
 const authRoutes = require('./api/auth/auth.routes');
+const projectRoutes = require('./api/project/project.routes');
+const memberRoutes = require('./api/member/member.routes');
+const taskRoutes = require('./api/task/task.routes');
 
 // Session-storage
 const sessionStore = new MongoStore(SessionStoreConfig);
 
 // Express App Config
 app.use(log('dev')) // Morgan
+app.use(cookieParser())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser())
 app.use(session({
     secret: 'taskTeamSecretKey',
     resave: false,
@@ -44,7 +47,7 @@ if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.resolve(__dirname, 'public')));
 } else {
     const corsOptions = {
-        origin: ['http://127.0.0.1:8080', 'http://localhost:8080', 'http://127.0.0.1:4200', 'http://localhost:4200', 'http://localhost:3200'],
+        origin: ['http://127.0.0.1:4200', 'http://localhost:4200', 'http://localhost:3200'],
         credentials: true
     };
     app.use(cors(corsOptions));
@@ -54,19 +57,10 @@ if (process.env.NODE_ENV === 'production') {
 // routes
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/project', projectRoutes);
+app.use('/api/member', memberRoutes);
+app.use('/api/task', taskRoutes);
 
-
-// const pageNotFound = require('./services/pageNotFound.service');
-// const morgan = require('morgan')
-// app.get('/404', pageNotFound);
-
-
-const { loginValidator } = require('./middlewares/validities/authentication.validator');
-const { requireAuth } = require('./middlewares/requireAuth.middleware');
-app.get('/testLogin', requireAuth, (req, res) => {
-    console.log('Test is working');
-    res.status(200).json('You are logged in');
-});
 
 // Rendering 
 app.use((req, res) => {
@@ -74,11 +68,9 @@ app.use((req, res) => {
 })
 
 
-
-
 // Server creating
 const port = process.env.PORT || 3030;
-http.listen(port, requireAuth, () => {
+http.listen(port, () => {
     logger.info('Server is running on port: ' + port)
     // Connecting to database
     dbConnection();
