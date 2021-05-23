@@ -142,5 +142,4 @@ export class SettingComponent implements OnInit, OnDestroy {
     });
     this.imgUrl = this.userLogged.imgUrl;
   }
-
 }

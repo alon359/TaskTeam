@@ -27,11 +27,7 @@ const schema = new mongoose.Schema({
     },
     title: { type: String, match: /^( |\d|\w|\-)+$/, default: null },
     phone: { type: String, match: /^0[1-9]\d{7,8}$/, default: null },
-    imgUrl: { type: String, default: null },
-    token: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Token'
-    },
+    imgUrl: { type: String, default: null }
 });
 
 module.exports = mongoose.model('User', schema);

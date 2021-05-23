@@ -1,26 +1,20 @@
 <!-- Actions task button -->
 <td class="actions-task-td">
-  <div class="dropdown">
+  <div class="dropdown" *ngIf="editableMode">
     <button class="btn-actions" id="taskMenu" role="button" data-toggle="dropdown" aria-expanded="false">
       <img src="./assets/three-dots-vertical.svg" />
     </button>
     <ul class="dropdown-menu" aria-labelledby="taskMenu">
       <li>
-        <button class="dropdown-item d-flex align-items-center" type="button" (click)="onRemoveTask(task._id)">
+        <button class="dropdown-item d-flex align-items-center" type="button" (click)="onRemoveTask()">
           <img class="mr-1" src="./assets/trash.svg" />
           <span>Remove task</span>
         </button>
       </li>
       <li>
-        <button class="dropdown-item d-flex align-items-center" type="button">
+        <button class="dropdown-item d-flex align-items-center" type="button" (click)="onEditTask()">
           <img class="mr-1" src="./assets/pencil-square.svg" />
           <span>Edit task</span>
-        </button>
-      </li>
-      <li>
-        <button class="dropdown-item d-flex align-items-center" type="button">
-          <img class="mr-1" src="./assets/person.svg" />
-          <span>Add/Remove owners</span>
         </button>
       </li>
     </ul>
@@ -30,10 +24,10 @@
 <td class="title-task">{{task.title}}</td>
 <!-- Owner task -->
 <td class="td-owner">
-  <a [href]="'/profile/' + task.owner[0]._id" class="d-flex align-items-center justify-content-center"
-    *ngIf="task.owner.length; else nonOwner">
-    <img class="mr-1" [src]="task.owner[0].imgUrl ? task.owner[0].imgUrl : './assets/profile.svg' ">
-    <p class="m-0 p-0">{{task.owner[0].fName}} {{task.owner[0].lName}}</p>
+  <a *ngIf="task.owner; else nonOwner" [href]="'/profile/' + task.owner._id"
+    class="d-flex align-items-center justify-content-center">
+    <img class="mr-1" [src]="task.owner.imgUrl ? task.owner.imgUrl : './assets/profile.svg' ">
+    <p class="m-0 p-0">{{task.owner.fName}} {{task.owner.lName}}</p>
   </a>
   <ng-template #nonOwner>none</ng-template>
 </td>
@@ -76,7 +70,7 @@
         Low
       </button>
       <button class="dropdown-item task-item priority-medium" type="button" (click)="onPriorityChange('medium')">
-       Medium
+        Medium
       </button>
       <button class="dropdown-item task-item priority-high" type="button" (click)="onPriorityChange('high')">
         High

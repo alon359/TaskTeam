@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const logger = require("../services/logger.service");
-const config = require('../config/DB')
+const logger = require(__dirname + '/logger.service');
+const config = require(__dirname + '/../config/DB/index')
 
 // Database connection
 var gDBconnect = null;

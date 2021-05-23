@@ -13,7 +13,6 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit, OnDestroy {
-
   userProfile: User;
   userLogged: User = null;
 

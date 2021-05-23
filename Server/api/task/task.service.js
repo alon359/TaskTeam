@@ -42,8 +42,11 @@ async function getByID(taskID) {
 }
 
 async function create(task) {
+
     try {
         task._id = new mongoose.Types.ObjectId();
+
+        if (!task.owner) task.owner = undefined;
 
         const taskSchema = new Task(task);
         let newTask = await taskSchema.save();
@@ -59,6 +62,11 @@ async function create(task) {
 
 async function update(task) {
     try {
+        if (!task.owner) task.owner = undefined;
+        else if (typeof task.owner === 'object') task.owner = task.owner._id
+
+        if (typeof task.ObjectId === 'object') task.ObjectId = task.ObjectId._id;
+
         let updateTask = await Task.findOneAndUpdate({ _id: task._id }, task, { new: true })
             .populate('projectID')
             .populate('owner');

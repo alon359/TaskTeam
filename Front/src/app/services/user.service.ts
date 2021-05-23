@@ -14,21 +14,23 @@ import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-  private endpoint = 'user';
+  // API URL address
+  private END_POINT = 'user';
+  // End point of URL API 
   private BASE_URL = environment.baseUrl;
 
   // tslint:disable-next-line: variable-name
   private _users$ = new BehaviorSubject<User[]>([]);
   public users$ = this._users$.asObservable();
 
+  // Subjects for messages
   public errUser$ = new Subject<any>();
   public successMsg$ = new Subject<{ param, msg }>();
-
 
   constructor(private http: HttpClient, private auth: AuthService) { }
 
   loadUsers() {
-    this.http.get<User[]>(this.BASE_URL + this.endpoint)
+    this.http.get<User[]>(this.BASE_URL + this.END_POINT)
       .subscribe(users => {
         this._users$.next(users);
       },
@@ -38,11 +40,11 @@ export class UserService {
   }
 
   async getByID(userID: string): Promise<Observable<User>> {
-    return this.http.get<User>(`${this.BASE_URL}${this.endpoint}/${userID}`);
+    return this.http.get<User>(`${this.BASE_URL}${this.END_POINT}/${userID}`);
   }
 
   update(user: User) {
-    this.http.put<User>(this.BASE_URL + this.endpoint, user)
+    this.http.put<User>(this.BASE_URL + this.END_POINT, user)
       .subscribe(
         userUpdated => {
           this.auth.updateUserLogged(userUpdated);
@@ -70,7 +72,7 @@ export class UserService {
   updatePassword(oldPass: string, newPass: string, confirmPass: string) {
     const data = { oldPass, newPass, confirmPass };
 
-    this.http.patch(`${this.BASE_URL}${this.endpoint}/updatePass`, data).subscribe(
+    this.http.patch(`${this.BASE_URL}${this.END_POINT}/updatePass`, data).subscribe(
       res => {
         this.successMsg$.next({
           param: 'password',
@@ -89,4 +91,4 @@ export class UserService {
         this.errUser$.next(err);
       });
   }
-} // END CLASS
+}

@@ -7,7 +7,11 @@ const taskService = require("./task.service");
 // Get tasks
 async function getTasks(req, res) {
   try {
-    const { query } = req;
+
+    let { query } = req;
+    if ('userID' in query) {
+      query = { owner: query.userID };
+    }
     const tasks = await taskService.query(query);
 
     res.status(200).json(tasks);

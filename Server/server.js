@@ -23,14 +23,14 @@ const projectRoutes = require('./api/project/project.routes');
 const memberRoutes = require('./api/member/member.routes');
 const taskRoutes = require('./api/task/task.routes');
 
-// Session-storage
-const sessionStore = new MongoStore(SessionStoreConfig);
 
 // Express App Config
 app.use(log('dev')) // Morgan
 app.use(cookieParser())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+// Session-storage
+const sessionStore = new MongoStore(SessionStoreConfig);
 app.use(session({
     secret: 'taskTeamSecretKey',
     resave: false,
@@ -41,6 +41,7 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24,
     }
 }));
+// Static files
 app.use(express.static('public'));
 
 if (process.env.NODE_ENV === 'production') {

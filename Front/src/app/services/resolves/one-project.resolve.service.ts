@@ -9,7 +9,6 @@ import { Project } from 'src/app/models/project.model';
   providedIn: 'root'
 })
 export class OneProjectResolveService implements Resolve<any>{
-
   constructor(private projectService: ProjectService, private router: Router) { }
 
   async resolve(route: ActivatedRouteSnapshot) {
@@ -30,5 +29,4 @@ export class OneProjectResolveService implements Resolve<any>{
       this.router.navigateByUrl('/notfound');
     }
   }
-
 }

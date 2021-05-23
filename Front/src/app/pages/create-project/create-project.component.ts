@@ -1,11 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import * as $ from 'jquery';
 // Services
 import { ProjectService } from 'src/app/services/project.service';
-import { MemberService } from 'src/app/services/member.service';
-// Models
+//  Models
 import { Project } from 'src/app/models/project.model';
 
 
@@ -15,76 +13,32 @@ import { Project } from 'src/app/models/project.model';
   styleUrls: ['./create-project.component.css']
 })
 export class CreateProjectComponent implements OnInit, OnDestroy {
-  projectFrom = new FormGroup({});
-
   errorMsg: string = null;
   successMsg: string = null;
-
-  isLoading = false;
-  isWasSubmit = false;
-
+  errorMsgSub: Subscription;
+  successMsgSub: Subscription;
+  createdProjectSub: Subscription;
   createdProject: Project = null;
 
-  // Subscriptions
-  projectsSub: Subscription;
-  errorMsgSub: Subscription;
-
-
-  constructor(
-    private projectService: ProjectService,
-    private fb: FormBuilder,
-    private memberService: MemberService
-  ) {
-    this.projectFrom = this.fb.group({
-      title: ['', Validators.required],
-      description: ['']
-    })
-  }
+  constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
-    this.projectsSub = this.projectService.projects$.subscribe(
-      projects => {
-        if (this.isLoading) {
-          this.createdProject = projects[0];
-          this.memberService.loadProjectMembers(this.createdProject._id);
-          this.isLoading = false;
-          $('.create-project').slideUp('200');
-          setTimeout(() => { $('.add-member').slideDown('200'); }, 300);
-          this.successMsg = 'New project created.';
-        }
-      });
+    this.projectService.setCurrentProject(null);
+
+    this.createdProjectSub = this.projectService.currentProject$.subscribe(createdProject => this.createdProject = createdProject);
 
     this.errorMsgSub = this.projectService.errMsg$.subscribe(errMsg => { this.errorMsg = errMsg });
+
+    this.successMsgSub = this.projectService.successMsg$.subscribe(successMsg => {
+      this.successMsg = successMsg;
+      $('.create-project').slideUp('200');
+      setTimeout(() => { $('.add-member').slideDown('200'); }, 300);
+    });
   }
 
   ngOnDestroy(): void {
-    this.projectsSub.unsubscribe();
-  }
-
-  // Get form-control
-  get fc() {
-    return this.projectFrom.controls;
-  }
-
-  onCreate() {
-    this.isWasSubmit = true;
-    this.errorMsg = null;
-    $('.project-form input').removeClass('is-invalid');
-
-    if (this.projectFrom.status === 'VALID') {
-      this.isLoading = true;
-      const data = this.projectFrom.value;
-      this.projectService.createProject(data);
-    }
-  }
-
-  GetValidationClass(inputName: string) {
-    if (!this.isWasSubmit) {
-      return '';
-    } else if (this.projectFrom.controls[inputName].errors) {
-      return 'is-invalid';
-    } else {
-      return 'is-valid';
-    }
+    this.errorMsgSub.unsubscribe();
+    this.successMsgSub.unsubscribe();
+    this.createdProjectSub.unsubscribe();
   }
 }

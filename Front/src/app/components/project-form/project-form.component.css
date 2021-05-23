@@ -1,0 +1,9 @@
+label {
+  font-weight: bold;
+}
+
+.project-form small {
+  margin-inline-start: 5px;
+  font-weight: bold;
+  color: rgb(236, 0, 0);
+}

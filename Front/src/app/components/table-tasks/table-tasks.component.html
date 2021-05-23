@@ -13,6 +13,6 @@
     </tr>
   </thead>
   <tbody>
-    <tr app-row-task *ngFor="let task of tasks;let i= index;" [task]="task">
+    <tr app-row-task *ngFor="let task of tasks;let i= index;" [task]="task" [editableMode]="editableMode"></tr>
   </tbody>
 </table>

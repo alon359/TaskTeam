@@ -23,6 +23,9 @@
         "mongoose": "^5.10.15",
         "morgan": "^1.10.0"
     },
+    "engines": { 
+        "node" : "12.8.0" 
+    },
     "devDependencies": {
         "nodemon": "1.18.10"
     }

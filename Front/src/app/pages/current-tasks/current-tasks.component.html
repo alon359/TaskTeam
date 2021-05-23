@@ -2,13 +2,37 @@
 
   <app-menu-login></app-menu-login>
 
-  <div class="current-tasks">
+  <main class="current-tasks">
     <div class="container">
-      <h1>Current tasks</h1>
-      <div class="tables-tasks-contain">
-        <div *ngFor="let table of tables; let i = index" class="table-contain table{{i}}">
-          <!-- <app-table-tasks [tableObj]="table" [tableIdx]="i"></app-table-tasks> -->
+
+      <h1 class="header-page mx-0 my-3 p-0 ">Current tasks</h1>
+
+      <!-- When the data is loaded -->
+      <section *ngIf="isLoading" class="d-flex align-items-center">
+        <div class="spinner-border" style="width: 1.5rem; height: 1.5rem;" role="status"></div>
+        <p class="h3 ml-1">Loading, please wait...</p>
+      </section>
+
+      <!--when the data has finished loading and there are no projects -->
+      <section *ngIf="!isLoading && projects && !projects.length">
+        <div class="h2 mx-0 my-3 p-0 ">You have no tasks</div>
+      </section>
+
+      <!-- tables project (If have...)  -->
+      <section *ngIf="projects && projects.length;" class="tables-tasks-contain">
+        <div *ngFor="let project of projects; let i = index;" class="table-contain" [id]="'table'+i">
+          <!-- Button collapse of table-tasks  -->
+          <button class="btn-table btn btn-dark btn-block dropdown-toggle" data-toggle="collapse"
+            [attr.data-target]="'#collapse'+i" (click)="scrollToTable(i)">
+            {{project.projectName}}
+          </button>
+          <div class="collapse" [id]="'collapse'+i">
+            <!-- Table tasks -->
+            <div class="card card-body">
+              <app-table-tasks [tasks]="project.tasks" [editableMode]="false"></app-table-tasks>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
     </div>
-  </div>
+  </main>

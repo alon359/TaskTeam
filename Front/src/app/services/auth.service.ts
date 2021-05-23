@@ -13,29 +13,33 @@ import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private key = 'user';
-  private END_POINT = 'auth/';
+  // Key for localStorage
+  private KEY = 'user';
+
+  // API URL address
   private BASE_URL = environment.baseUrl;
-  // tslint:disable-next-line: variable-name
+  // End point of URL API 
+  private END_POINT = 'auth';
+
   private _loggedUser$ = new BehaviorSubject<User>(this._loadLoggedUser());
   public loggedUser$ = this._loggedUser$.asObservable();
 
+  // For errors massages
   public errAuth$ = new Subject<any>();
 
   constructor(private http: HttpClient, private storage: StorageService) { }
 
   private _loadLoggedUser() {
-    const loggedUser = this.storage.load(this.key) || null;
+    const loggedUser = this.storage.load(this.KEY) || null;
     return loggedUser;
   }
-
 
   login(email: string, password: string) {
     const data = { email, password };
     this.http.post<User>(`${this.BASE_URL}${this.END_POINT}/login`, data, { withCredentials: true })
       .subscribe(
         loggedUser => {
-          this.storage.store(this.key, loggedUser);
+          this.storage.store(this.KEY, loggedUser);
           this._loggedUser$.next(loggedUser);
         },
         error => {
@@ -56,7 +60,7 @@ export class AuthService {
   signUp(user: User) {
     this.http.post<User>(`${this.BASE_URL}${this.END_POINT}/signup`, user).subscribe(
       loggedUser => {
-        this.storage.store(this.key, loggedUser);
+        this.storage.store(this.KEY, loggedUser);
         this._loggedUser$.next(loggedUser);
       },
       error => {
@@ -76,12 +80,11 @@ export class AuthService {
 
   logout() {
     this.http.get(`${this.BASE_URL}/${this.END_POINT}/logout`);
-    this.storage.remove(this.key);
-    this._loggedUser$.next(null);
+    this.storage.remove(this.KEY);
   }
 
   updateUserLogged(userUpdate) {
-    this.storage.store(this.key, userUpdate);
+    this.storage.store(this.KEY, userUpdate);
     this._loggedUser$.next(userUpdate);
   }
 }

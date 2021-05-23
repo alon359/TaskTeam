@@ -1,6 +1,16 @@
+@font-face {
+  font-family: Chunkfive;
+  src: url(./assets/fonts/Chunkfive.otf);
+}
+@font-face {
+  font-family: NotoSansJP;
+  src: url(./assets/fonts/NotoSansJP.otf);
+}
+
 :root {
   /* Main background */
   --bgc-main: #87ceeb;
+  --bgc-menu: #292f4c;
 
   /* Statuses colors */
   --status-hold: #e97385;
@@ -53,4 +63,8 @@ h1 {
 
 button:disabled {
   cursor: not-allowed;
+}
+
+.header-page {
+  font-family: Chunkfive;
 }

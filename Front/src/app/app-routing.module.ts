@@ -10,8 +10,6 @@ import { OneProjectComponent } from './pages/one-project/one-project.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { CreateProjectComponent } from './pages/create-project/create-project.component';
 import { SettingComponent } from './pages/setting/setting.component';
-import { ForgetPasswordComponent } from './pages/forget-password/forget-password.component';
-import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 // Guards
 import { AuthGuard } from './services/auth.guard';
 // Resolves
@@ -21,73 +19,33 @@ import { OneProjectResolveService } from './services/resolves/one-project.resolv
 
 
 const routes: Routes = [
-  {
-    path: 'tasks',
-    pathMatch: 'full',
-    canActivate: [AuthGuard],
-    component: CurrentTasksComponent
-  },
-  {
-    path: 'projects',
-    pathMatch: 'full',
-    canActivate: [AuthGuard],
-    component: MyProjectsComponent
-  },
-  {
-    path: 'project/:projectID',
-    pathMatch: 'full',
-    canActivate: [AuthGuard],
-    resolve: { project: OneProjectResolveService },
-    component: OneProjectComponent
-  },
-  {
-    path: 'signup',
-    pathMatch: 'full',
-    component: SignUpComponent
-  },
-  {
-    path: 'profile/:userID',
-    pathMatch: 'full',
-    resolve: { user: ProfileResolveService },
-    component: ProfileComponent
-  },
-  {
-    path: 'createProject',
-    pathMatch: 'full',
-    canActivate: [AuthGuard],
-    component: CreateProjectComponent
-  },
-  {
-    path: 'setting',
-    pathMatch: 'full',
-    canActivate: [AuthGuard],
-    component: SettingComponent
-  },
-  {
-    path: 'forget',
-    pathMatch: 'full',
-    component: ForgetPasswordComponent
-  },
-  {
-    path: 'reset',
-    pathMatch: 'full',
-    component: ResetPasswordComponent
-  },
-  {
-    path: 'notfound',
-    pathMatch: 'full',
-    component: NotFoundComponent
-  },
-  {
-    path: '',
-    pathMatch: 'full',
-    component: HomePageComponent
-  },
-  {
-    path: '**',
-    pathMatch: 'full',
-    component: NotFoundComponent
-  },
+  // Home page
+  { path: '', pathMatch: 'full', component: HomePageComponent },
+
+  // My tasks / Current tasks page
+  { path: 'tasks', pathMatch: 'full', canActivate: [AuthGuard], component: CurrentTasksComponent },
+
+  // My projects page
+  { path: 'projects', pathMatch: 'full', canActivate: [AuthGuard], component: MyProjectsComponent },
+
+  // project page
+  { path: 'project/:projectID', pathMatch: 'full', canActivate: [AuthGuard], resolve: { project: OneProjectResolveService }, component: OneProjectComponent },
+
+  // Signup page 
+  { path: 'signup', pathMatch: 'full', component: SignUpComponent },
+
+  // User profile page
+  { path: 'profile/:userID', pathMatch: 'full', resolve: { user: ProfileResolveService }, component: ProfileComponent },
+
+  // Create new project page
+  { path: 'createProject', pathMatch: 'full', canActivate: [AuthGuard], component: CreateProjectComponent },
+
+  // Settings/Edit profile page
+  { path: 'setting', pathMatch: 'full', canActivate: [AuthGuard], component: SettingComponent },
+
+  //  Not found page (Error 404)
+  { path: 'notfound', pathMatch: 'full', component: NotFoundComponent },
+  { path: '**', pathMatch: 'full', component: NotFoundComponent },
 ];
 
 @NgModule({

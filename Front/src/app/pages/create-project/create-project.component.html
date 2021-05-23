@@ -1,10 +1,9 @@
 <div class="layout-main">
-
   <app-menu-login></app-menu-login>
 
   <div class="container">
     <header>
-      <h1 class="h1">New project</h1>
+      <h1 class="header-page">New project</h1>
     </header>
     <main class="pb-1">
 
@@ -17,38 +16,9 @@
       <!-- Create project -->
       <p class="h3 top">1. Create project</p>
       <section class="contain create-project">
-        <form class="project-form" novalidate [formGroup]="projectFrom" (ngSubmit)="onCreate()">
-          <!-- Title / Project name -->
-          <div class="form-group">
-            <label for="title">Project name:</label>
-            <input type="text" class="form-control" id="title" placeholder="Enter a name project"
-              formControlName="title" [ngClass]="GetValidationClass('title')" required>
-            <!-- Invalid massage -->
-            <div class="invalid-feedback">
-              <p *ngIf="fc.title.errors">Please enter name to your project.</p>
-            </div>
-          </div>
-
-          <!-- Project description -->
-          <div class="form-group">
-            <label for="description">Project description:</label>
-            <small>(*Optional)</small>
-            <textarea name="description" class="form-control" id="description" cols="30" rows="2"
-              placeholder="Add description to your project" formControlName="description"
-              [ngClass]="GetValidationClass('description')"></textarea>
-          </div>
-
-          <div class="form-group">
-            <button class="btn btn-lg btn-success btn-block" [disabled]="isLoading">
-              <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1" role="status"></span>
-              Create project
-            </button>
-          </div>
-        </form>
+        <app-project-form></app-project-form>
       </section>
-      <section>
 
-      </section>
       <!-- Add members to project -->
       <p class="h3">2. Add members</p>
       <section class="contain add-member" style="display: none;">
@@ -61,22 +31,21 @@
           Next
         </button>
 
-
+        <!-- Add-member to  project component -->
         <app-add-member></app-add-member>
 
         <!-- Members table -->
         <h2 class="mt-4">Project members</h2>
-        <app-table-members-management></app-table-members-management>
+        <app-table-invitees-management></app-table-invitees-management>
 
       </section>
     </main>
 
   </div>
-
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="modal" data-backdrop="static" aria-hidden="true">
+<div *ngIf="createdProject" class="modal fade" id="modal" data-backdrop="static" aria-hidden="true">
   <div class="modal-dialog modal-md">
     <div class="modal-content">
       <div class="modal-header">

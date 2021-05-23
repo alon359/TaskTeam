@@ -15,15 +15,15 @@ memberValidator = [
     check('userID')
         .exists({ checkFalsy: true }).withMessage('"_id" is required').bail()
         .notEmpty().withMessage('"_id" is required').bail()
-        .custom((_id) => {
-            return mongoose.Types.ObjectId.isValid(_id);
+        .custom((userID) => {
+            return mongoose.Types.ObjectId.isValid(userID._id);
         }).withMessage('Invalid ID'),
 
     check('projectID')
         .exists({ checkFalsy: true }).withMessage('"_id" is required').bail()
         .notEmpty().withMessage('"_id" is required').bail()
-        .custom((_id) => {
-            return mongoose.Types.ObjectId.isValid(_id);
+        .custom((projectID) => {
+            return mongoose.Types.ObjectId.isValid(projectID._id);
         }).withMessage('Invalid ID'),
 
     check('permission')

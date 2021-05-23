@@ -2,10 +2,10 @@ p {
   margin: 0;
 }
 
-.layout-main {
+/* .layout-main {
   background-color: #bacef4;
   min-height: 100vh;
-}
+} */
 
 .main-contain {
   display: flex;
@@ -45,6 +45,8 @@ p {
   line-height: 1;
   background-color: #fff;
   padding: 30px;
+  border: 1px solid #000000;
+
   border-radius: 10px;
   width: 500px;
 }

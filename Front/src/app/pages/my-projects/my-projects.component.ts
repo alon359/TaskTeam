@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 // Services
 import { ProjectService } from 'src/app/services/project.service';
 import { TaskService } from 'src/app/services/task.service';
@@ -27,6 +27,7 @@ export class MyProjectsComponent implements OnInit, OnDestroy {
     this.projectService.loadUserProjects();
 
     this.dataProjectsSub = this.projectService.projects$.pipe(
+      take(2),
       map((projects: Project[]) => {
         let dataProjects: DataProject[] = [];
 

@@ -10,10 +10,11 @@ const schema = new mongoose.Schema({
         ref: 'Project',
         required: true,
     },
-    owner: [{
+    owner: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }],
+        ref: 'User',
+        default: undefined,
+    },
     title: {
         type: String,
         required: true
@@ -29,9 +30,9 @@ const schema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['on hold', 'not started yet', 'working on it', 'waiting for response', 'stuck', 'Done'],
+        enum: ['on hold', 'not started yet', 'working on it', 'waiting for response', 'stuck', 'done'],
         lowercase: true,
-        default: 'Not started yet'
+        default: 'not started yet'
     },
     startDate: {
         type: Date,
@@ -40,16 +41,6 @@ const schema = new mongoose.Schema({
     endDate: {
         type: Date,
         default: null
-    },
-    subTasks: {
-        type: [this], // Tasks
-        ref: 'Task',
-        default: null
-    },
-    isSubTask: {
-        type: Boolean,
-        default: false,
-        required: true
     }
 });
 

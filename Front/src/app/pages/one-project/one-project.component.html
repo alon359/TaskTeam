@@ -23,7 +23,7 @@
           <li class="nav-item mr-2">
             <!-- "Modal add-task button" -->
             <button type="button" class="btn btn-success d-flex align-items-center" data-toggle="modal"
-              data-target="#addTaskModal">
+              data-target="#addTaskModal" (click)="onAddTask()">
               <img class="mr-1" src="./assets/task-plus.svg" style="width: 1.1rem;" />
               Add task
             </button>
@@ -36,17 +36,20 @@
                 Admin options
               </button>
               <div class="dropdown-menu" aria-labelledby="adminMenu">
-                <button class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#delProjectModal">
+                <button class="dropdown-item d-flex align-items-center" data-toggle="modal"
+                  data-target="#delProjectModal">
                   <img class="mr-1" src="./assets/trash.svg" />
                   Delete project
                 </button>
-                <button class="dropdown-item d-flex align-items-center">
+                <button class="dropdown-item d-flex align-items-center" data-toggle="modal"
+                  data-target="#inviteMemberModal">
                   <img class="mr-1" src="./assets/person-plus.svg" />
                   Invite new members
                 </button>
-                <button class="dropdown-item d-flex align-items-center">
+                <button class="dropdown-item d-flex align-items-center" data-toggle="modal"
+                  data-target="#renmaeProjectMoadl">
                   <img class="mr-1" src="./assets/pencil.svg" />
-                   Rename project
+                  Rename project
                 </button>
               </div>
             </div>
@@ -55,10 +58,24 @@
       </div>
     </nav>
 
-    <h1 class="my-2">{{currentProject.title}}</h1>
+    <h1 class="m-2" style="font-family: Chunkfive">{{currentProject.title}}</h1>
+
+    <!-- Massages -->
+    <div *ngIf="taskMsg" class="taskMsg alert alert-success alert-dismissible fade show" role="alert">
+      <strong>{{taskMsg}}</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <!-- When the data is loaded -->
+    <section *ngIf="isLoading" class="d-flex align-items-center">
+      <div class="spinner-border" style="width: 1.5rem; height: 1.5rem;" role="status"></div>
+      <p class="h3 ml-1">Loading, please wait...</p>
+    </section>
 
     <!-- If there are no tasks yet -->
-    <section *ngIf="!projectTasks.length" class="non-task">
+    <section *ngIf="!isLoading && !projectTasks.length" class="non-task">
       <p>You do not have any tasks in the project yet.</p>
       <div class="d-flex align-items-center">
         <p class="m-0 mr-2">Click on</p>
@@ -74,14 +91,24 @@
 
     <!-- Table projectTasks -->
     <app-table-tasks *ngIf="projectTasks.length" [tasks]="projectTasks"></app-table-tasks>
-
   </main>
 
   <!-- Modal "Project-members" -->
-  <project-members-modal></project-members-modal>
+  <project-members-modal (projcetMemberEmitter)=setProjectMember($event) [memberUser]="userMember">
+  </project-members-modal>
   <!-- Modal "Add-task" -->
   <add-task-modal></add-task-modal>
   <!-- Modal "Delete project" -->
   <app-delete-project-modal [project]="currentProject"></app-delete-project-modal>
+  <!-- Modal "Rename project" -->
+  <app-rename-project-modal [project]="currentProject"></app-rename-project-modal>
+  <!-- Modal "Delete task" -->
+  <app-delete-task-modal></app-delete-task-modal>
+  <!-- Modal "Invite members" to project -->
+  <app-invite-member-modal></app-invite-member-modal>
+  <!-- Modal "Remove-member"-->
+  <app-remove-member-modal [member]="projectMember"></app-remove-member-modal>
+  <!-- Modal "Change permission" -->
+  <app-change-permission-modal [member]="projectMember"></app-change-permission-modal>
 
 </div>

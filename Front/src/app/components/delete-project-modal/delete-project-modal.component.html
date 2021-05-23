@@ -8,10 +8,13 @@
           </button>
         </div>
         <div class="modal-body">
+          <div *ngIf="errMsg" class="alert alert-danger">
+            Delete project failed, please try again.
+          </div>
           <p>To delete the project "{{project.title}}", type the name to confirm.</p>
           <form>
             <div class="form-group">
-          <input type="text" class="form-control"placeholder="Enter project name" [(ngModel)]="inputProjectName" (ngModelChange)="onInputChage()"/>
+          <input type="text" name="inputProjectName" class="form-control" placeholder="Enter project name" [(ngModel)]="inputProjectName" (ngModelChange)="onInputChage()"/>
       </div>
       <div class="form-group">
         <button type="button" class="btn btn-danger mr-2" [disabled]="isBtnDelDisabled" (click)="onDelete()">Delete</button>

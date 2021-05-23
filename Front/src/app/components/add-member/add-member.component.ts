@@ -15,13 +15,10 @@ import { ProjectService } from 'src/app/services/project.service';
 })
 export class AddMemberComponent implements OnInit, OnDestroy {
   addMemberForm: FormGroup = new FormGroup({});
-
   projectMembers: Member[] = [];
   currentProject: Project = null;
-
   isWasSubmit = false;
   isLoading = false;
-
   //  Permission options
   options = ['Normal', 'Admin'];
 
@@ -47,7 +44,6 @@ export class AddMemberComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
     // Members listener
     this.projectMembersSub = this.memberService.members$.subscribe(
       members => {
@@ -88,11 +84,9 @@ export class AddMemberComponent implements OnInit, OnDestroy {
 
   get fc() { return this.addMemberForm.controls; }
 
-
   onAdd() {
     // Reset massages
     this.resetMsgs();
-
     this.isWasSubmit = true;
 
     if (this.addMemberForm.status == 'VALID') {
@@ -102,7 +96,6 @@ export class AddMemberComponent implements OnInit, OnDestroy {
       this.memberService.createMember(data);
     }
   }
-
 
   GetValidationClass(inputName: string) {
     if (!this.isWasSubmit) {

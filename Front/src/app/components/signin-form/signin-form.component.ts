@@ -13,12 +13,11 @@ import { Router } from '@angular/router';
 })
 export class SigninFormComponent implements OnInit, OnDestroy {
   userLoggedIn: User = null;
-
   // Subscriptions
   loggedSub: Subscription;
   errSub: Subscription;
 
-  // Error
+  // Error message
   errMsg: string = null;
 
   isLoading = false;
@@ -39,7 +38,6 @@ export class SigninFormComponent implements OnInit, OnDestroy {
         this.router.navigate(['/projects']);
       }
     });
-
 
     this.errSub = this.authService.errAuth$.subscribe(
       err => {
@@ -80,5 +78,4 @@ export class SigninFormComponent implements OnInit, OnDestroy {
       return 'is-valid';
     }
   }
-
 }

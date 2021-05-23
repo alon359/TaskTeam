@@ -1,0 +1,41 @@
+<form class="project-form" novalidate [formGroup]="projectFrom" (ngSubmit)="onSubmit()">
+    <!-- Title / Project name -->
+    <div class="form-group">
+        <label for="title">Project name:</label>
+        <input type="text" class="form-control" id="title" placeholder="Enter a name project" formControlName="title"
+            [ngClass]="GetValidationClass('title')" required />
+        <!-- Invalid massage -->
+        <div class="invalid-feedback">
+            <p *ngIf="fc.title.errors">Please enter name to your project.</p>
+        </div>
+    </div>
+
+    <!-- Project description -->
+    <div class="form-group">
+        <label for="description">Project description:</label>
+        <small>(*Optional)</small>
+        <textarea name="description" class="form-control" id="description" cols="30" rows="2"
+            placeholder="Add description to your project" formControlName="description"
+            [ngClass]="GetValidationClass('description')"></textarea>
+    </div>
+
+    <!-- If create new project -->
+    <div *ngIf="!project" class="form-group">
+        <button class="btn btn-lg btn-primary btn-block" [disabled]="isLoading">
+            <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1" role="status"></span>
+            Create project
+        </button>
+    </div>
+
+    <!-- If update project -->
+    <div *ngIf="project" class="form-group d-flex">
+        <button class="btn btn-lg btn-primary mr-2" [disabled]="isLoading">
+            <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1" role="status"></span>
+            Update
+        </button>
+        <button class="btn btn-lg btn-secondary" [disabled]="isLoading" data-dismiss="modal">
+            Cancel
+        </button>
+    </div>
+
+</form>

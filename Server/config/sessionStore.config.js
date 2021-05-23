@@ -1,5 +1,4 @@
-const dbConfig = require('../config/db/index.js');
-
+const dbConfig = require(__dirname + '/DB/index')
 module.exports = {
     url: dbConfig.dbURL,
     collection: 'session',

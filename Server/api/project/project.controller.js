@@ -37,11 +37,9 @@ async function createProject(req, res) {
             logger.debug('project.controller: createProject - errors:\n\t' + JSON.stringify(errors))
             return res.status(409).json(errors);
         }
-
         const project = req.body;
         project.creatorID = req.session.user._id;
         const newProject = await projectService.create(project);
-
         res.status(200).json(newProject);
     } catch (error) {
         logger.error('Project.controller - Create new project failed.\n' + error);
@@ -71,7 +69,6 @@ async function updateProject(req, res) {
             return res.status(409).json(errors);
         }
 
-
         const updateProject = await projectService.update(project);
 
         res.status(200).json(updateProject);
@@ -83,7 +80,7 @@ async function updateProject(req, res) {
 
 async function removeProject(req, res) {
     try {
-        const  projectID  = req.params.id;
+        const projectID = req.params.id;
 
         await projectService.remove(projectID);
 

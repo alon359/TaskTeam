@@ -4,11 +4,15 @@ const router = express.Router();
 const { createMember, getMembers, getMember, updateMember, removeMember } = require('./member.controller');
 // validators
 const { memberValidator, createMemberValidation } = require('../../middlewares/validities/member.validator');
+// Middlewares
+const { requireAuth, requireProjectMembership } = require('../../middlewares/requireAuth.middleware');
 
-router.get('/', getMembers);
-router.get('/:id', getMember);
-router.post('/', createMemberValidation, createMember);
-router.put('/', memberValidator, updateMember);
-router.delete('/:id', removeMember);
+
+
+router.get('/', requireAuth, getMembers);
+router.get('/:id', requireAuth, getMember);
+router.post('/', requireAuth, createMemberValidation, createMember);
+router.put('/', requireAuth, memberValidator, updateMember);
+router.delete('/:id', requireAuth, requireProjectMembership, removeMember);
 
 module.exports = router;

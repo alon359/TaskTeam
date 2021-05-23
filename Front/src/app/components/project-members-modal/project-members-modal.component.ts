@@ -1,7 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 // Models
 import { Member } from 'src/app/models/member.model';
+import { User } from 'src/app/models/user.model';
 // Services
 import { MemberService } from 'src/app/services/member.service';
 
@@ -11,9 +12,10 @@ import { MemberService } from 'src/app/services/member.service';
   styleUrls: ['./project-members-modal.component.css']
 })
 export class ProjectMembersModalComponent implements OnInit, OnDestroy {
+  @Input() memberUser: User
+  @Output() projcetMemberEmitter: EventEmitter<string> = new EventEmitter();
   members: Member[] = [];
   userMember: Member = null;
-
   // Subscriptions
   membersSub: Subscription;
   userMemberSub: Subscription;
@@ -23,13 +25,16 @@ export class ProjectMembersModalComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.membersSub = this.memberService.members$.subscribe(projectMembers => {
       this.members = projectMembers;
-      console.log('Members:', this.members);
-    })
+    });
     this.userMemberSub = this.memberService.userMember$.subscribe(member => { this.userMember = member });
   }
 
   ngOnDestroy(): void {
     this.membersSub.unsubscribe();
     this.userMemberSub.unsubscribe();
+  }
+
+  passMemberID(memberID: Member['_id']) {
+    this.projcetMemberEmitter.emit(memberID);
   }
 }

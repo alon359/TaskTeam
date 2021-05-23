@@ -1,0 +1,40 @@
+<div class="modal fade" id="removeMemberModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Remove member</h4>
+                <button type="button" (click)="onClose()" class="close" data-dismiss="modal" aria-label="Close">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div *ngIf="errorMsg" class="alert alert-danger" role="alert">{{errorMsg}}</div>
+
+                <p *ngIf="member && !errorMsg" class="m-0">
+                    Are you sure you want to remove <b>{{member.userID.fName}} {{member.userID.lName}}</b> from the project?
+                </p>
+
+                <p *ngIf="errorMsg " class="alert alert-danger m-0">
+                    {{errorMsg}}
+                </p>
+                
+            </div>
+            <div class="modal-footer">
+                <!-- Delete button -->
+                <button type="button" class="btn btn-danger" (click)="removeMember()" [disabled]="isLoading">
+                    <!-- If Loading -->
+                    <div *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <span *ngIf="isLoading" class="ml-2">Loading</span>
+                    <!-- If not loading -->
+                    <span *ngIf="!isLoading">Remove</span>
+                </button>
+                <!-- Cancel button -->
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    [disabled]="isLoading" (click)="onClose()">Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

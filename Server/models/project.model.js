@@ -24,6 +24,11 @@ const schema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    projectOwner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Member',
+        default: null,
+    }
 });
 
 

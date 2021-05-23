@@ -17,14 +17,18 @@
               <p class="m-0 p-0">{{member.userID.fName}} {{member.userID.lName}}</p>
             </a>
             <!-- Actions menu -->
-            <div class="dropdown dropleft">
+            <div *ngIf="userMember && userMember.permission === 'admin'" class="dropdown dropleft">
               <button class="btn-actions" id="btnAction" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
                 <img src="./assets/three-dots-vertical.svg" />
               </button>
               <div class="dropdown-menu" aria-labelledby="btnAction">
-                <button class="dropdown-item">Remove member</button>
-                <button class="dropdown-item">Change permission</button>
+                <button class="dropdown-item" data-toggle="modal" data-target="#removeMemberModal"
+                  (click)="passMemberID(member._id)">
+                  Remove member
+                </button>
+                <button class="dropdown-item" data-toggle="modal" data-target="#memberPermissionModal"
+                  (click)="passMemberID(member._id)">Change permission</button>
               </div>
             </div>
 

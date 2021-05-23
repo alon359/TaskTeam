@@ -42,7 +42,6 @@ export class UpdatePasswordComponent implements OnInit, OnDestroy {
       });
   }
 
-
   ngOnDestroy(): void {
     this.errMsgPassSub.unsubscribe();
   }

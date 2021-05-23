@@ -37,11 +37,8 @@ async function createMember(req, res) {
             logger.debug('member.controller: createMember - errors:\n\t' + JSON.stringify(errors))
             return res.status(409).json(errors);
         }
-
         const member = req.body;
-
         const newMember = await memberService.create(member);
-
         res.status(200).json(newMember);
     } catch (error) {
         logger.error('Member.controller - Create new member failed.\n' + error);
@@ -71,7 +68,8 @@ async function updateMember(req, res) {
             return res.status(409).json(errors);
         }
 
-
+        member.projectID = member.projectID._id;
+        member.userID = member.userID._id;
         const updateMember = await memberService.update(member);
 
         res.status(200).json(updateMember);

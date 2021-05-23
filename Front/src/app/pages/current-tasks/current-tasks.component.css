@@ -1,6 +1,5 @@
 .current-tasks {
   min-height: 100vh;
-  background-color: var(--bgc-main);
 }
 
 h1 {
@@ -19,4 +18,10 @@ h1 {
 
 .table-contain:not(:last-of-type) {
   margin-bottom: 5px;
+}
+
+.btn-table {
+  font-family: NotoSansJP;
+  letter-spacing: 1px;
+  font-size: 1.2rem;
 }

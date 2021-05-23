@@ -6,7 +6,9 @@
   left: 0;
   width: 200px;
   height: 100vh;
-  background-color: #751049;
+  /* background-color: #751049; */
+  /* background-color: #292f4c; */
+  background-color: var(--bgc-menu);
   color: #ffffff;
 }
 

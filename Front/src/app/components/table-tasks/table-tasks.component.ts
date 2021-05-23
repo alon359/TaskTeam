@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 // Models
 import { Task } from 'src/app/models/task.model';
 
@@ -7,16 +7,10 @@ import { Task } from 'src/app/models/task.model';
   templateUrl: './table-tasks.component.html',
   styleUrls: ['./table-tasks.component.css']
 })
-export class TableTasksComponent implements OnInit {
+export class TableTasksComponent {
   @Input() tasks: Task[] = [];
+  @Input() editableMode: boolean = true;
 
-  constructor() {
-  }
-
-  ngOnInit(): void {
-    console.log(this.tasks);
-
-  }
-
+  constructor() { }
 
 }

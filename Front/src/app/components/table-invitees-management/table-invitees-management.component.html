@@ -1,0 +1,22 @@
+<section class="table-responsive-lg">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>promission</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let member of projectMembers">
+        <td class="text-left">
+          <img class="mr-1"[src]="member.userID.imgUrl || './assets/user.jpg'" />
+          {{member.userID.fName }} {{member.userID.lName }}
+        </td>
+        <td>{{member.userID.email }}</td>
+        <td class="permission">
+          {{member.permission}}
+        </td>
+    </tbody>
+  </table>
+</section>

@@ -2,8 +2,9 @@
   <app-menu-login></app-menu-login>
 
   <div class="container">
-    <h1>My projects</h1>
+    <h1 class="head header-page">My Projects</h1>
 
+    <!-- When the data is loaded -->
     <section *ngIf="isLoading" class="d-flex align-items-center justify-content-center mt-4 mr-2">
       <div class="spinner-border" style="width: 2rem; height: 2rem;" role="status">
         <span class="sr-only">Loading, please wait...</span>
@@ -32,9 +33,11 @@
           <td>{{dataProject.project.title}}</td>
           <td>
             <div class="progress">
-              <span *ngIf='!dataProject.countTasks.doneTasks'>0%</span>
-              <div class="progress-bar" role="progressbar" [ngStyle]="{'width':getProgress(dataProject.countTasks)}" aria-valuenow="80" aria-valuemin="0"
-                aria-valuemax="100">{{getProgress(dataProject.countTasks)}}</div>
+              <div class="progress-bar" role="progressbar" [ngStyle]="{'width':getProgress(dataProject.countTasks)}"
+                aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
+                {{getProgress(dataProject.countTasks)}}
+              </div>
+              <span *ngIf="!dataProject.countTasks.doneTasks" class="ml-1 mt-2">0%</span>
             </div>
           </td>
           <td>{{dataProject.countTasks.doneTasks}}/{{dataProject.countTasks.countTasks}}</td>

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Task } from 'src/app/models/task.model';
+declare var $: any;
 // Services
 import { TaskService } from 'src/app/services/task.service';
 
@@ -9,17 +10,23 @@ import { TaskService } from 'src/app/services/task.service';
   styleUrls: ['./row-task.component.css']
 })
 export class RowTaskComponent implements OnInit {
-
   @Input() task: Task;
+  @Input() editableMode: boolean = true;
 
-  constructor(private taskService: TaskService) { }
+  constructor(private taskService: TaskService) {
 
-  ngOnInit(): void {
-    console.log(this.task)
   }
 
-  onRemoveTask(taskID: string) {
-    this.taskService.remove(taskID);
+  ngOnInit(): void { }
+
+  onRemoveTask() {
+    this.taskService.setCurrentTask(this.task);
+    $('#deleteTaskModal').modal('show');
+  }
+
+  onEditTask() {
+    this.taskService.setCurrentTask(this.task);
+    $('#addTaskModal').modal('show');
   }
 
   onStatusChange(status: Task['status']) {
@@ -34,9 +41,11 @@ export class RowTaskComponent implements OnInit {
 
   updateTask() {
     let taskToUpdate: any = Object.assign({}, this.task);
+    taskToUpdate.endDate = taskToUpdate.endDate.substr(0, 10);
+    taskToUpdate.startDate = taskToUpdate.startDate.substr(0, 10);
     taskToUpdate.projectID = taskToUpdate.projectID._id;
-    if (taskToUpdate.owner && taskToUpdate.owner.length) {
-      taskToUpdate.owner = taskToUpdate.owner[0]._id;
+    if (taskToUpdate.owner) {
+      taskToUpdate.owner = taskToUpdate.owner._id;
     }
     this.taskService.update(taskToUpdate);
   }
@@ -58,7 +67,7 @@ export class RowTaskComponent implements OnInit {
     }
   }
 
-  getPriorityClass(priorityTask:Task['priority']):string{
+  getPriorityClass(priorityTask: Task['priority']): string {
     switch (priorityTask) {
       case 'low':
         return 'priority-low';

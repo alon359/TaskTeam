@@ -7,6 +7,7 @@ const Member = require('../../models/member.model');
 
 module.exports = {
     query,
+    getOneMember,
     getByID,
     create,
     update,
@@ -27,9 +28,23 @@ async function query(filter = {}) {
     }
 }
 
+async function getOneMember(filter = {}) {
+    try {
+        const member = await Member.findOne(filter)
+            .populate('userID')
+            .populate('projectID');
+        return member;
+    } catch (error) {
+        logger.error('memberService - Get one member failed.')
+        throw error;
+    }
+}
+
 async function getByID(memberID) {
     try {
-        const member = await Member.findById(memberID);
+        const member = await Member.findById(memberID)
+            .populate('userID')
+            .populate('projectID');
 
         return member;
     } catch (error) {
@@ -60,9 +75,14 @@ async function create(member) {
 
 async function update(member) {
     try {
-        const updateMember = await Member.findOneAndUpdate({ _id: member._id }, member, { new: true });
+        const updateMember = await Member.findOneAndUpdate({ _id: member._id }, member, { new: true })
+            .populate('userID')
+            .populate('projectID');
 
-        logger.info('memberService - Update Member successfully. memberID: ', member._id);
+
+        console.log(updateMember)
+
+        logger.info('memberService - Update Member successfully. memberID: ', updateMember._id);
         return updateMember;
     } catch (error) {
         logger.error('memberService - Update member failed.')
@@ -81,9 +101,9 @@ async function remove(memberID) {
     }
 }
 
-async function removeByProjectID(projectID){
+async function removeByProjectID(projectID) {
     try {
-       const res =  await Member.deleteMany({ projectID });
+        const res = await Member.deleteMany({ projectID });
 
         logger.info('memberService - Remove members by projectID successfully. projectID: ' + projectID);
         return res;

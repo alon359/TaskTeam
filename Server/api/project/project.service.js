@@ -49,9 +49,13 @@ async function create(project) {
             _id: new mongoose.Types.ObjectId(),
             userID: newProject.creatorID,
             projectID: newProject._id,
-            permission: 'admin'
-        }
+            permission: 'admin',
+        };
         const newMember = await memberService.create(member);
+        
+        // Set projectOwner
+        newProject.projectOwner = newMember._id;
+        newProject.save();
 
         logger.info('projectService - New project created projectID: ', project._id);
         return newProject;
