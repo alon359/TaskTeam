@@ -12,7 +12,6 @@ function requireAuth(req, res, next) {
 
 // Checks if is a project member by userID and projectID
 async function requireProjectMembership(req, res, next) {
-  logger.debug(JSON.stringify(req.body));
   const userID = req.session.user._id;
 
   // If the user ask data by query with userID

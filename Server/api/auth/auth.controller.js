@@ -7,8 +7,6 @@ async function login(req, res) {
     try {
         const errors = validationResult(req).errors;
         if (errors.length !== 0) {
-            logger.debug('auth.controller: login - errors:\n\t' + JSON.stringify(errors))
-
             res.status(409).json(errors);
             return;
         }
@@ -32,7 +30,6 @@ async function signup(req, res) {
     try {
         const errors = validationResult(req).errors;
         if (errors.length !== 0) {
-            logger.debug('auth.controller: signup - errors:\n\t' + JSON.stringify(errors))
             res.status(409).json(errors);
             return;
         }

@@ -60,7 +60,6 @@ async function updateUser(req, res) {
             user[key] = value;
         }
 
-
         if ('password' in user) {
             return status(401)
                 .json('massage: Unable to update password with this request.')
