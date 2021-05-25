@@ -19,8 +19,8 @@ async function getMembers(req, res) {
 // Get member by id
 async function getMember(req, res) {
     try {
-        const { id } = req.params;
-        const member = await memberService.getByID(id);
+        const memberID = req.params.memberID;
+        const member = await memberService.getByID(memberID);
 
         res.status(200).json(member);
     } catch (error) {
@@ -81,9 +81,9 @@ async function updateMember(req, res) {
 
 async function removeMember(req, res) {
     try {
-        const { id } = req.params;
+        const { memberID } = req.params;
 
-        await memberService.remove(id);
+        await memberService.remove(memberID);
 
         res.status(200).json({ massage: 'Remove member successfully.' });
     } catch (error) {

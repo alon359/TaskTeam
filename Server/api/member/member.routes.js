@@ -5,14 +5,12 @@ const { createMember, getMembers, getMember, updateMember, removeMember } = requ
 // validators
 const { memberValidator, createMemberValidation } = require('../../middlewares/validities/member.validator');
 // Middlewares
-const { requireAuth, requireProjectMembership } = require('../../middlewares/requireAuth.middleware');
+const { requireAuth, requireProjectMembership, requireAdminProject } = require('../../middlewares/requireAuth.middleware');
 
-
-
-router.get('/', requireAuth, getMembers);
-router.get('/:id', requireAuth, getMember);
-router.post('/', requireAuth, createMemberValidation, createMember);
-router.put('/', requireAuth, memberValidator, updateMember);
-router.delete('/:id', requireAuth, requireProjectMembership, removeMember);
+router.get('/', requireAuth, requireProjectMembership, getMembers);
+router.get('/:memberID', requireAuth, requireProjectMembership, getMember);
+router.post('/', requireAuth, requireProjectMembership, requireAdminProject, createMemberValidation, createMember);
+router.put('/', requireAuth, requireProjectMembership, requireAdminProject, memberValidator, updateMember);
+router.delete('/:memberID', requireAuth, requireProjectMembership, requireAdminProject, removeMember);
 
 module.exports = router;

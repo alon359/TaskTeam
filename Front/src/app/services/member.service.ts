@@ -79,6 +79,7 @@ export class MemberService {
   removeMember(memberID: Member['_id']) {
     this.http.delete<Member>(`${this.BASE_URL}${this.endpoint}/${memberID}`).subscribe(
       res => {
+        // Remove the member from the list
         const members = this._members$.value.filter(member => member._id != memberID);
         this._members$.next(members);
         this.successMsg$.next('Member removed.');

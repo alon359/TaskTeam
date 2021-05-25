@@ -7,8 +7,14 @@ const projectService = require('./project.service');
 // Get projects
 async function getProjects(req, res) {
     try {
-        const { query } = req;
-        const projects = await projectService.query(query);
+        const { userID } = req.query;
+
+        if (userID !== req.session.user._id) {
+            res.status(403).end('You don\'t permission to do this action');
+            return;
+        }
+
+        const projects = await projectService.query({ userID });
         res.status(200).json(projects);
     } catch (error) {
         logger.error('Get projects filed\n', error);
@@ -19,8 +25,8 @@ async function getProjects(req, res) {
 // Get project by id
 async function getProject(req, res) {
     try {
-        const { id } = req.params;
-        const project = await projectService.getByID(id);
+        const { projectID } = req.params;
+        const project = await projectService.getByID(projectID);
 
         res.status(200).json(project);
     } catch (error) {
@@ -34,7 +40,7 @@ async function createProject(req, res) {
     try {
         const errors = validationResult(req).errors;
         if (errors.length !== 0) {
-            logger.debug('project.controller: createProject - errors:\n\t' + JSON.stringify(errors))
+            logger.error('project.controller: createProject - errors:\n\t' + JSON.stringify(errors))
             return res.status(409).json(errors);
         }
         const project = req.body;
@@ -51,7 +57,7 @@ async function updateProject(req, res) {
     try {
         const errors = validationResult(req).errors;
         if (errors.length !== 0) {
-            logger.debug('project.controller: updateProject - errors:\n\t' + JSON.stringify(errors))
+            logger.error('project.controller: updateProject - errors:\n\t' + JSON.stringify(errors))
             return res.status(409).json(errors);
         }
 
@@ -65,7 +71,7 @@ async function updateProject(req, res) {
             }
             errors.push(error)
 
-            logger.debug('project.controller: updateProject - errors:\n\t' + JSON.stringify(errors))
+            logger.error('project.controller: updateProject - errors:\n\t' + JSON.stringify(errors))
             return res.status(409).json(errors);
         }
 

@@ -24,8 +24,8 @@ async function getTasks(req, res) {
 // Get task by id
 async function getTask(req, res) {
   try {
-    const { id } = req.params;
-    // const task = await taskService.getByID(id);
+    const { taskID } = req.params;
+    const task = await taskService.getByID(taskID);
 
     res.status(200).json(task);
   } catch (error) {
@@ -77,7 +77,7 @@ async function updateTask(req, res) {
 
 async function removeTask(req, res) {
   try {
-    const taskID = req.params.id;
+    const { taskID } = req.params;
 
     await taskService.remove(taskID);
 
