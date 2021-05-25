@@ -12,6 +12,7 @@ function requireAuth(req, res, next) {
 
 // Checks if is a project member by userID and projectID
 async function requireProjectMembership(req, res, next) {
+  logger.debug(JSON.stringify(req.body));
   const userID = req.session.user._id;
 
   // If the user ask data by query with userID
@@ -34,6 +35,8 @@ async function requireProjectMembership(req, res, next) {
     } else if ("memberID" in req.params) {
       const member = await memberService.getByID(req.params.memberID)
       projectID = member.projectID;
+    } else if ("_id" in req.body) {
+      projectID = req.body._id;
     } else {
       res.status(404).end('Data is missing for this request')
       return;
