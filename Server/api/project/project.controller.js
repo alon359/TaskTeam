@@ -86,7 +86,7 @@ async function updateProject(req, res) {
 
 async function removeProject(req, res) {
     try {
-        const projectID = req.params.id;
+        const { projectID } = req.params;
 
         await projectService.remove(projectID);
 

@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 // Services
 const logger = require('../../services/logger.service');
-const projectService = require('../project/project.service');
 // Models
 const Task = require('../../models/task.model');
 

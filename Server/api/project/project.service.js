@@ -52,7 +52,7 @@ async function create(project) {
             permission: 'admin',
         };
         const newMember = await memberService.create(member);
-        
+
         // Set projectOwner
         newProject.projectOwner = newMember._id;
         newProject.save();
@@ -79,11 +79,10 @@ async function update(project) {
 
 async function remove(projectID) {
     try {
-        // Remove members project from DB
-        await memberService.removeByProjectID(projectID);
-        // Remove members tasks from DB
+        // Remove project tasks from DB
         await taskService.removeByProjectID(projectID);
-
+        // Remove project members from DB
+        await memberService.removeByProjectID(projectID);
         // Remove the project from DB
         const res = await Project.deleteOne({ _id: projectID });
 
